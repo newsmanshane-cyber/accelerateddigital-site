@@ -1,53 +1,46 @@
-// quote.js
-(function () {
+(() => {
   const $ = (id) => document.getElementById(id);
 
-  // Inputs
   const inputs = {
     qtyIndoor: $("qtyIndoor"),
     qtyOutdoor: $("qtyOutdoor"),
     qtyG5Bullet: $("qtyG5Bullet"),
     qtyG5Flex: $("qtyG5Flex"),
     qtyG5Turret: $("qtyG5Turret"),
+    runs: $("runs"),
+    consoleSelect: $("consoleSelect"),
     nvrSelect: $("nvrSelect"),
     poeSelect: $("poeSelect"),
-    runs: $("runs"),
+    internetReady: $("internetReady"),
     laborTier: $("laborTier"),
     travelFee: $("travelFee"),
   };
 
-  // Outputs
-  const els = {
-    status: $("priceStatus"),
-    summaryLines: $("summaryLines"),
-    hardwareTotal: $("hardwareTotal"),
-    laborTotal: $("laborTotal"),
+  const out = {
+    priceStatus: $("priceStatus"),
     grandTotal: $("grandTotal"),
+    subTotals: $("subTotals"),
+    breakdown: $("breakdown"),
     resetBtn: $("resetBtn"),
     copyBtn: $("copyBtn"),
-    estimateBlob: $("estimateBlob"),
-    contactStatus: $("contactStatus"),
-    contactForm: $("contactForm"),
   };
 
-  // Default fallback pricing (USD) — used if live pricing not available
-  // You can tweak these anytime.
-  const fallback = {
+  // Fallback prices (used if live pricing not available)
+  const prices = {
     u7pro: 189,
     u6mesh: 179,
     g5bullet: 129,
     g5flex: 99,
     g5turretultra: 129,
+
+    udmpro: 379,
     cloudkeyplus: 199,
     unvr: 299,
     usw16poe: 299,
     usw24poe: 399,
   };
 
-  // Live price map (filled from /api/prices)
-  const prices = { ...fallback };
-
-  // Labor model (tweak as desired)
+  // Labor model (tweak anytime)
   const laborModel = {
     baseStandard: 350,
     basePremium: 550,
@@ -55,73 +48,34 @@
     perDrop: 85,   // per Cat6 run
   };
 
-  const products = [
-    { key: "u7pro", label: "U7 Pro (Indoor AP)", qty: () => num(inputs.qtyIndoor.value) },
-    { key: "u6mesh", label: "U6 Mesh (Outdoor AP)", qty: () => num(inputs.qtyOutdoor.value) },
-    { key: "g5bullet", label: "G5 Bullet", qty: () => num(inputs.qtyG5Bullet.value) },
-    { key: "g5flex", label: "G5 Flex", qty: () => num(inputs.qtyG5Flex.value) },
-    { key: "g5turretultra", label: "G5 Turret Ultra", qty: () => num(inputs.qtyG5Turret.value) },
+  const items = [
+    { key: "u7pro", label: "U7 Pro (Indoor AP)", qty: () => n(inputs.qtyIndoor.value) },
+    { key: "u6mesh", label: "U6 Mesh (Outdoor AP)", qty: () => n(inputs.qtyOutdoor.value) },
+    { key: "g5bullet", label: "G5 Bullet", qty: () => n(inputs.qtyG5Bullet.value) },
+    { key: "g5flex", label: "G5 Flex", qty: () => n(inputs.qtyG5Flex.value) },
+    { key: "g5turretultra", label: "G5 Turret Ultra", qty: () => n(inputs.qtyG5Turret.value) },
   ];
 
-  function num(v) {
-    const n = parseInt(v || "0", 10);
-    return Number.isFinite(n) && n > 0 ? n : 0;
+  function n(v) {
+    const x = parseInt(v || "0", 10);
+    return Number.isFinite(x) && x > 0 ? x : 0;
   }
 
-  function money(n) {
-    const x = Math.round((n + Number.EPSILON) * 100) / 100;
-    return x.toLocaleString(undefined, { style: "currency", currency: "USD" });
+  function money(x) {
+    const v = Math.round((x + Number.EPSILON) * 100) / 100;
+    return v.toLocaleString(undefined, { style: "currency", currency: "USD" });
   }
 
   function setPriceLabels() {
     document.querySelectorAll("[data-price-label]").forEach((el) => {
-      const key = el.getAttribute("data-price-label");
-      const p = prices[key];
-      el.textContent = (p == null) ? "$—" : money(p);
+      const k = el.getAttribute("data-price-label");
+      el.textContent = prices[k] ? money(prices[k]) : "$—";
     });
   }
 
-  function selectedHardwareLines() {
-    const lines = [];
-
-    // APs + Cameras
-    for (const p of products) {
-      const q = p.qty();
-      if (!q) continue;
-      const unit = prices[p.key] ?? 0;
-      lines.push({
-        label: `${q}× ${p.label}`,
-        amount: q * unit,
-        kind: "hardware",
-      });
-    }
-
-    // NVR
-    const nvr = inputs.nvrSelect.value;
-    if (nvr !== "none") {
-      lines.push({
-        label: `NVR: ${nvrName(nvr)}`,
-        amount: (prices[nvr] ?? 0),
-        kind: "hardware",
-      });
-    }
-
-    // Switch
-    const poe = inputs.poeSelect.value;
-    if (poe !== "none") {
-      lines.push({
-        label: `PoE Switch: ${poeName(poe)}`,
-        amount: (prices[poe] ?? 0),
-        kind: "hardware",
-      });
-    }
-
-    return lines;
-  }
-
-  function nvrName(v) {
+  function consoleName(v) {
+    if (v === "udmpro") return "Dream Machine Pro (UDM Pro)";
     if (v === "cloudkeyplus") return "Cloud Key Gen2 Plus";
-    if (v === "unvr") return "UNVR";
     return v;
   }
 
@@ -131,84 +85,124 @@
     return v;
   }
 
-  function computeLabor() {
+  function computeHardwareLines() {
+    const lines = [];
+
+    for (const it of items) {
+      const q = it.qty();
+      if (!q) continue;
+      const unit = prices[it.key] || 0;
+      lines.push({ label: `${q}× ${it.label}`, qty: q, unit, ext: q * unit, kind: "hardware" });
+    }
+
+    const consoleSel = inputs.consoleSelect.value;
+    if (consoleSel !== "none") {
+      const unit = prices[consoleSel] || 0;
+      lines.push({
+        label: `UniFi Console: ${consoleName(consoleSel)}`,
+        qty: 1,
+        unit,
+        ext: unit,
+        kind: "hardware"
+      });
+    }
+
+    const nvr = inputs.nvrSelect.value;
+    if (nvr !== "none") {
+      const unit = prices[nvr] || 0;
+      lines.push({
+        label: `Recorder: UNVR`,
+        qty: 1,
+        unit,
+        ext: unit,
+        kind: "hardware"
+      });
+    }
+
+    const poe = inputs.poeSelect.value;
+    if (poe !== "none") {
+      const unit = prices[poe] || 0;
+      lines.push({
+        label: `PoE Switch: ${poeName(poe)}`,
+        qty: 1,
+        unit,
+        ext: unit,
+        kind: "hardware"
+      });
+    }
+
+    return lines;
+  }
+
+  function computeLaborLines() {
     const deviceCount =
-      num(inputs.qtyIndoor.value) +
-      num(inputs.qtyOutdoor.value) +
-      num(inputs.qtyG5Bullet.value) +
-      num(inputs.qtyG5Flex.value) +
-      num(inputs.qtyG5Turret.value);
+      n(inputs.qtyIndoor.value) +
+      n(inputs.qtyOutdoor.value) +
+      n(inputs.qtyG5Bullet.value) +
+      n(inputs.qtyG5Flex.value) +
+      n(inputs.qtyG5Turret.value);
 
-    const drops = num(inputs.runs.value);
-    const base = (inputs.laborTier.value === "premium")
-      ? laborModel.basePremium
-      : laborModel.baseStandard;
-
+    const drops = n(inputs.runs.value);
+    const base = inputs.laborTier.value === "premium" ? laborModel.basePremium : laborModel.baseStandard;
     const trip = parseFloat(inputs.travelFee.value || "0") || 0;
-    const labor = base + deviceCount * laborModel.perDevice + drops * laborModel.perDrop + trip;
 
     const lines = [];
-    if (base) lines.push({ label: `Install package (${inputs.laborTier.value})`, amount: base, kind: "labor" });
-    if (deviceCount) lines.push({ label: `Device install (${deviceCount} devices)`, amount: deviceCount * laborModel.perDevice, kind: "labor" });
-    if (drops) lines.push({ label: `Cat6 drops (${drops})`, amount: drops * laborModel.perDrop, kind: "labor" });
-    if (trip) lines.push({ label: `Trip fee`, amount: trip, kind: "labor" });
+    lines.push({ label: `Install package (${inputs.laborTier.value})`, qty: 1, unit: base, ext: base, kind: "labor" });
+    if (deviceCount) lines.push({ label: `Device install (${deviceCount})`, qty: deviceCount, unit: laborModel.perDevice, ext: deviceCount * laborModel.perDevice, kind: "labor" });
+    if (drops) lines.push({ label: `Cat6 drops (${drops})`, qty: drops, unit: laborModel.perDrop, ext: drops * laborModel.perDrop, kind: "labor" });
+    if (trip) lines.push({ label: `Trip fee`, qty: 1, unit: trip, ext: trip, kind: "labor" });
 
-    return { labor, lines };
+    return lines;
   }
 
   function render() {
-    const hardwareLines = selectedHardwareLines();
-    const hardwareTotal = hardwareLines.reduce((a, b) => a + b.amount, 0);
+    const hw = computeHardwareLines();
+    const labor = computeLaborLines();
 
-    const labor = computeLabor();
-    const laborTotal = labor.lines.reduce((a, b) => a + b.amount, 0);
+    const hardwareTotal = hw.reduce((s, x) => s + x.ext, 0);
+    const laborTotal = labor.reduce((s, x) => s + x.ext, 0);
+    const grand = hardwareTotal + laborTotal;
 
-    const grandTotal = hardwareTotal + laborTotal;
+    out.grandTotal.textContent = money(grand);
+    out.subTotals.textContent = `Hardware ${money(hardwareTotal)} • Labor/Wiring ${money(laborTotal)}`;
 
-    // Summary lines
-    els.summaryLines.innerHTML = "";
-    const allLines = [...hardwareLines, ...labor.lines];
+    out.breakdown.innerHTML = "";
 
-    if (allLines.length === 0) {
-      const empty = document.createElement("div");
-      empty.className = "muted";
-      empty.textContent = "Select items to build your estimate.";
-      els.summaryLines.appendChild(empty);
-    } else {
-      for (const line of allLines) {
-        const row = document.createElement("div");
-        row.className = "summary-item";
-        row.innerHTML = `<span>${escapeHtml(line.label)}</span><strong>${money(line.amount)}</strong>`;
-        els.summaryLines.appendChild(row);
-      }
-    }
-
-    els.hardwareTotal.textContent = money(hardwareTotal);
-    els.laborTotal.textContent = money(laborTotal);
-    els.grandTotal.textContent = money(grandTotal);
-
-    // Store a compact estimate blob for the contact form hidden field
-    const blob = {
-      ts: new Date().toISOString(),
-      pricing: { ...prices },
-      selections: {
-        indoor: num(inputs.qtyIndoor.value),
-        outdoor: num(inputs.qtyOutdoor.value),
-        g5bullet: num(inputs.qtyG5Bullet.value),
-        g5flex: num(inputs.qtyG5Flex.value),
-        g5turretultra: num(inputs.qtyG5Turret.value),
-        nvr: inputs.nvrSelect.value,
-        poe: inputs.poeSelect.value,
-        drops: num(inputs.runs.value),
-        tier: inputs.laborTier.value,
-        trip: parseFloat(inputs.travelFee.value || "0") || 0,
-      },
-      totals: { hardwareTotal, laborTotal, grandTotal },
-      disclaimer:
-        "Estimate only. Final pricing depends on site conditions, taxes/shipping, and availability.",
+    const addHeader = (text) => {
+      const div = document.createElement("div");
+      div.className = "bd-sub";
+      div.textContent = text;
+      out.breakdown.appendChild(div);
     };
 
-    if (els.estimateBlob) els.estimateBlob.value = JSON.stringify(blob);
+    const addRow = (line) => {
+      const row = document.createElement("div");
+      row.className = "bd-row";
+      row.innerHTML = `
+        <div class="bd-label">${escapeHtml(line.label)}</div>
+        <div class="bd-qty">${line.qty}</div>
+        <div class="bd-unit">${money(line.unit)}</div>
+        <div class="bd-ext">${money(line.ext)}</div>
+      `;
+      out.breakdown.appendChild(row);
+    };
+
+    if (hw.length) {
+      addHeader("Hardware");
+      hw.forEach(addRow);
+    }
+
+    if (labor.length) {
+      addHeader("Labor / Wiring");
+      labor.forEach(addRow);
+    }
+
+    if (!hw.length && !labor.length) {
+      const empty = document.createElement("div");
+      empty.className = "hint";
+      empty.textContent = "Select quantities to build an estimate.";
+      out.breakdown.appendChild(empty);
+    }
   }
 
   function escapeHtml(s) {
@@ -222,32 +216,27 @@
 
   async function loadLivePrices() {
     try {
-      els.status.textContent = "Loading live pricing…";
-
+      out.priceStatus.textContent = "Loading live pricing…";
       const res = await fetch("/api/prices", { cache: "no-store" });
-      if (!res.ok) throw new Error(`Prices API error: ${res.status}`);
+      if (!res.ok) throw new Error(`Prices API ${res.status}`);
 
       const data = await res.json();
-
-      // Expected structure: { products: { key: { price } } } or { products: { key: price } }
       const p = data?.products || {};
 
-      // Support either {key:{price}} or {key:price}
-      for (const key of Object.keys(prices)) {
-        const v = p[key];
-        if (typeof v === "number") prices[key] = v;
-        if (v && typeof v.price === "number") prices[key] = v.price;
-      }
+      // Accept { key: number } or { key: { price:number } }
+      Object.keys(prices).forEach((k) => {
+        const v = p[k];
+        if (typeof v === "number") prices[k] = v;
+        if (v && typeof v.price === "number") prices[k] = v.price;
+      });
 
       setPriceLabels();
       render();
-
-      els.status.textContent = "Live pricing loaded";
+      out.priceStatus.textContent = "Live pricing loaded";
     } catch (e) {
-      // Keep fallback prices
       setPriceLabels();
       render();
-      els.status.textContent = "Using fallback pricing (live unavailable)";
+      out.priceStatus.textContent = "Using fallback pricing";
       console.warn(e);
     }
   }
@@ -259,45 +248,39 @@
       el.addEventListener("change", render);
     });
 
-    els.resetBtn?.addEventListener("click", () => {
+    out.resetBtn?.addEventListener("click", () => {
       inputs.qtyIndoor.value = "2";
       inputs.qtyOutdoor.value = "0";
       inputs.qtyG5Bullet.value = "0";
       inputs.qtyG5Flex.value = "0";
       inputs.qtyG5Turret.value = "0";
+      inputs.runs.value = "4";
+      inputs.consoleSelect.value = "none";
       inputs.nvrSelect.value = "none";
       inputs.poeSelect.value = "none";
-      inputs.runs.value = "4";
+      inputs.internetReady.value = "yes";
       inputs.laborTier.value = "standard";
       inputs.travelFee.value = "0";
       render();
     });
 
-    els.copyBtn?.addEventListener("click", async () => {
-      const text =
-`Accelerated Digital Solutions – Instant Estimate
-
-Hardware: ${els.hardwareTotal.textContent}
-Labor/Wiring: ${els.laborTotal.textContent}
-Total: ${els.grandTotal.textContent}
-
-Selections:
-${(els.estimateBlob?.value ? els.estimateBlob.value : "")}
+    out.copyBtn?.addEventListener("click", async () => {
+      const text = `ADS Instant Estimate
+Total: ${out.grandTotal.textContent}
+${out.subTotals.textContent}
 
 Disclaimer: Estimate only. Final pricing depends on site conditions, taxes/shipping, and availability.`;
 
       try {
         await navigator.clipboard.writeText(text);
-        els.copyBtn.textContent = "Copied!";
-        setTimeout(() => (els.copyBtn.textContent = "Copy estimate"), 1200);
+        out.copyBtn.textContent = "Copied!";
+        setTimeout(() => (out.copyBtn.textContent = "Copy Estimate"), 1200);
       } catch {
-        // Fallback: prompt
         window.prompt("Copy this estimate:", text);
       }
     });
   }
 
-  // Init
   bind();
   setPriceLabels();
   render();
