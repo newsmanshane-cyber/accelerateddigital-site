@@ -338,7 +338,7 @@
             <div class="divider"></div>
 
             <h3>Email This Estimate</h3>
-            <p class="hint">We’ll email a copy to <strong>you</strong> and <strong>the client</strong>. No spam — just the estimate summary.</p>
+            <p class="hint">We’ll email a copy to <strong>you</strong> and <strong>the client</strong>.</p>
 
             <form id="estimateEmailForm" class="estimate-email" novalidate>
               <div class="row" style="margin-top:12px;">
@@ -357,8 +357,13 @@
                 <input id="estNotes" type="text" placeholder="Anything you want us to know (site details, timeline, etc.)" />
               </div>
 
+              <!-- ✅ IMPORTANT: unique response field name for estimate widget -->
               <div class="field field-full turnstile-row" style="margin-top:12px;">
-                <div class="cf-turnstile" data-sitekey="0x4AAAAAAClxR7FVt3S2YrrD"></div>
+                <div
+                  class="cf-turnstile"
+                  data-sitekey="0x4AAAAAAClxR7FVt3S2YrrD"
+                  data-response-field-name="est-turnstile-response"
+                ></div>
               </div>
 
               <div class="actions" style="margin-top:12px;">
@@ -377,7 +382,7 @@
           <div class="estimate-card estimate-out">
             <div class="out-top">
               <h3>Estimate Total</h3>
-              <div class="updated" id="priceStatus">Loading live pricing…</div>
+              <div class="updated" id="priceStatus">Loading pricing…</div>
             </div>
 
             <div class="total" id="grandTotal">$0</div>
@@ -392,7 +397,6 @@
         </div>
       </div>
     </section>
-    <!-- ===== /Estimate Section ===== -->
 
     <section id="service-area" class="section" data-observe>
       <h2>Serving the Greater Los Angeles Area</h2>
@@ -473,8 +477,13 @@
             <textarea name="message" id="message" placeholder="Tell me what you need help with…" rows="6" required></textarea>
           </div>
 
+          <!-- ✅ IMPORTANT: unique response field name for contact widget -->
           <div class="field field-full turnstile-row">
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAClxR7FVt3S2YrrD"></div>
+            <div
+              class="cf-turnstile"
+              data-sitekey="0x4AAAAAAClxR7FVt3S2YrrD"
+              data-response-field-name="contact-turnstile-response"
+            ></div>
           </div>
 
           <div class="field field-full actions-row">
@@ -496,7 +505,7 @@
   </footer>
 
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  <script src="quote.js?v=3" defer></script>
+  <script src="quote.js?v=4" defer></script>
 
   <script>
     (function () {
@@ -537,62 +546,6 @@
           card.style.setProperty("--my", (e.clientY - r.top) + "px");
         });
       });
-    })();
-
-    (function () {
-      const form = document.getElementById("contactForm");
-      const statusEl = document.getElementById("formStatus");
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        statusEl.textContent = "Sending…";
-
-        const payload = {
-          name: document.getElementById("name").value.trim(),
-          email: document.getElementById("email").value.trim(),
-          message: document.getElementById("message").value.trim(),
-          fax: document.getElementById("fax").value.trim(),
-          turnstileToken: form["cf-turnstile-response"].value
-        };
-
-        if (!payload.name || !payload.email || !payload.message) { statusEl.textContent = "Please complete all fields."; return; }
-        if (!payload.turnstileToken) { statusEl.textContent = "Please complete the verification."; return; }
-
-        try {
-          const res = await fetch("/api/contact", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-          });
-
-          const data = await res.json().catch(() => ({}));
-          if (!res.ok) { statusEl.textContent = data?.error || "Could not send. Please try again."; return; }
-
-          statusEl.textContent = "Message sent! I’ll reply soon.";
-          form.reset();
-          if (window.turnstile) window.turnstile.reset();
-        } catch {
-          statusEl.textContent = "Network error. Please try again.";
-        }
-      });
-    })();
-
-    (function () {
-      const net = document.querySelector(".hero-net");
-      if (!net) return;
-
-      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) return;
-
-      let t = 0;
-      function tick() {
-        t += 0.0035;
-        const x = Math.sin(t) * 8;
-        const y = Math.cos(t * 0.9) * 6;
-        net.style.transform = `translate(-50%, 0) translate(${x}px, ${y}px)`;
-        requestAnimationFrame(tick);
-      }
-      tick();
     })();
   </script>
 </body>
