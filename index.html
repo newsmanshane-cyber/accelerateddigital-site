@@ -12,6 +12,76 @@
 
   <link rel="stylesheet" href="style.css?v=2" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+  <!-- Small inline styles for the collapsible header -->
+  <style>
+    .estimate-toggle {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 18px 18px;
+      cursor: pointer;
+      color: inherit;
+      transition: transform .08s ease, background .15s ease, border-color .15s ease;
+    }
+    .estimate-toggle:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.16);
+    }
+    .estimate-toggle:active { transform: translateY(1px); }
+    .estimate-toggle:focus-visible {
+      outline: 2px solid rgba(255,255,255,0.35);
+      outline-offset: 3px;
+    }
+    .estimate-toggle .title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .estimate-toggle .title h2 {
+      margin: 0;
+      font-size: clamp(28px, 3vw, 40px);
+      letter-spacing: -0.02em;
+    }
+    .estimate-toggle .title .sub {
+      opacity: 0.85;
+      font-size: 14px;
+    }
+    .estimate-toggle .chev {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      transition: transform .2s ease, background .15s ease, border-color .15s ease;
+    }
+    .estimate-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    .estimate-toggle svg { width: 18px; height: 18px; opacity: 0.9; }
+
+    /* Collapsible container animation */
+    .estimate-collapsible {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: max-height .35s ease, opacity .25s ease, transform .25s ease;
+    }
+    .estimate-collapsible.open {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 4000px; /* large enough for content */
+    }
+    .estimate-collapsible .estimate-wrap { margin-top: 18px; }
+  </style>
 </head>
 
 <body>
@@ -29,9 +99,9 @@
 
     <nav class="site-nav" aria-label="Primary navigation">
       <a href="#services" data-section="services">Services</a>
-      <a href="#estimate" data-section="estimate">Estimate</a>
       <a href="#service-area" data-section="service-area">Service Area</a>
       <a href="#projects" data-section="projects">Projects</a>
+      <a href="#estimate" data-section="estimate">Estimate</a>
       <a href="#contact" data-section="contact">Contact</a>
     </nav>
   </header>
@@ -132,272 +202,6 @@
       </div>
     </section>
 
-    <!-- ===== Estimate Section ===== -->
-    <section id="estimate" class="section" data-observe>
-      <h2>Instant Estimate</h2>
-      <p class="section-text">
-        Use a preset (fastest), or build your own. If you don’t already have UniFi, choose <strong>UDM Pro</strong>.
-      </p>
-
-      <div class="estimate-wrap">
-        <div class="estimate-grid">
-          <!-- LEFT: Inputs -->
-          <div class="estimate-card">
-            <h3>Quick Start Presets</h3>
-            <p class="hint">Pick one to auto-fill. You can tweak anything afterward.</p>
-
-            <div class="row" style="margin-top:12px;">
-              <div class="field">
-                <label>Typical Setup</label>
-                <select id="presetSelect">
-                  <option value="none">Choose a preset…</option>
-                  <option value="homeSmall">Small Home</option>
-                  <option value="homeLarge">Large Home</option>
-                  <option value="retail">Retail / Small Business</option>
-                  <option value="office">Office / Multi-room</option>
-                  <option value="camerasOnly">Cameras Only</option>
-                </select>
-                <div class="hint" id="presetHint">Tip: “Retail” is a great starting point for most storefronts.</div>
-              </div>
-
-              <div class="field">
-                <label>&nbsp;</label>
-                <button class="btn" id="applyPresetBtn" type="button">Apply Preset</button>
-                <div class="hint">One click fill — doesn’t lock anything.</div>
-              </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <h3>Coverage Helper</h3>
-            <p class="hint">Don’t know how many access points? Enter basic info and we’ll recommend a starting point.</p>
-
-            <div class="row" style="margin-top:12px;">
-              <div class="field">
-                <label for="sqft">Square footage</label>
-                <input id="sqft" type="number" min="200" value="1800" />
-                <div class="hint">Rough estimate is fine.</div>
-              </div>
-
-              <div class="field">
-                <label for="floors">Floors</label>
-                <select id="floors">
-                  <option value="1">1</option>
-                  <option value="2" selected>2</option>
-                  <option value="3">3+</option>
-                </select>
-                <div class="hint">More floors usually means more APs.</div>
-              </div>
-            </div>
-
-            <div class="row" style="margin-top:12px;">
-              <div class="field">
-                <label for="needOutdoor">Outdoor coverage</label>
-                <select id="needOutdoor">
-                  <option value="no" selected>No</option>
-                  <option value="yes">Yes</option>
-                </select>
-                <div class="hint">Patio / yard / exterior areas.</div>
-              </div>
-
-              <div class="field">
-                <label>&nbsp;</label>
-                <button class="btn btn-ghost" id="applyCoverageBtn" type="button">Apply Recommendation</button>
-                <div class="hint" id="coverageResult">Recommendation will appear here.</div>
-              </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <h3>Build Your System</h3>
-            <p class="hint">Indoor AP: <strong>U7 Pro</strong> • Outdoor AP: <strong>U6 Mesh</strong></p>
-
-            <div class="row">
-              <div class="field">
-                <label for="qtyIndoor">Indoor APs (U7 Pro)</label>
-                <input id="qtyIndoor" type="number" min="0" value="2" />
-                <div class="hint">Unit: <span data-price-label="u7pro">$—</span></div>
-              </div>
-
-              <div class="field">
-                <label for="qtyOutdoor">Outdoor APs (U6 Mesh)</label>
-                <input id="qtyOutdoor" type="number" min="0" value="0" />
-                <div class="hint">Unit: <span data-price-label="u6mesh">$—</span></div>
-              </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <h4>Cameras (UniFi Protect)</h4>
-            <div class="row">
-              <div class="field">
-                <label for="qtyG5Bullet">G5 Bullet</label>
-                <input id="qtyG5Bullet" type="number" min="0" value="0" />
-                <div class="hint">Unit: <span data-price-label="g5bullet">$—</span></div>
-              </div>
-
-              <div class="field">
-                <label for="qtyG5Flex">G5 Flex</label>
-                <input id="qtyG5Flex" type="number" min="0" value="0" />
-                <div class="hint">Unit: <span data-price-label="g5flex">$—</span></div>
-              </div>
-            </div>
-
-            <div class="row" style="margin-top:14px;">
-              <div class="field">
-                <label for="qtyG5Turret">G5 Turret Ultra</label>
-                <input id="qtyG5Turret" type="number" min="0" value="0" />
-                <div class="hint">Unit: <span data-price-label="g5turretultra">$—</span></div>
-              </div>
-
-              <div class="field">
-                <label for="runs">New Cat6 drops</label>
-                <input id="runs" type="number" min="0" value="4" />
-                <div class="hint">Includes termination + test</div>
-              </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <h4>Core UniFi Hardware</h4>
-            <div class="row">
-              <div class="field">
-                <label for="consoleSelect">UniFi Console (controller)</label>
-                <select id="consoleSelect">
-                  <option value="none">Already have one / none</option>
-                  <option value="udmpro">Dream Machine Pro (UDM Pro)</option>
-                  <option value="cloudkeyplus">Cloud Key Gen2 Plus</option>
-                </select>
-                <div class="hint">
-                  UDM Pro: <span data-price-label="udmpro">$—</span> •
-                  CK G2+: <span data-price-label="cloudkeyplus">$—</span>
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="nvrSelect">Recorder (for cameras)</label>
-                <select id="nvrSelect">
-                  <option value="none">No / already have one</option>
-                  <option value="unvr">UNVR</option>
-                </select>
-                <div class="hint">UNVR: <span data-price-label="unvr">$—</span></div>
-              </div>
-            </div>
-
-            <div class="row" style="margin-top:14px;">
-              <div class="field">
-                <label for="poeSelect">PoE Switch</label>
-                <select id="poeSelect">
-                  <option value="none">Already have one / none</option>
-                  <option value="usw16poe">USW 16 PoE</option>
-                  <option value="usw24poe">USW 24 PoE</option>
-                </select>
-                <div class="hint">
-                  16 PoE: <span data-price-label="usw16poe">$—</span> •
-                  24 PoE: <span data-price-label="usw24poe">$—</span>
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="internetReady">Internet modem / ISP handoff</label>
-                <select id="internetReady">
-                  <option value="yes">Already available</option>
-                  <option value="unsure">Not sure</option>
-                </select>
-                <div class="hint">If “Not sure”, we’ll confirm during the site walk.</div>
-              </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <h4>Install Package</h4>
-            <div class="row">
-              <div class="field">
-                <label for="laborTier">Tier</label>
-                <select id="laborTier">
-                  <option value="standard">Standard</option>
-                  <option value="premium">Premium (neater rack + labeling)</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="travelFee">Trip Fee</label>
-                <select id="travelFee">
-                  <option value="0">$0 (waived)</option>
-                  <option value="35">$35</option>
-                  <option value="65">$65</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="actions">
-              <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
-              <button class="btn" id="copyBtn" type="button">Copy Estimate</button>
-            </div>
-
-            <div class="divider"></div>
-
-            <h3>Email This Estimate</h3>
-            <p class="hint">We’ll email a copy to <strong>you</strong> and <strong>the client</strong>.</p>
-
-            <form id="estimateEmailForm" class="estimate-email" novalidate>
-              <div class="row" style="margin-top:12px;">
-                <div class="field">
-                  <label for="estName">Name</label>
-                  <input id="estName" type="text" placeholder="Your name" required />
-                </div>
-                <div class="field">
-                  <label for="estEmail">Email</label>
-                  <input id="estEmail" type="email" placeholder="you@company.com" required />
-                </div>
-              </div>
-
-              <div class="field" style="margin-top:12px;">
-                <label for="estNotes">Notes (optional)</label>
-                <input id="estNotes" type="text" placeholder="Anything you want us to know (site details, timeline, etc.)" />
-              </div>
-
-              <!-- ✅ IMPORTANT: unique response field name for estimate widget -->
-              <div class="field field-full turnstile-row" style="margin-top:12px;">
-                <div
-                  class="cf-turnstile"
-                  data-sitekey="0x4AAAAAAClxR7FVt3S2YrrD"
-                  data-response-field-name="est-turnstile-response"
-                ></div>
-              </div>
-
-              <div class="actions" style="margin-top:12px;">
-                <button class="btn" id="emailEstimateBtn" type="submit">Send Estimate</button>
-                <div class="hint" id="estimateEmailStatus" aria-live="polite"></div>
-              </div>
-            </form>
-
-            <p class="disclaimer">
-              Disclaimer: Estimate only. Final pricing depends on site conditions (attic/wall access, cable distance, mounting),
-              taxes/shipping, and availability.
-            </p>
-          </div>
-
-          <!-- RIGHT: Output -->
-          <div class="estimate-card estimate-out">
-            <div class="out-top">
-              <h3>Estimate Total</h3>
-              <div class="updated" id="priceStatus">Loading pricing…</div>
-            </div>
-
-            <div class="total" id="grandTotal">$0</div>
-            <div class="range" id="subTotals">Hardware $0 • Labor/Wiring $0</div>
-
-            <div class="breakdown" id="breakdown"></div>
-
-            <div class="bd-note" style="margin-top:14px;">
-              Want this confirmed? Email the estimate above, or use the contact form below.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="service-area" class="section" data-observe>
       <h2>Serving the Greater Los Angeles Area</h2>
       <p class="section-text">
@@ -446,6 +250,292 @@
       </div>
     </section>
 
+    <!-- ===== Estimate Section (moved here, collapsible) ===== -->
+    <section id="estimate" class="section" data-observe>
+      <button
+        class="estimate-toggle"
+        id="estimateToggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="estimatePanel"
+      >
+        <div class="title">
+          <h2>Instant Estimate</h2>
+          <div class="sub">Click to expand • Use a preset (fastest), or build your own.</div>
+        </div>
+
+        <div class="chev" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </button>
+
+      <div id="estimatePanel" class="estimate-collapsible" hidden>
+        <p class="section-text" style="margin-top:16px;">
+          If you don’t already have UniFi, choose <strong>UDM Pro</strong>.
+        </p>
+
+        <div class="estimate-wrap">
+          <div class="estimate-grid">
+            <!-- LEFT: Inputs -->
+            <div class="estimate-card">
+              <h3>Quick Start Presets</h3>
+              <p class="hint">Pick one to auto-fill. You can tweak anything afterward.</p>
+
+              <div class="row" style="margin-top:12px;">
+                <div class="field">
+                  <label>Typical Setup</label>
+                  <select id="presetSelect">
+                    <option value="none">Choose a preset…</option>
+                    <option value="homeSmall">Small Home</option>
+                    <option value="homeLarge">Large Home</option>
+                    <option value="retail">Retail / Small Business</option>
+                    <option value="office">Office / Multi-room</option>
+                    <option value="camerasOnly">Cameras Only</option>
+                  </select>
+                  <div class="hint" id="presetHint">Tip: “Retail” is a great starting point for most storefronts.</div>
+                </div>
+
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <button class="btn" id="applyPresetBtn" type="button">Apply Preset</button>
+                  <div class="hint">One click fill — doesn’t lock anything.</div>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <h3>Coverage Helper</h3>
+              <p class="hint">Don’t know how many access points? Enter basic info and we’ll recommend a starting point.</p>
+
+              <div class="row" style="margin-top:12px;">
+                <div class="field">
+                  <label for="sqft">Square footage</label>
+                  <input id="sqft" type="number" min="200" value="1800" />
+                  <div class="hint">Rough estimate is fine.</div>
+                </div>
+
+                <div class="field">
+                  <label for="floors">Floors</label>
+                  <select id="floors">
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3+</option>
+                  </select>
+                  <div class="hint">More floors usually means more APs.</div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top:12px;">
+                <div class="field">
+                  <label for="needOutdoor">Outdoor coverage</label>
+                  <select id="needOutdoor">
+                    <option value="no" selected>No</option>
+                    <option value="yes">Yes</option>
+                  </select>
+                  <div class="hint">Patio / yard / exterior areas.</div>
+                </div>
+
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <button class="btn btn-ghost" id="applyCoverageBtn" type="button">Apply Recommendation</button>
+                  <div class="hint" id="coverageResult">Recommendation will appear here.</div>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <h3>Build Your System</h3>
+              <p class="hint">Indoor AP: <strong>U7 Pro</strong> • Outdoor AP: <strong>U6 Mesh</strong></p>
+
+              <div class="row">
+                <div class="field">
+                  <label for="qtyIndoor">Indoor APs (U7 Pro)</label>
+                  <input id="qtyIndoor" type="number" min="0" value="2" />
+                  <div class="hint">Unit: <span data-price-label="u7pro">$—</span></div>
+                </div>
+
+                <div class="field">
+                  <label for="qtyOutdoor">Outdoor APs (U6 Mesh)</label>
+                  <input id="qtyOutdoor" type="number" min="0" value="0" />
+                  <div class="hint">Unit: <span data-price-label="u6mesh">$—</span></div>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <h4>Cameras (UniFi Protect)</h4>
+              <div class="row">
+                <div class="field">
+                  <label for="qtyG5Bullet">G5 Bullet</label>
+                  <input id="qtyG5Bullet" type="number" min="0" value="0" />
+                  <div class="hint">Unit: <span data-price-label="g5bullet">$—</span></div>
+                </div>
+
+                <div class="field">
+                  <label for="qtyG5Flex">G5 Flex</label>
+                  <input id="qtyG5Flex" type="number" min="0" value="0" />
+                  <div class="hint">Unit: <span data-price-label="g5flex">$—</span></div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top:14px;">
+                <div class="field">
+                  <label for="qtyG5Turret">G5 Turret Ultra</label>
+                  <input id="qtyG5Turret" type="number" min="0" value="0" />
+                  <div class="hint">Unit: <span data-price-label="g5turretultra">$—</span></div>
+                </div>
+
+                <div class="field">
+                  <label for="runs">New Cat6 drops</label>
+                  <input id="runs" type="number" min="0" value="4" />
+                  <div class="hint">Includes termination + test</div>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <h4>Core UniFi Hardware</h4>
+              <div class="row">
+                <div class="field">
+                  <label for="consoleSelect">UniFi Console (controller)</label>
+                  <select id="consoleSelect">
+                    <option value="none">Already have one / none</option>
+                    <option value="udmpro">Dream Machine Pro (UDM Pro)</option>
+                    <option value="cloudkeyplus">Cloud Key Gen2 Plus</option>
+                  </select>
+                  <div class="hint">
+                    UDM Pro: <span data-price-label="udmpro">$—</span> •
+                    CK G2+: <span data-price-label="cloudkeyplus">$—</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="nvrSelect">Recorder (for cameras)</label>
+                  <select id="nvrSelect">
+                    <option value="none">No / already have one</option>
+                    <option value="unvr">UNVR</option>
+                  </select>
+                  <div class="hint">UNVR: <span data-price-label="unvr">$—</span></div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top:14px;">
+                <div class="field">
+                  <label for="poeSelect">PoE Switch</label>
+                  <select id="poeSelect">
+                    <option value="none">Already have one / none</option>
+                    <option value="usw16poe">USW 16 PoE</option>
+                    <option value="usw24poe">USW 24 PoE</option>
+                  </select>
+                  <div class="hint">
+                    16 PoE: <span data-price-label="usw16poe">$—</span> •
+                    24 PoE: <span data-price-label="usw24poe">$—</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="internetReady">Internet modem / ISP handoff</label>
+                  <select id="internetReady">
+                    <option value="yes">Already available</option>
+                    <option value="unsure">Not sure</option>
+                  </select>
+                  <div class="hint">If “Not sure”, we’ll confirm during the site walk.</div>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <h4>Install Package</h4>
+              <div class="row">
+                <div class="field">
+                  <label for="laborTier">Tier</label>
+                  <select id="laborTier">
+                    <option value="standard">Standard</option>
+                    <option value="premium">Premium (neater rack + labeling)</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="travelFee">Trip Fee</label>
+                  <select id="travelFee">
+                    <option value="0">$0 (waived)</option>
+                    <option value="35">$35</option>
+                    <option value="65">$65</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
+                <button class="btn" id="copyBtn" type="button">Copy Estimate</button>
+              </div>
+
+              <div class="divider"></div>
+
+              <h3>Email This Estimate</h3>
+              <p class="hint">We’ll email a copy to <strong>you</strong> and <strong>the client</strong>.</p>
+
+              <form id="estimateEmailForm" class="estimate-email" novalidate>
+                <div class="row" style="margin-top:12px;">
+                  <div class="field">
+                    <label for="estName">Name</label>
+                    <input id="estName" type="text" placeholder="Your name" required />
+                  </div>
+                  <div class="field">
+                    <label for="estEmail">Email</label>
+                    <input id="estEmail" type="email" placeholder="you@company.com" required />
+                  </div>
+                </div>
+
+                <div class="field" style="margin-top:12px;">
+                  <label for="estNotes">Notes (optional)</label>
+                  <input id="estNotes" type="text" placeholder="Anything you want us to know (site details, timeline, etc.)" />
+                </div>
+
+                <div class="field field-full turnstile-row" style="margin-top:12px;">
+                  <div
+                    class="cf-turnstile"
+                    data-sitekey="0x4AAAAAAClxR7FVt3S2YrrD"
+                    data-response-field-name="est-turnstile-response"
+                  ></div>
+                </div>
+
+                <div class="actions" style="margin-top:12px;">
+                  <button class="btn" id="emailEstimateBtn" type="submit">Send Estimate</button>
+                  <div class="hint" id="estimateEmailStatus" aria-live="polite"></div>
+                </div>
+              </form>
+
+              <p class="disclaimer">
+                Disclaimer: Estimate only. Final pricing depends on site conditions (attic/wall access, cable distance, mounting),
+                taxes/shipping, and availability.
+              </p>
+            </div>
+
+            <!-- RIGHT: Output -->
+            <div class="estimate-card estimate-out">
+              <div class="out-top">
+                <h3>Estimate Total</h3>
+                <div class="updated" id="priceStatus">Loading pricing…</div>
+              </div>
+
+              <div class="total" id="grandTotal">$0</div>
+              <div class="range" id="subTotals">Hardware $0 • Labor/Wiring $0</div>
+
+              <div class="breakdown" id="breakdown"></div>
+
+              <div class="bd-note" style="margin-top:14px;">
+                Want this confirmed? Email the estimate above, or use the contact form below.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ===== /Estimate Section ===== -->
+
     <section id="cta" class="section">
       <h2>Ready to upgrade your network?</h2>
       <p class="section-text">Tell us what you’re building — we’ll recommend a clean plan and help you deploy it.</p>
@@ -477,7 +567,6 @@
             <textarea name="message" id="message" placeholder="Tell me what you need help with…" rows="6" required></textarea>
           </div>
 
-          <!-- ✅ IMPORTANT: unique response field name for contact widget -->
           <div class="field field-full turnstile-row">
             <div
               class="cf-turnstile"
@@ -505,7 +594,7 @@
   </footer>
 
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  <script src="quote.js?v=4" defer></script>
+  <script src="quote.js?v=5" defer></script>
 
   <script>
     (function () {
@@ -545,6 +634,84 @@
           card.style.setProperty("--mx", (e.clientX - r.left) + "px");
           card.style.setProperty("--my", (e.clientY - r.top) + "px");
         });
+      });
+    })();
+
+    // Collapsible Estimate section
+    (function () {
+      const btn = document.getElementById("estimateToggle");
+      const panel = document.getElementById("estimatePanel");
+      if (!btn || !panel) return;
+
+      const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function setOpen(open) {
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) {
+          panel.hidden = false;
+          // allow layout before adding class (for transition)
+          requestAnimationFrame(() => panel.classList.add("open"));
+          if (!prefersReduce) {
+            // scroll header into view slightly when opening
+            setTimeout(() => {
+              const top = btn.getBoundingClientRect().top + window.scrollY - 90;
+              window.scrollTo({ top, behavior: "smooth" });
+            }, 80);
+          }
+        } else {
+          panel.classList.remove("open");
+          // wait for transition then hide
+          setTimeout(() => { panel.hidden = true; }, prefersReduce ? 0 : 260);
+        }
+      }
+
+      btn.addEventListener("click", () => {
+        const isOpen = btn.getAttribute("aria-expanded") === "true";
+        setOpen(!isOpen);
+      });
+
+      // optional: open if URL has #estimate and ?open=1
+      const shouldAutoOpen = (location.hash === "#estimate") && (new URLSearchParams(location.search).get("open") === "1");
+      if (shouldAutoOpen) setOpen(true);
+    })();
+
+    // Contact form submit (unchanged except token field name)
+    (function () {
+      const form = document.getElementById("contactForm");
+      const statusEl = document.getElementById("formStatus");
+      if (!form) return;
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        statusEl.textContent = "Sending…";
+
+        const payload = {
+          name: document.getElementById("name").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          message: document.getElementById("message").value.trim(),
+          fax: document.getElementById("fax").value.trim(),
+          turnstileToken: form["contact-turnstile-response"].value
+        };
+
+        if (!payload.name || !payload.email || !payload.message) { statusEl.textContent = "Please complete all fields."; return; }
+        if (!payload.turnstileToken) { statusEl.textContent = "Please complete the verification."; return; }
+
+        try {
+          const res = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) { statusEl.textContent = data?.error || "Could not send. Please try again."; return; }
+
+          statusEl.textContent = "Message sent! I’ll reply soon.";
+          form.reset();
+          if (window.turnstile) window.turnstile.reset();
+        } catch {
+          statusEl.textContent = "Network error. Please try again.";
+        }
       });
     })();
   </script>
