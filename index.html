@@ -1,224 +1,257 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Accelerated Digital Solutions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>Accelerated Digital Solutions LLC | Los Angeles IT & Network Infrastructure</title>
+  <meta name="description" content="Accelerated Digital Solutions LLC provides IT and network infrastructure, Wi-Fi deployment, structured cabling, and production networking throughout the Greater Los Angeles area." />
+  <meta name="robots" content="index,follow" />
+
+  <link rel="canonical" href="https://www.accelerateddigital.net/" />
+
+  <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style.css?v=2" />
-
-  <!-- If you use Cloudflare Turnstile -->
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="#top" aria-label="Accelerated Digital Solutions">
-        <img src="assets/ADS%20LOGO%20WHITE.svg?v=1" alt="Accelerated Digital Solutions logo" />
-      </a>
+  <div class="bg-grid" aria-hidden="true"></div>
 
-      <nav class="site-nav" aria-label="Primary navigation">
-        <a href="#services">Services</a>
-        <a href="#quote">Instant Estimate</a>
-        <a href="#service-area">Service Area</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
+  <header class="site-header" id="siteHeader">
+    <!-- Header logo: MONOGRAM -->
+    <a class="brand" href="#top" aria-label="Accelerated Digital Solutions">
+      <img
+        src="assets/ADS%20LOGO%20WHITE%20MONOGRAM.svg?v=1"
+        alt="Accelerated Digital Solutions"
+        class="brand-logo"
+        draggable="false"
+      />
+    </a>
 
-      <a class="btn btn-primary" href="#contact">Get a Quote</a>
-    </div>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="#services" data-section="services">Services</a>
+      <a href="#estimate" data-section="estimate">Estimate</a>
+      <a href="#service-area" data-section="service-area">Service Area</a>
+      <a href="#projects" data-section="projects">Projects</a>
+      <a href="#contact" data-section="contact">Contact</a>
+    </nav>
   </header>
 
   <main id="top">
-    <!-- HERO -->
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="kicker">IT • Networking • Security</p>
-          <h1>Reliable Wi-Fi, clean installs, and smart security—done right.</h1>
-          <p class="subhead">
-            Accelerated Digital Solutions designs and installs UniFi-based networks and cameras for homes and small businesses.
-            Get an instant ballpark estimate below, then we’ll confirm details on-site.
-          </p>
+      <!-- Animated network topology background behind hero -->
+      <svg class="hero-net" viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true">
+        <g class="net-lines">
+          <line x1="120" y1="140" x2="320" y2="220" />
+          <line x1="320" y1="220" x2="520" y2="160" />
+          <line x1="520" y1="160" x2="720" y2="240" />
+          <line x1="720" y1="240" x2="920" y2="150" />
+          <line x1="920" y1="150" x2="1080" y2="240" />
 
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#quote">Instant Estimate</a>
-            <a class="btn btn-ghost" href="#services">See Services</a>
-          </div>
+          <line x1="260" y1="350" x2="420" y2="300" />
+          <line x1="420" y1="300" x2="600" y2="360" />
+          <line x1="600" y1="360" x2="780" y2="310" />
+          <line x1="780" y1="310" x2="980" y2="360" />
 
-          <p class="fineprint">
-            Estimates are non-binding and may change after site survey, cable paths, walls/attic access, and final equipment availability.
-          </p>
+          <line x1="320" y1="220" x2="420" y2="300" />
+          <line x1="520" y1="160" x2="600" y2="360" />
+          <line x1="720" y1="240" x2="780" y2="310" />
+          <line x1="920" y1="150" x2="980" y2="360" />
+        </g>
+
+        <g class="net-nodes">
+          <circle cx="120" cy="140" r="6" />
+          <circle cx="320" cy="220" r="7" />
+          <circle cx="520" cy="160" r="6" />
+          <circle cx="720" cy="240" r="7" />
+          <circle cx="920" cy="150" r="6" />
+          <circle cx="1080" cy="240" r="7" />
+
+          <circle cx="260" cy="350" r="6" />
+          <circle cx="420" cy="300" r="7" />
+          <circle cx="600" cy="360" r="6" />
+          <circle cx="780" cy="310" r="7" />
+          <circle cx="980" cy="360" r="6" />
+        </g>
+      </svg>
+
+      <!-- Hero logo: FULL LOGO -->
+      <img
+        src="assets/ADS%20LOGO%20WHITE.svg?v=1"
+        class="hero-logo"
+        alt="Accelerated Digital Solutions"
+        draggable="false"
+      />
+
+      <h1>Modern IT Infrastructure.<br>Reliable Network Design.</h1>
+
+      <p>
+        Accelerated Digital Solutions LLC delivers network deployment, structured cabling, Wi-Fi systems, and production networking —
+        built clean, documented, and scalable across Los Angeles.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#contact" class="btn">Request Consultation</a>
+        <a href="#services" class="btn btn-ghost">View Services</a>
+      </div>
+    </section>
+
+    <section id="services" class="section" data-observe>
+      <h2>Services</h2>
+      <p class="section-text">
+        Practical, business-grade systems with clean installs, strong documentation, and support you can count on.
+      </p>
+
+      <div class="cards">
+        <div class="card reveal">
+          <h3>Network Infrastructure</h3>
+          <p>Design, routing, switching, VLANs, firewall configuration, and secure deployments for offices and studios.</p>
         </div>
 
-        <div class="hero-art" aria-hidden="true">
-          <!-- Your existing hero SVG/art can stay here -->
-          <svg viewBox="0 0 700 520" role="img" aria-label="">
-            <defs>
-              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="rgba(255,255,255,.15)"/>
-                <stop offset="1" stop-color="rgba(255,255,255,0)"/>
-              </linearGradient>
-            </defs>
-            <rect x="40" y="40" width="620" height="440" rx="28" fill="url(#g)" stroke="rgba(255,255,255,.12)" />
-            <circle cx="170" cy="160" r="8" fill="rgba(255,255,255,.7)"/>
-            <circle cx="520" cy="145" r="8" fill="rgba(255,255,255,.7)"/>
-            <circle cx="420" cy="330" r="8" fill="rgba(255,255,255,.7)"/>
-            <path d="M170 160 L520 145 L420 330 L170 160" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"/>
-            <path d="M120 380 C180 320, 260 330, 320 280 S460 210, 560 250" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="10" stroke-linecap="round"/>
-          </svg>
+        <div class="card reveal">
+          <h3>Wi-Fi Deployment</h3>
+          <p>Enterprise access points, guest networks, performance tuning, and coverage planning for reliable connectivity.</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Structured Cabling</h3>
+          <p>Professional cable runs, labeling, patch panels, racks, and documentation that scales with your business.</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Security & Cameras</h3>
+          <p>IP cameras, NVR setups, network segmentation, and clean installs designed for uptime and remote access.</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>IT Setup & Support</h3>
+          <p>New office buildouts, workstation setup, network troubleshooting, and ongoing maintenance plans.</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Production & Streaming Networks</h3>
+          <p>Network design for live production environments, streaming workflows, and reliable low-latency transport.</p>
         </div>
       </div>
     </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="section">
-      <div class="container">
-        <h2>Services</h2>
-        <div class="cards">
-          <article class="card">
-            <h3>UniFi Wi-Fi</h3>
-            <p>Coverage planning, clean ceiling/wall installs, optimized roaming, and secure guest networks.</p>
-          </article>
-          <article class="card">
-            <h3>Cameras & NVR</h3>
-            <p>UniFi Protect cameras, NVR selection, PoE switching, and mobile app setup.</p>
-          </article>
-          <article class="card">
-            <h3>Wiring & Rack Cleanup</h3>
-            <p>Cat6 runs, patch panels, labeling, cable management, and tidy network closets.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+    <!-- ===== NEW: Estimate Section ===== -->
+    <section id="estimate" class="section" data-observe>
+      <h2>Instant Estimate</h2>
+      <p class="section-text">
+        Quick ballpark estimate for UniFi installs. If you’re not sure what you need: set your indoor/outdoor coverage,
+        add cameras, then choose <strong>UDM Pro</strong> if you don’t already have UniFi.
+      </p>
 
-    <!-- INSTANT ESTIMATE TOOL -->
-    <section id="quote" class="section estimate">
-      <div class="container">
-        <div class="estimate-header">
-          <div>
-            <h2>Instant Estimate</h2>
-            <p class="muted">
-              Choose gear + quantities for a ballpark estimate. Final price is confirmed after a quick site survey.
-            </p>
-          </div>
-
-          <div class="estimate-status" aria-live="polite">
-            <span class="pill" id="priceStatus">Loading live pricing…</span>
-          </div>
-        </div>
-
+      <div class="estimate-wrap">
         <div class="estimate-grid">
-          <!-- LEFT: INPUTS -->
-          <div class="estimate-panel">
-            <h3>Wi-Fi Access Points</h3>
+          <!-- LEFT: Inputs -->
+          <div class="estimate-card">
+            <h3>Build Your System</h3>
+            <p class="hint">Indoor AP: <strong>U7 Pro</strong> • Outdoor AP: <strong>U6 Mesh</strong></p>
 
             <div class="row">
               <div class="field">
-                <label for="qtyIndoor">Indoor APs</label>
-                <div class="field-inline">
-                  <input id="qtyIndoor" type="number" min="0" value="2" />
-                  <div class="meta">
-                    <div class="name">U7 Pro</div>
-                    <div class="price" data-price-label="u7pro">$—</div>
-                  </div>
-                </div>
+                <label for="qtyIndoor">Indoor APs (U7 Pro)</label>
+                <input id="qtyIndoor" type="number" min="0" value="2" />
+                <div class="hint">Unit: <span data-price-label="u7pro">$—</span></div>
               </div>
 
               <div class="field">
-                <label for="qtyOutdoor">Outdoor APs</label>
-                <div class="field-inline">
-                  <input id="qtyOutdoor" type="number" min="0" value="0" />
-                  <div class="meta">
-                    <div class="name">U6 Mesh</div>
-                    <div class="price" data-price-label="u6mesh">$—</div>
-                  </div>
-                </div>
+                <label for="qtyOutdoor">Outdoor APs (U6 Mesh)</label>
+                <input id="qtyOutdoor" type="number" min="0" value="0" />
+                <div class="hint">Unit: <span data-price-label="u6mesh">$—</span></div>
               </div>
             </div>
 
-            <h3 style="margin-top: 22px;">Security Cameras</h3>
+            <div class="divider"></div>
 
-            <div class="row row-3">
+            <h4>Cameras (UniFi Protect)</h4>
+            <div class="row">
               <div class="field">
                 <label for="qtyG5Bullet">G5 Bullet</label>
-                <div class="field-inline">
-                  <input id="qtyG5Bullet" type="number" min="0" value="0" />
-                  <div class="meta">
-                    <div class="name">UniFi Protect</div>
-                    <div class="price" data-price-label="g5bullet">$—</div>
-                  </div>
-                </div>
+                <input id="qtyG5Bullet" type="number" min="0" value="0" />
+                <div class="hint">Unit: <span data-price-label="g5bullet">$—</span></div>
               </div>
 
               <div class="field">
                 <label for="qtyG5Flex">G5 Flex</label>
-                <div class="field-inline">
-                  <input id="qtyG5Flex" type="number" min="0" value="0" />
-                  <div class="meta">
-                    <div class="name">UniFi Protect</div>
-                    <div class="price" data-price-label="g5flex">$—</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="qtyG5Turret">G5 Turret Ultra</label>
-                <div class="field-inline">
-                  <input id="qtyG5Turret" type="number" min="0" value="0" />
-                  <div class="meta">
-                    <div class="name">UniFi Protect</div>
-                    <div class="price" data-price-label="g5turretultra">$—</div>
-                  </div>
-                </div>
+                <input id="qtyG5Flex" type="number" min="0" value="0" />
+                <div class="hint">Unit: <span data-price-label="g5flex">$—</span></div>
               </div>
             </div>
 
-            <h3 style="margin-top: 22px;">Core Hardware</h3>
+            <div class="row" style="margin-top:14px;">
+              <div class="field">
+                <label for="qtyG5Turret">G5 Turret Ultra</label>
+                <input id="qtyG5Turret" type="number" min="0" value="0" />
+                <div class="hint">Unit: <span data-price-label="g5turretultra">$—</span></div>
+              </div>
 
+              <div class="field">
+                <label for="runs">New Cat6 drops</label>
+                <input id="runs" type="number" min="0" value="4" />
+                <div class="hint">Includes termination + test</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h4>Core UniFi Hardware</h4>
             <div class="row">
               <div class="field">
-                <label for="nvrSelect">Recorder (NVR)</label>
-                <select id="nvrSelect">
-                  <option value="none">No NVR (already have one)</option>
+                <label for="consoleSelect">UniFi Console (controller)</label>
+                <select id="consoleSelect">
+                  <option value="none">Already have one / none</option>
+                  <option value="udmpro">Dream Machine Pro (UDM Pro)</option>
                   <option value="cloudkeyplus">Cloud Key Gen2 Plus</option>
-                  <option value="unvr">UNVR</option>
                 </select>
                 <div class="hint">
-                  <span class="price" data-price-label="cloudkeyplus">$—</span>
-                  <span class="spacer">•</span>
-                  <span class="price" data-price-label="unvr">$—</span>
+                  UDM Pro: <span data-price-label="udmpro">$—</span> •
+                  CK G2+: <span data-price-label="cloudkeyplus">$—</span>
                 </div>
               </div>
 
               <div class="field">
+                <label for="nvrSelect">Recorder (for cameras)</label>
+                <select id="nvrSelect">
+                  <option value="none">No / already have one</option>
+                  <option value="unvr">UNVR</option>
+                </select>
+                <div class="hint">UNVR: <span data-price-label="unvr">$—</span></div>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:14px;">
+              <div class="field">
                 <label for="poeSelect">PoE Switch</label>
                 <select id="poeSelect">
-                  <option value="none">No PoE switch (already have one)</option>
+                  <option value="none">Already have one / none</option>
                   <option value="usw16poe">USW 16 PoE</option>
                   <option value="usw24poe">USW 24 PoE</option>
                 </select>
                 <div class="hint">
-                  <span class="price" data-price-label="usw16poe">$—</span>
-                  <span class="spacer">•</span>
-                  <span class="price" data-price-label="usw24poe">$—</span>
+                  16 PoE: <span data-price-label="usw16poe">$—</span> •
+                  24 PoE: <span data-price-label="usw24poe">$—</span>
                 </div>
+              </div>
+
+              <div class="field">
+                <label for="internetReady">Internet modem / ISP handoff</label>
+                <select id="internetReady">
+                  <option value="yes">Already available</option>
+                  <option value="unsure">Not sure</option>
+                </select>
+                <div class="hint">If “Not sure”, we’ll confirm during the site walk.</div>
               </div>
             </div>
 
-            <h3 style="margin-top: 22px;">Install & Wiring</h3>
+            <div class="divider"></div>
 
-            <div class="row row-3">
+            <h4>Install Package</h4>
+            <div class="row">
               <div class="field">
-                <label for="runs">New Cat6 drops</label>
-                <input id="runs" type="number" min="0" value="4" />
-                <div class="hint">Per drop includes termination + test</div>
-              </div>
-
-              <div class="field">
-                <label for="laborTier">Install package</label>
+                <label for="laborTier">Tier</label>
                 <select id="laborTier">
                   <option value="standard">Standard</option>
                   <option value="premium">Premium (neater rack + labeling)</option>
@@ -226,7 +259,7 @@
               </div>
 
               <div class="field">
-                <label for="travelFee">Trip fee</label>
+                <label for="travelFee">Trip Fee</label>
                 <select id="travelFee">
                   <option value="0">$0 (waived)</option>
                   <option value="35">$35</option>
@@ -235,120 +268,238 @@
               </div>
             </div>
 
-            <div class="estimate-actions">
+            <div class="actions">
               <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
-              <button class="btn btn-primary" id="copyBtn" type="button">Copy estimate</button>
+              <button class="btn" id="copyBtn" type="button">Copy Estimate</button>
             </div>
 
-            <p class="fineprint" style="margin-top: 14px;">
-              Disclaimer: This tool provides an estimate only. Final pricing depends on site conditions (attic/wall access,
-              cable distance, mounting needs), taxes/shipping, and current availability.
+            <p class="disclaimer">
+              Disclaimer: Estimate only. Final pricing depends on site conditions (attic/wall access, cable distance, mounting),
+              taxes/shipping, and availability.
             </p>
           </div>
 
-          <!-- RIGHT: SUMMARY -->
-          <aside class="estimate-summary">
-            <h3>Estimate Summary</h3>
-
-            <div class="summary-lines" id="summaryLines"></div>
-
-            <div class="summary-total">
-              <div class="line">
-                <span>Estimated hardware</span>
-                <strong id="hardwareTotal">$0</strong>
-              </div>
-              <div class="line">
-                <span>Estimated labor & wiring</span>
-                <strong id="laborTotal">$0</strong>
-              </div>
-              <div class="line grand">
-                <span>Estimated total</span>
-                <strong id="grandTotal">$0</strong>
-              </div>
+          <!-- RIGHT: Output -->
+          <div class="estimate-card estimate-out">
+            <div class="out-top">
+              <h3>Estimate Total</h3>
+              <div class="updated" id="priceStatus">Loading live pricing…</div>
             </div>
 
-            <div class="summary-note">
-              <p class="muted">
-                Want this confirmed? Submit your info and we’ll schedule a quick walkthrough.
-              </p>
-              <a class="btn btn-primary" href="#contact">Request a confirmed quote</a>
+            <div class="total" id="grandTotal">$0</div>
+            <div class="range" id="subTotals">Hardware $0 • Labor/Wiring $0</div>
+
+            <div class="breakdown" id="breakdown"></div>
+
+            <div class="bd-note" style="margin-top:14px;">
+              Want this confirmed? Use the contact form below and mention your estimate total (or copy/paste it).
             </div>
-          </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ===== /Estimate Section ===== -->
+
+    <section id="service-area" class="section" data-observe>
+      <h2>Serving the Greater Los Angeles Area</h2>
+      <p class="section-text">
+        Accelerated Digital Solutions LLC provides on-site and remote support across Los Angeles and surrounding communities.
+      </p>
+
+      <div class="cards">
+        <div class="card reveal">
+          <h3>Primary Coverage</h3>
+          <p>Los Angeles • Pasadena • Glendale • Burbank • Santa Monica • Culver City • San Fernando Valley</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Also Available</h3>
+          <p>Nearby areas by request — especially for multi-site businesses, offices, and production environments.</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Response & Scheduling</h3>
+          <p>Flexible scheduling, after-hours support options, and clear communication from planning to final handoff.</p>
         </div>
       </div>
     </section>
 
-    <!-- SERVICE AREA -->
-    <section id="service-area" class="section">
-      <div class="container">
-        <h2>Service Area</h2>
-        <p class="muted">Serving Nebraska installs and remote consulting.</p>
+    <section id="projects" class="section" data-observe>
+      <h2>Recent Projects</h2>
+      <p class="section-text">
+        A few examples of the kind of work we can do. Want to see more? Ask and we’ll share relevant examples.
+      </p>
+
+      <div class="cards">
+        <div class="card reveal">
+          <h3>Network Rack Deployment</h3>
+          <p>Rack organization, switching, patch panels, labeling, and documentation for a clean handoff.</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Office Wi-Fi Upgrade</h3>
+          <p>Enterprise wireless systems designed for reliable coverage and capacity.</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Structured Cabling Cleanup</h3>
+          <p>Re-terminated drops, re-labeled patching, and simplified topology for easier troubleshooting.</p>
+        </div>
       </div>
     </section>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="section">
-      <div class="container">
-        <h2>Projects</h2>
-        <p class="muted">Recent installs coming soon.</p>
+    <section id="cta" class="section">
+      <h2>Ready to upgrade your network?</h2>
+      <p class="section-text">Tell us what you’re building — we’ll recommend a clean plan and help you deploy it.</p>
+      <div class="hero-actions" style="margin-top: 18px;">
+        <a href="#contact" class="btn">Get a Quote</a>
+        <a href="mailto:info@accelerateddigital.net?subject=Consultation%20Request%20-%20Accelerated%20Digital%20Solutions" class="btn btn-ghost">Email Us</a>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="section contact">
-      <div class="container">
-        <h2>Contact</h2>
+    <section id="contact" class="section" data-observe>
+      <h2>Contact</h2>
 
-        <form id="contactForm" class="contact-form" method="post" action="/api/contact">
-          <div class="row">
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" name="name" required />
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" required />
-            </div>
-          </div>
+      <div class="contact-wrap">
+        <form id="contactForm" class="contact-form" novalidate>
+          <input type="text" name="fax" id="fax" autocomplete="off" tabindex="-1" aria-hidden="true" />
 
-          <div class="row">
-            <div class="field">
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" />
-            </div>
-            <div class="field">
-              <label for="city">City</label>
-              <input id="city" name="city" />
-            </div>
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" placeholder="Your name" required />
           </div>
 
           <div class="field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…"></textarea>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="you@company.com" required />
           </div>
 
-          <!-- Optional: include the estimate in the message -->
-          <input type="hidden" id="estimateBlob" name="estimate" value="" />
+          <div class="field field-full">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" placeholder="Tell me what you need help with…" rows="6" required></textarea>
+          </div>
 
-          <!-- Turnstile widget (if you’re using it) -->
-          <div class="cf-turnstile" data-sitekey="0x4AAAAAAClxR7FVt3S2YrrD"></div>
+          <div class="field field-full turnstile-row">
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAClxR7FVt3S2YrrD"></div>
+          </div>
 
-          <button class="btn btn-primary" type="submit">Send</button>
-          <p class="fineprint" id="contactStatus" aria-live="polite"></p>
+          <div class="field field-full actions-row">
+            <button class="btn" type="submit">Send Message</button>
+            <p id="formStatus" class="form-status" aria-live="polite"></p>
+          </div>
+
+          <p class="contact-alt">
+            Or email:
+            <a class="link" href="mailto:info@accelerateddigital.net">info@accelerateddigital.net</a>
+          </p>
         </form>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p class="muted">© <span id="year"></span> Accelerated Digital Solutions</p>
-    </div>
+    © 2026 Accelerated Digital Solutions LLC — Los Angeles, California
   </footer>
 
-  <script src="quote.js?v=1" defer></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script src="quote.js" defer></script>
+
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    (function () {
+      const header = document.getElementById("siteHeader");
+      const onScroll = () => header.classList.toggle("scrolled", (window.scrollY || 0) > 10);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    })();
+
+    (function () {
+      const navLinks = Array.from(document.querySelectorAll(".site-nav a[data-section]"));
+      const sections = Array.from(document.querySelectorAll("section[data-observe]"));
+      const setActive = (id) => navLinks.forEach(a => a.classList.toggle("active", a.dataset.section === id));
+
+      const io = new IntersectionObserver((entries) => {
+        const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target?.id) setActive(visible.target.id);
+      }, { threshold: [0.2, 0.35, 0.5, 0.65], rootMargin: "-20% 0px -60% 0px" });
+
+      sections.forEach(s => io.observe(s));
+      setActive("services");
+    })();
+
+    (function () {
+      const cards = Array.from(document.querySelectorAll(".card.reveal"));
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+      }, { threshold: 0.18 });
+      cards.forEach(c => io.observe(c));
+    })();
+
+    (function () {
+      const cards = Array.from(document.querySelectorAll(".card"));
+      cards.forEach(card => {
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+          card.style.setProperty("--my", (e.clientY - r.top) + "px");
+        });
+      });
+    })();
+
+    (function () {
+      const form = document.getElementById("contactForm");
+      const statusEl = document.getElementById("formStatus");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        statusEl.textContent = "Sending…";
+
+        const payload = {
+          name: document.getElementById("name").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          message: document.getElementById("message").value.trim(),
+          fax: document.getElementById("fax").value.trim(),
+          turnstileToken: form["cf-turnstile-response"].value
+        };
+
+        if (!payload.name || !payload.email || !payload.message) { statusEl.textContent = "Please complete all fields."; return; }
+        if (!payload.turnstileToken) { statusEl.textContent = "Please complete the verification."; return; }
+
+        try {
+          const res = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) { statusEl.textContent = data?.error || "Could not send. Please try again."; return; }
+
+          statusEl.textContent = "Message sent! I’ll reply soon.";
+          form.reset();
+          if (window.turnstile) window.turnstile.reset();
+        } catch {
+          statusEl.textContent = "Network error. Please try again.";
+        }
+      });
+    })();
+
+    (function () {
+      const net = document.querySelector(".hero-net");
+      if (!net) return;
+
+      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) return;
+
+      let t = 0;
+      function tick() {
+        t += 0.0035;
+        const x = Math.sin(t) * 8;
+        const y = Math.cos(t * 0.9) * 6;
+        net.style.transform = `translate(-50%, 0) translate(${x}px, ${y}px)`;
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
   </script>
 </body>
 </html>
