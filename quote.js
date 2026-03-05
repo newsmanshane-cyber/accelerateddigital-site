@@ -1,6 +1,7 @@
 (() => {
   const $ = (id) => document.getElementById(id);
 
+  // Estimate inputs (existing)
   const inputs = {
     qtyIndoor: $("qtyIndoor"),
     qtyOutdoor: $("qtyOutdoor"),
@@ -16,6 +17,20 @@
     travelFee: $("travelFee"),
   };
 
+  // New: Presets + coverage helper
+  const quick = {
+    presetSelect: $("presetSelect"),
+    applyPresetBtn: $("applyPresetBtn"),
+    presetHint: $("presetHint"),
+
+    sqft: $("sqft"),
+    floors: $("floors"),
+    needOutdoor: $("needOutdoor"),
+    applyCoverageBtn: $("applyCoverageBtn"),
+    coverageResult: $("coverageResult"),
+  };
+
+  // Outputs
   const out = {
     priceStatus: $("priceStatus"),
     grandTotal: $("grandTotal"),
@@ -23,6 +38,16 @@
     breakdown: $("breakdown"),
     resetBtn: $("resetBtn"),
     copyBtn: $("copyBtn"),
+  };
+
+  // Email estimate mini-form
+  const emailUI = {
+    form: $("estimateEmailForm"),
+    name: $("estName"),
+    email: $("estEmail"),
+    notes: $("estNotes"),
+    status: $("estimateEmailStatus"),
+    btn: $("emailEstimateBtn"),
   };
 
   // Fallback prices (USD)
@@ -39,7 +64,7 @@
     usw24poe: 399,
   };
 
-  // Simple labor model (tweak anytime)
+  // Labor model (tweak anytime)
   const laborModel = {
     baseStandard: 350,
     basePremium: 550,
@@ -55,10 +80,89 @@
     { key: "g5turretultra", label: "G5 Turret Ultra", qty: () => n(inputs.qtyG5Turret.value) },
   ];
 
-  // Alias support in case API ever returns camelCase only
+  // Alias support (in case the API uses camelCase)
   const keyAliases = {
     u7pro: ["u7pro", "u7Pro"],
     u6mesh: ["u6mesh", "u6Mesh"],
+  };
+
+  // Presets (simple, not overwhelming)
+  const presets = {
+    homeSmall: {
+      label: "Small Home",
+      hint: "Good starting point for ~1,000–2,000 sq ft.",
+      values: {
+        qtyIndoor: 2, qtyOutdoor: 0,
+        qtyG5Bullet: 0, qtyG5Flex: 0, qtyG5Turret: 0,
+        runs: 4,
+        consoleSelect: "udmpro",
+        nvrSelect: "none",
+        poeSelect: "usw16poe",
+        laborTier: "standard",
+        travelFee: "0",
+        internetReady: "yes",
+      }
+    },
+    homeLarge: {
+      label: "Large Home",
+      hint: "Good starting point for ~2,500–4,000 sq ft or multi-level.",
+      values: {
+        qtyIndoor: 4, qtyOutdoor: 1,
+        qtyG5Bullet: 0, qtyG5Flex: 0, qtyG5Turret: 0,
+        runs: 6,
+        consoleSelect: "udmpro",
+        nvrSelect: "none",
+        poeSelect: "usw24poe",
+        laborTier: "standard",
+        travelFee: "0",
+        internetReady: "yes",
+      }
+    },
+    retail: {
+      label: "Retail / Small Business",
+      hint: "Great baseline for storefronts and small offices.",
+      values: {
+        qtyIndoor: 3, qtyOutdoor: 0,
+        qtyG5Bullet: 0, qtyG5Flex: 0, qtyG5Turret: 0,
+        runs: 6,
+        consoleSelect: "udmpro",
+        nvrSelect: "none",
+        poeSelect: "usw16poe",
+        laborTier: "standard",
+        travelFee: "0",
+        internetReady: "yes",
+      }
+    },
+    office: {
+      label: "Office / Multi-room",
+      hint: "If you have conference rooms + multiple work areas.",
+      values: {
+        qtyIndoor: 5, qtyOutdoor: 0,
+        qtyG5Bullet: 0, qtyG5Flex: 0, qtyG5Turret: 0,
+        runs: 10,
+        consoleSelect: "udmpro",
+        nvrSelect: "none",
+        poeSelect: "usw24poe",
+        laborTier: "premium",
+        travelFee: "0",
+        internetReady: "yes",
+      }
+    },
+    camerasOnly: {
+      label: "Cameras Only",
+      hint: "If you already have Wi-Fi handled and want cameras.",
+      values: {
+        qtyIndoor: 0, qtyOutdoor: 0,
+        qtyG5Bullet: 4, qtyG5Flex: 0, qtyG5Turret: 0,
+        runs: 6,
+        consoleSelect: "udmpro",
+        nvrSelect: "unvr",
+        poeSelect: "usw16poe",
+        laborTier: "standard",
+        travelFee: "0",
+        internetReady: "yes",
+      }
+    },
   };
 
   function n(v) {
@@ -107,25 +211,25 @@
       const q = it.qty();
       if (!q) continue;
       const unit = prices[it.key] || 0;
-      lines.push({ label: `${q}× ${it.label}`, qty: q, unit, ext: q * unit, kind: "hardware" });
+      lines.push({ label: `${q}× ${it.label}`, qty: q, unit, ext: q * unit, kind: "hardware", key: it.key });
     }
 
     const consoleSel = inputs.consoleSelect.value;
     if (consoleSel !== "none") {
       const unit = prices[consoleSel] || 0;
-      lines.push({ label: `UniFi Console: ${consoleName(consoleSel)}`, qty: 1, unit, ext: unit, kind: "hardware" });
+      lines.push({ label: `UniFi Console: ${consoleName(consoleSel)}`, qty: 1, unit, ext: unit, kind: "hardware", key: consoleSel });
     }
 
     const nvr = inputs.nvrSelect.value;
     if (nvr !== "none") {
       const unit = prices[nvr] || 0;
-      lines.push({ label: `Recorder: UNVR`, qty: 1, unit, ext: unit, kind: "hardware" });
+      lines.push({ label: `Recorder: UNVR`, qty: 1, unit, ext: unit, kind: "hardware", key: nvr });
     }
 
     const poe = inputs.poeSelect.value;
     if (poe !== "none") {
       const unit = prices[poe] || 0;
-      lines.push({ label: `PoE Switch: ${poeName(poe)}`, qty: 1, unit, ext: unit, kind: "hardware" });
+      lines.push({ label: `PoE Switch: ${poeName(poe)}`, qty: 1, unit, ext: unit, kind: "hardware", key: poe });
     }
 
     return lines;
@@ -152,13 +256,17 @@
     return lines;
   }
 
-  function render() {
+  function getTotals() {
     const hw = computeHardwareLines();
     const labor = computeLaborLines();
-
     const hardwareTotal = hw.reduce((s, x) => s + x.ext, 0);
     const laborTotal = labor.reduce((s, x) => s + x.ext, 0);
     const grand = hardwareTotal + laborTotal;
+    return { hw, labor, hardwareTotal, laborTotal, grand };
+  }
+
+  function render() {
+    const { hw, labor, hardwareTotal, laborTotal, grand } = getTotals();
 
     out.grandTotal.textContent = money(grand);
     out.subTotals.textContent = `Hardware ${money(hardwareTotal)} • Labor/Wiring ${money(laborTotal)}`;
@@ -204,7 +312,6 @@
 
   function extractPrice(products, key) {
     const candidates = keyAliases[key] || [key];
-
     for (const ck of candidates) {
       const v = products?.[ck];
       if (typeof v === "number") return v;
@@ -238,11 +345,180 @@
     }
   }
 
+  function applyPreset(id) {
+    const preset = presets[id];
+    if (!preset) return;
+
+    const v = preset.values;
+
+    inputs.qtyIndoor.value = String(v.qtyIndoor);
+    inputs.qtyOutdoor.value = String(v.qtyOutdoor);
+    inputs.qtyG5Bullet.value = String(v.qtyG5Bullet);
+    inputs.qtyG5Flex.value = String(v.qtyG5Flex);
+    inputs.qtyG5Turret.value = String(v.qtyG5Turret);
+    inputs.runs.value = String(v.runs);
+    inputs.consoleSelect.value = v.consoleSelect;
+    inputs.nvrSelect.value = v.nvrSelect;
+    inputs.poeSelect.value = v.poeSelect;
+    inputs.laborTier.value = v.laborTier;
+    inputs.travelFee.value = v.travelFee;
+    inputs.internetReady.value = v.internetReady;
+
+    render();
+  }
+
+  // Coverage helper: simple + not over-explained
+  // Baseline rule of thumb:
+  // - 1 indoor AP per ~1200 sq ft (then bump for multi-floor)
+  // - Add +1 if floors >= 2 and sqft > 1500 (stairs + walls)
+  // - Outdoor: suggest 1 U6 Mesh if selected
+  function recommendCoverage(sqft, floors, needOutdoor) {
+    const area = Math.max(200, sqft || 0);
+    const fl = parseInt(floors || "1", 10);
+
+    let indoor = Math.ceil(area / 1200);
+
+    if (fl >= 2 && area >= 1500) indoor += 1;
+    if (fl >= 3) indoor += 1;
+
+    indoor = clamp(indoor, 1, 10);
+
+    const outdoor = needOutdoor === "yes" ? 1 : 0;
+    return { indoor, outdoor };
+  }
+
+  function clamp(x, a, b) {
+    return Math.min(b, Math.max(a, x));
+  }
+
+  function updateCoverageResult() {
+    const sqft = parseInt(quick.sqft.value || "0", 10);
+    const floors = quick.floors.value;
+    const needOutdoor = quick.needOutdoor.value;
+    const rec = recommendCoverage(sqft, floors, needOutdoor);
+
+    quick.coverageResult.textContent =
+      `Recommended starting point: ${rec.indoor} indoor AP(s)` + (rec.outdoor ? ` + ${rec.outdoor} outdoor AP` : "");
+    return rec;
+  }
+
+  function buildEstimatePayload() {
+    const totals = getTotals();
+
+    const payload = {
+      ts: new Date().toISOString(),
+      pricing: { ...prices },
+      selections: {
+        indoor: n(inputs.qtyIndoor.value),
+        outdoor: n(inputs.qtyOutdoor.value),
+        g5bullet: n(inputs.qtyG5Bullet.value),
+        g5flex: n(inputs.qtyG5Flex.value),
+        g5turretultra: n(inputs.qtyG5Turret.value),
+        drops: n(inputs.runs.value),
+        console: inputs.consoleSelect.value,
+        nvr: inputs.nvrSelect.value,
+        poe: inputs.poeSelect.value,
+        internetReady: inputs.internetReady.value,
+        tier: inputs.laborTier.value,
+        trip: parseFloat(inputs.travelFee.value || "0") || 0,
+      },
+      totals: {
+        hardware: totals.hardwareTotal,
+        labor: totals.laborTotal,
+        grand: totals.grand,
+      },
+      lines: {
+        hardware: totals.hw,
+        labor: totals.labor,
+      }
+    };
+
+    return payload;
+  }
+
+  async function sendEstimateEmail(e) {
+    e.preventDefault();
+    if (!emailUI.form) return;
+
+    emailUI.status.textContent = "";
+    const name = (emailUI.name?.value || "").trim();
+    const email = (emailUI.email?.value || "").trim();
+    const notes = (emailUI.notes?.value || "").trim();
+
+    if (!name || !email) {
+      emailUI.status.textContent = "Please enter name + email.";
+      return;
+    }
+
+    // Turnstile token is injected into the form as cf-turnstile-response
+    const token = emailUI.form["cf-turnstile-response"]?.value || "";
+    if (!token) {
+      emailUI.status.textContent = "Please complete the verification.";
+      return;
+    }
+
+    const estimate = buildEstimatePayload();
+
+    emailUI.btn.disabled = true;
+    emailUI.status.textContent = "Sending…";
+
+    try {
+      const res = await fetch("/api/estimate", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ name, email, notes, turnstileToken: token, estimate })
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        emailUI.status.textContent = data?.error || "Could not send. Please try again.";
+        emailUI.btn.disabled = false;
+        return;
+      }
+
+      emailUI.status.textContent = "Estimate sent! Check your inbox.";
+      emailUI.form.reset();
+      if (window.turnstile) window.turnstile.reset();
+    } catch {
+      emailUI.status.textContent = "Network error. Please try again.";
+    } finally {
+      emailUI.btn.disabled = false;
+    }
+  }
+
   function bind() {
     Object.values(inputs).forEach((el) => {
       if (!el) return;
       el.addEventListener("input", render);
       el.addEventListener("change", render);
+    });
+
+    // Presets
+    if (quick.presetSelect && quick.presetHint) {
+      quick.presetSelect.addEventListener("change", () => {
+        const id = quick.presetSelect.value;
+        quick.presetHint.textContent = presets[id]?.hint || "Pick a preset to auto-fill, then tweak as needed.";
+      });
+    }
+
+    quick.applyPresetBtn?.addEventListener("click", () => {
+      const id = quick.presetSelect.value;
+      if (id === "none") return;
+      applyPreset(id);
+    });
+
+    // Coverage helper
+    ["input", "change"].forEach((evt) => {
+      quick.sqft?.addEventListener(evt, updateCoverageResult);
+      quick.floors?.addEventListener(evt, updateCoverageResult);
+      quick.needOutdoor?.addEventListener(evt, updateCoverageResult);
+    });
+
+    quick.applyCoverageBtn?.addEventListener("click", () => {
+      const rec = updateCoverageResult();
+      inputs.qtyIndoor.value = String(rec.indoor);
+      inputs.qtyOutdoor.value = String(rec.outdoor);
+      render();
     });
 
     out.resetBtn?.addEventListener("click", () => {
@@ -258,13 +534,34 @@
       inputs.internetReady.value = "yes";
       inputs.laborTier.value = "standard";
       inputs.travelFee.value = "0";
+
+      if (quick.presetSelect) quick.presetSelect.value = "none";
+      if (quick.presetHint) quick.presetHint.textContent = "Tip: “Retail” is a great starting point for most storefronts.";
+      if (quick.sqft) quick.sqft.value = "1800";
+      if (quick.floors) quick.floors.value = "2";
+      if (quick.needOutdoor) quick.needOutdoor.value = "no";
+      updateCoverageResult();
+
       render();
     });
 
     out.copyBtn?.addEventListener("click", async () => {
-      const text = `ADS Instant Estimate
-Total: ${out.grandTotal.textContent}
-${out.subTotals.textContent}
+      const totals = getTotals();
+      const text =
+`ADS Instant Estimate
+Total: ${money(totals.grand)}
+Hardware: ${money(totals.hardwareTotal)}
+Labor/Wiring: ${money(totals.laborTotal)}
+
+Selections:
+- Indoor APs (U7 Pro): ${n(inputs.qtyIndoor.value)}
+- Outdoor APs (U6 Mesh): ${n(inputs.qtyOutdoor.value)}
+- Cameras: Bullet ${n(inputs.qtyG5Bullet.value)}, Flex ${n(inputs.qtyG5Flex.value)}, Turret ${n(inputs.qtyG5Turret.value)}
+- Console: ${inputs.consoleSelect.value}
+- NVR: ${inputs.nvrSelect.value}
+- PoE Switch: ${inputs.poeSelect.value}
+- Cat6 drops: ${n(inputs.runs.value)}
+- Tier: ${inputs.laborTier.value}
 
 Disclaimer: Estimate only. Final pricing depends on site conditions, taxes/shipping, and availability.`;
 
@@ -276,10 +573,15 @@ Disclaimer: Estimate only. Final pricing depends on site conditions, taxes/shipp
         window.prompt("Copy this estimate:", text);
       }
     });
+
+    // Email estimate
+    emailUI.form?.addEventListener("submit", sendEstimateEmail);
   }
 
+  // Init
   bind();
   setPriceLabels();
   render();
+  updateCoverageResult();
   loadLivePrices();
 })();
