@@ -20,7 +20,7 @@ export async function onRequestPost(context) {
     if (!TURNSTILE_SECRET) {
       return j({ ok: false, error: "Turnstile secret not configured on Pages." }, 500);
     }
-
+/////
     // Verify Turnstile
     const ip = request.headers.get("CF-Connecting-IP") || "";
     const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
