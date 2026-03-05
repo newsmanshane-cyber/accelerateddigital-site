@@ -10,7 +10,7 @@
 
   <link rel="canonical" href="https://www.accelerateddigital.net/" />
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=2" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 </head>
 
@@ -18,7 +18,6 @@
   <div class="bg-grid" aria-hidden="true"></div>
 
   <header class="site-header" id="siteHeader">
-    <!-- Header logo: MONOGRAM -->
     <a class="brand" href="#top" aria-label="Accelerated Digital Solutions">
       <img
         src="assets/ADS%20LOGO%20WHITE%20MONOGRAM.svg?v=1"
@@ -39,7 +38,6 @@
 
   <main id="top">
     <section class="hero">
-      <!-- Animated network topology background behind hero -->
       <svg class="hero-net" viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true">
         <g class="net-lines">
           <line x1="120" y1="140" x2="320" y2="220" />
@@ -75,7 +73,6 @@
         </g>
       </svg>
 
-      <!-- Hero logo: FULL LOGO -->
       <img
         src="assets/ADS%20LOGO%20WHITE.svg?v=1"
         class="hero-logo"
@@ -135,18 +132,83 @@
       </div>
     </section>
 
-    <!-- ===== NEW: Estimate Section ===== -->
+    <!-- ===== Estimate Section ===== -->
     <section id="estimate" class="section" data-observe>
       <h2>Instant Estimate</h2>
       <p class="section-text">
-        Quick ballpark estimate for UniFi installs. If you’re not sure what you need: set your indoor/outdoor coverage,
-        add cameras, then choose <strong>UDM Pro</strong> if you don’t already have UniFi.
+        Use a preset (fastest), or build your own. If you don’t already have UniFi, choose <strong>UDM Pro</strong>.
       </p>
 
       <div class="estimate-wrap">
         <div class="estimate-grid">
           <!-- LEFT: Inputs -->
           <div class="estimate-card">
+            <h3>Quick Start Presets</h3>
+            <p class="hint">Pick one to auto-fill. You can tweak anything afterward.</p>
+
+            <div class="row" style="margin-top:12px;">
+              <div class="field">
+                <label>Typical Setup</label>
+                <select id="presetSelect">
+                  <option value="none">Choose a preset…</option>
+                  <option value="homeSmall">Small Home</option>
+                  <option value="homeLarge">Large Home</option>
+                  <option value="retail">Retail / Small Business</option>
+                  <option value="office">Office / Multi-room</option>
+                  <option value="camerasOnly">Cameras Only</option>
+                </select>
+                <div class="hint" id="presetHint">Tip: “Retail” is a great starting point for most storefronts.</div>
+              </div>
+
+              <div class="field">
+                <label>&nbsp;</label>
+                <button class="btn" id="applyPresetBtn" type="button">Apply Preset</button>
+                <div class="hint">One click fill — doesn’t lock anything.</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h3>Coverage Helper</h3>
+            <p class="hint">Don’t know how many access points? Enter basic info and we’ll recommend a starting point.</p>
+
+            <div class="row" style="margin-top:12px;">
+              <div class="field">
+                <label for="sqft">Square footage</label>
+                <input id="sqft" type="number" min="200" value="1800" />
+                <div class="hint">Rough estimate is fine.</div>
+              </div>
+
+              <div class="field">
+                <label for="floors">Floors</label>
+                <select id="floors">
+                  <option value="1">1</option>
+                  <option value="2" selected>2</option>
+                  <option value="3">3+</option>
+                </select>
+                <div class="hint">More floors usually means more APs.</div>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:12px;">
+              <div class="field">
+                <label for="needOutdoor">Outdoor coverage</label>
+                <select id="needOutdoor">
+                  <option value="no" selected>No</option>
+                  <option value="yes">Yes</option>
+                </select>
+                <div class="hint">Patio / yard / exterior areas.</div>
+              </div>
+
+              <div class="field">
+                <label>&nbsp;</label>
+                <button class="btn btn-ghost" id="applyCoverageBtn" type="button">Apply Recommendation</button>
+                <div class="hint" id="coverageResult">Recommendation will appear here.</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
             <h3>Build Your System</h3>
             <p class="hint">Indoor AP: <strong>U7 Pro</strong> • Outdoor AP: <strong>U6 Mesh</strong></p>
 
@@ -273,6 +335,38 @@
               <button class="btn" id="copyBtn" type="button">Copy Estimate</button>
             </div>
 
+            <div class="divider"></div>
+
+            <h3>Email This Estimate</h3>
+            <p class="hint">We’ll email a copy to <strong>you</strong> and <strong>the client</strong>. No spam — just the estimate summary.</p>
+
+            <form id="estimateEmailForm" class="estimate-email" novalidate>
+              <div class="row" style="margin-top:12px;">
+                <div class="field">
+                  <label for="estName">Name</label>
+                  <input id="estName" type="text" placeholder="Your name" required />
+                </div>
+                <div class="field">
+                  <label for="estEmail">Email</label>
+                  <input id="estEmail" type="email" placeholder="you@company.com" required />
+                </div>
+              </div>
+
+              <div class="field" style="margin-top:12px;">
+                <label for="estNotes">Notes (optional)</label>
+                <input id="estNotes" type="text" placeholder="Anything you want us to know (site details, timeline, etc.)" />
+              </div>
+
+              <div class="field field-full turnstile-row" style="margin-top:12px;">
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAAClxR7FVt3S2YrrD"></div>
+              </div>
+
+              <div class="actions" style="margin-top:12px;">
+                <button class="btn" id="emailEstimateBtn" type="submit">Send Estimate</button>
+                <div class="hint" id="estimateEmailStatus" aria-live="polite"></div>
+              </div>
+            </form>
+
             <p class="disclaimer">
               Disclaimer: Estimate only. Final pricing depends on site conditions (attic/wall access, cable distance, mounting),
               taxes/shipping, and availability.
@@ -292,7 +386,7 @@
             <div class="breakdown" id="breakdown"></div>
 
             <div class="bd-note" style="margin-top:14px;">
-              Want this confirmed? Use the contact form below and mention your estimate total (or copy/paste it).
+              Want this confirmed? Email the estimate above, or use the contact form below.
             </div>
           </div>
         </div>
@@ -402,7 +496,7 @@
   </footer>
 
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  <script src="quote.js" defer></script>
+  <script src="quote.js?v=3" defer></script>
 
   <script>
     (function () {
