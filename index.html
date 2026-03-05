@@ -10,10 +10,10 @@
 
   <link rel="canonical" href="https://www.accelerateddigital.net/" />
 
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=2" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 
-  <!-- Collapsible Estimate styles (kept here to avoid breaking your existing CSS) -->
+  <!-- Small inline styles for the collapsible header -->
   <style>
     .estimate-toggle {
       width: 100%;
@@ -67,6 +67,7 @@
     .estimate-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
     .estimate-toggle svg { width: 18px; height: 18px; opacity: 0.9; }
 
+    /* Collapsible container animation */
     .estimate-collapsible {
       overflow: hidden;
       max-height: 0;
@@ -77,7 +78,7 @@
     .estimate-collapsible.open {
       opacity: 1;
       transform: translateY(0);
-      max-height: 4000px;
+      max-height: 4000px; /* large enough for content */
     }
     .estimate-collapsible .estimate-wrap { margin-top: 18px; }
   </style>
@@ -102,23 +103,6 @@
       <a href="#projects" data-section="projects">Projects</a>
       <a href="#estimate" data-section="estimate">Estimate</a>
       <a href="#contact" data-section="contact">Contact</a>
-    </nav>
-
-    <!-- Mobile menu button (visible via CSS media query) -->
-    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      Menu
-    </button>
-
-    <!-- Mobile nav panel (shown/hidden by JS + CSS) -->
-    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
-      <a href="#services">Services</a>
-      <a href="#service-area">Service Area</a>
-      <a href="#projects">Projects</a>
-      <a href="#estimate">Estimate</a>
-      <a href="#contact">Contact</a>
     </nav>
   </header>
 
@@ -491,7 +475,7 @@
               <div class="divider"></div>
 
               <h3>Email This Estimate</h3>
-              <p class="hint">We’ll email a copy to <strong>you</strong>.</p>
+              <p class="hint">We’ll email a copy to <strong>you</strong> and <strong>the client</strong>.</p>
 
               <form id="estimateEmailForm" class="estimate-email" novalidate>
                 <div class="row" style="margin-top:12px;">
@@ -501,7 +485,7 @@
                   </div>
                   <div class="field">
                     <label for="estEmail">Email</label>
-                    <input id="estEmail" type="email" placeholder="you@emailprovider.com" required />
+                    <input id="estEmail" type="email" placeholder="you@company.com" required />
                   </div>
                 </div>
 
@@ -575,12 +559,12 @@
 
           <div class="field">
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="you@emailprovider.com" required />
+            <input type="email" name="email" id="email" placeholder="you@company.com" required />
           </div>
 
           <div class="field field-full">
             <label for="message">Message</label>
-            <textarea name="message" id="message" placeholder="Tell us what you need help with…" rows="6" required></textarea>
+            <textarea name="message" id="message" placeholder="Tell me what you need help with…" rows="6" required></textarea>
           </div>
 
           <div class="field field-full turnstile-row">
@@ -653,33 +637,6 @@
       });
     })();
 
-    // Mobile nav toggle
-    (function () {
-      const btn = document.getElementById("navToggle");
-      const panel = document.getElementById("mobileNav");
-      if (!btn || !panel) return;
-
-      function setOpen(open){
-        panel.classList.toggle("open", open);
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
-      }
-
-      btn.addEventListener("click", () => {
-        const isOpen = btn.getAttribute("aria-expanded") === "true";
-        setOpen(!isOpen);
-      });
-
-      panel.querySelectorAll("a").forEach(a => {
-        a.addEventListener("click", () => setOpen(false));
-      });
-
-      document.addEventListener("click", (e) => {
-        if (!panel.classList.contains("open")) return;
-        if (panel.contains(e.target) || btn.contains(e.target)) return;
-        setOpen(false);
-      });
-    })();
-
     // Collapsible Estimate section
     (function () {
       const btn = document.getElementById("estimateToggle");
@@ -692,8 +649,10 @@
         btn.setAttribute("aria-expanded", open ? "true" : "false");
         if (open) {
           panel.hidden = false;
+          // allow layout before adding class (for transition)
           requestAnimationFrame(() => panel.classList.add("open"));
           if (!prefersReduce) {
+            // scroll header into view slightly when opening
             setTimeout(() => {
               const top = btn.getBoundingClientRect().top + window.scrollY - 90;
               window.scrollTo({ top, behavior: "smooth" });
@@ -701,6 +660,7 @@
           }
         } else {
           panel.classList.remove("open");
+          // wait for transition then hide
           setTimeout(() => { panel.hidden = true; }, prefersReduce ? 0 : 260);
         }
       }
@@ -710,11 +670,12 @@
         setOpen(!isOpen);
       });
 
+      // optional: open if URL has #estimate and ?open=1
       const shouldAutoOpen = (location.hash === "#estimate") && (new URLSearchParams(location.search).get("open") === "1");
       if (shouldAutoOpen) setOpen(true);
     })();
 
-    // Contact form submit
+    // Contact form submit (unchanged except token field name)
     (function () {
       const form = document.getElementById("contactForm");
       const statusEl = document.getElementById("formStatus");
