@@ -25,14 +25,13 @@
     copyBtn: $("copyBtn"),
   };
 
-  // Fallback prices (used if live pricing not available)
+  // Fallback prices (USD)
   const prices = {
     u7pro: 189,
     u6mesh: 179,
     g5bullet: 129,
     g5flex: 99,
     g5turretultra: 129,
-
     udmpro: 379,
     cloudkeyplus: 199,
     unvr: 299,
@@ -40,12 +39,12 @@
     usw24poe: 399,
   };
 
-  // Labor model (tweak anytime)
+  // Simple labor model (tweak anytime)
   const laborModel = {
     baseStandard: 350,
     basePremium: 550,
-    perDevice: 55, // per AP/camera
-    perDrop: 85,   // per Cat6 run
+    perDevice: 55,
+    perDrop: 85,
   };
 
   const items = [
@@ -55,6 +54,12 @@
     { key: "g5flex", label: "G5 Flex", qty: () => n(inputs.qtyG5Flex.value) },
     { key: "g5turretultra", label: "G5 Turret Ultra", qty: () => n(inputs.qtyG5Turret.value) },
   ];
+
+  // Alias support in case API ever returns camelCase only
+  const keyAliases = {
+    u7pro: ["u7pro", "u7Pro"],
+    u6mesh: ["u6mesh", "u6Mesh"],
+  };
 
   function n(v) {
     const x = parseInt(v || "0", 10);
@@ -66,10 +71,20 @@
     return v.toLocaleString(undefined, { style: "currency", currency: "USD" });
   }
 
+  function escapeHtml(s) {
+    return String(s)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
   function setPriceLabels() {
     document.querySelectorAll("[data-price-label]").forEach((el) => {
       const k = el.getAttribute("data-price-label");
-      el.textContent = prices[k] ? money(prices[k]) : "$—";
+      const p = prices[k];
+      el.textContent = typeof p === "number" ? money(p) : "$—";
     });
   }
 
@@ -98,37 +113,19 @@
     const consoleSel = inputs.consoleSelect.value;
     if (consoleSel !== "none") {
       const unit = prices[consoleSel] || 0;
-      lines.push({
-        label: `UniFi Console: ${consoleName(consoleSel)}`,
-        qty: 1,
-        unit,
-        ext: unit,
-        kind: "hardware"
-      });
+      lines.push({ label: `UniFi Console: ${consoleName(consoleSel)}`, qty: 1, unit, ext: unit, kind: "hardware" });
     }
 
     const nvr = inputs.nvrSelect.value;
     if (nvr !== "none") {
       const unit = prices[nvr] || 0;
-      lines.push({
-        label: `Recorder: UNVR`,
-        qty: 1,
-        unit,
-        ext: unit,
-        kind: "hardware"
-      });
+      lines.push({ label: `Recorder: UNVR`, qty: 1, unit, ext: unit, kind: "hardware" });
     }
 
     const poe = inputs.poeSelect.value;
     if (poe !== "none") {
       const unit = prices[poe] || 0;
-      lines.push({
-        label: `PoE Switch: ${poeName(poe)}`,
-        qty: 1,
-        unit,
-        ext: unit,
-        kind: "hardware"
-      });
+      lines.push({ label: `PoE Switch: ${poeName(poe)}`, qty: 1, unit, ext: unit, kind: "hardware" });
     }
 
     return lines;
@@ -205,13 +202,15 @@
     }
   }
 
-  function escapeHtml(s) {
-    return String(s)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  function extractPrice(products, key) {
+    const candidates = keyAliases[key] || [key];
+
+    for (const ck of candidates) {
+      const v = products?.[ck];
+      if (typeof v === "number") return v;
+      if (v && typeof v.price === "number") return v.price;
+    }
+    return null;
   }
 
   async function loadLivePrices() {
@@ -223,16 +222,14 @@
       const data = await res.json();
       const p = data?.products || {};
 
-      // Accept { key: number } or { key: { price:number } }
       Object.keys(prices).forEach((k) => {
-        const v = p[k];
-        if (typeof v === "number") prices[k] = v;
-        if (v && typeof v.price === "number") prices[k] = v.price;
+        const got = extractPrice(p, k);
+        if (typeof got === "number") prices[k] = got;
       });
 
       setPriceLabels();
       render();
-      out.priceStatus.textContent = "Live pricing loaded";
+      out.priceStatus.textContent = "Pricing loaded";
     } catch (e) {
       setPriceLabels();
       render();
