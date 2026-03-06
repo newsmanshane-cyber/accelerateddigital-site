@@ -871,4 +871,25 @@
 
       wrapper.querySelectorAll('.floating-contact-action').forEach((link) => {
         link.addEventListener('click', async function (event) {
-          const mobileHref = link.getAttribute('data-mobil
+          const mobileHref = link.getAttribute('data-mobile-href');
+          const desktopCopy = link.getAttribute('data-desktop-copy');
+
+          if (isMobileLike()) {
+            return;
+          }
+
+          if (desktopCopy) {
+            event.preventDefault();
+            try {
+              await navigator.clipboard.writeText(desktopCopy);
+              showFeedback('Number copied!');
+            } catch {
+              showFeedback(desktopCopy);
+            }
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
