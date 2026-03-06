@@ -872,6 +872,11 @@ body {
     overflow: hidden;
   }
 
+  /* Keep floating contact above the mobile nav overlay */
+  body.nav-open .floating-contact {
+    z-index: 9999;
+  }
+
   .floating-contact {
     right: 14px;
     bottom: 14px;
