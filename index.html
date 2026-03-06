@@ -745,7 +745,7 @@
           const data = await res.json().catch(() => ({}));
           if (!res.ok) { statusEl.textContent = data?.error || "Could not send. Please try again."; return; }
 
-          statusEl.textContent = "Message sent! I’ll reply soon.";
+          statusEl.textContent = "Message sent! I’ll reply soon. If you don’t see a confirmation email, check your spam folder.";
           form.reset();
           if (window.turnstile) window.turnstile.reset();
         } catch {
