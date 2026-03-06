@@ -585,7 +585,9 @@
           </div>
 
           <p class="contact-alt">
-            Or email:
+            Or call/text:
+            <a class="link" href="tel:+13235334872">(323) 533-4872</a>
+            • email:
             <a class="link" href="mailto:info@accelerateddigital.net">info@accelerateddigital.net</a>
           </p>
         </form>
@@ -594,7 +596,14 @@
   </main>
 
   <footer class="site-footer">
-    © 2026 Accelerated Digital Solutions LLC — Los Angeles, California
+    <div class="site-footer-inner">
+      <div>© 2026 Accelerated Digital Solutions LLC — Los Angeles, California</div>
+      <div class="site-footer-links">
+        <a class="link" href="tel:+13235334872">(323) 533-4872</a>
+        <span aria-hidden="true">•</span>
+        <a class="link" href="mailto:info@accelerateddigital.net">info@accelerateddigital.net</a>
+      </div>
+    </div>
   </footer>
 
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -719,38 +728,114 @@
       });
     })();
   </script>
-  <div class="floating-contact">
-  <button class="floating-contact-toggle" id="floatingContactToggle" aria-label="Open contact options">
-    Contact Us
-  </button>
+  <div class="floating-contact" id="floatingContact">
+    <button
+      class="floating-contact-toggle"
+      id="floatingContactToggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="floatingContactPanel"
+    >
+      <span class="floating-contact-dot" aria-hidden="true"></span>
+      Call or Text Us
+    </button>
 
-  <div class="floating-contact-menu" id="floatingContactMenu">
-    <a href="tel:+13235334872" class="floating-contact-action call">
-      Call Us
-    </a>
-    <a href="sms:+13235334872" class="floating-contact-action text">
-      Text Us
-    </a>
+    <div class="floating-contact-panel" id="floatingContactPanel" hidden>
+      <div class="floating-contact-card">
+        <p class="floating-contact-eyebrow">Accelerated Digital Solutions</p>
+        <a class="floating-contact-number" href="tel:+13235334872">(323) 533-4872</a>
+        <p class="floating-contact-subtext">Call or text for a quote, walkthrough, or quick question.</p>
+
+        <div class="floating-contact-actions">
+          <a
+            class="floating-contact-action primary"
+            href="tel:+13235334872"
+            data-mobile-href="tel:+13235334872"
+            data-desktop-copy="(323) 533-4872"
+          >
+            Call
+          </a>
+
+          <a
+            class="floating-contact-action ghost"
+            href="sms:+13235334872?body=Hi%20ADS%2C%20I%E2%80%99d%20like%20to%20get%20a%20quote."
+            data-mobile-href="sms:+13235334872?body=Hi%20ADS%2C%20I%E2%80%99d%20like%20to%20get%20a%20quote."
+            data-desktop-copy="(323) 533-4872"
+          >
+            Text
+          </a>
+        </div>
+
+        <p class="floating-contact-feedback" id="floatingContactFeedback" aria-live="polite"></p>
+      </div>
+    </div>
   </div>
-</div>
-<script>
-  (function () {
-    const toggle = document.getElementById('floatingContactToggle');
-    const menu = document.getElementById('floatingContactMenu');
 
-    if (!toggle || !menu) return;
+  <script>
+    (function () {
+      const wrapper = document.getElementById('floatingContact');
+      const toggle = document.getElementById('floatingContactToggle');
+      const panel = document.getElementById('floatingContactPanel');
+      const feedback = document.getElementById('floatingContactFeedback');
 
-    toggle.addEventListener('click', function () {
-      menu.classList.toggle('open');
-    });
+      if (!wrapper || !toggle || !panel) return;
 
-    document.addEventListener('click', function (event) {
-      const wrapper = document.querySelector('.floating-contact');
-      if (!wrapper.contains(event.target)) {
-        menu.classList.remove('open');
-      }
-    });
-  })();
-</script>
+      const isMobileLike = () => {
+        return window.matchMedia('(max-width: 720px), (pointer: coarse)').matches;
+      };
+
+      const setOpen = (open) => {
+        wrapper.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        panel.hidden = !open;
+      };
+
+      const showFeedback = (message) => {
+        if (!feedback) return;
+        feedback.textContent = message;
+        window.clearTimeout(showFeedback._timer);
+        showFeedback._timer = window.setTimeout(() => {
+          feedback.textContent = '';
+        }, 2200);
+      };
+
+      toggle.addEventListener('click', function () {
+        setOpen(!wrapper.classList.contains('open'));
+      });
+
+      document.addEventListener('click', function (event) {
+        if (!wrapper.contains(event.target)) {
+          setOpen(false);
+        }
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          setOpen(false);
+        }
+      });
+
+      wrapper.querySelectorAll('.floating-contact-action').forEach((link) => {
+        link.addEventListener('click', async function (event) {
+          const mobileHref = link.getAttribute('data-mobile-href');
+          const desktopCopy = link.getAttribute('data-desktop-copy') || '(323) 533-4872';
+
+          if (isMobileLike()) {
+            link.setAttribute('href', mobileHref);
+            return;
+          }
+
+          event.preventDefault();
+
+          try {
+            await navigator.clipboard.writeText(desktopCopy);
+            showFeedback('Copied (323) 533-4872');
+          } catch (err) {
+            showFeedback('Number: (323) 533-4872');
+          }
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
