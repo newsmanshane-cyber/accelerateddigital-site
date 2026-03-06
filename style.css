@@ -732,10 +732,6 @@ body {
 }
 
 @media(max-width:720px){
-  .site-header{ padding:16px 6%; }
-  .site-header.scrolled{ padding:10px 6%; }
-  .site-nav a{ margin-left:14px; }
-
   .hero{ padding:90px 6% 60px; }
   .section{ padding:60px 6%; }
 
@@ -762,59 +758,126 @@ body {
     grid-template-columns: 1.4fr 0.4fr 0.6fr 0.6fr;
   }
 }
-/* ===== Mobile Header Fix ===== */
+/* ===== Hamburger button (hidden on desktop) ===== */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  cursor: pointer;
+  padding: 0;
+  transition: background .15s ease, border-color .15s ease;
+  flex-shrink: 0;
+}
+.nav-hamburger:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.18);
+}
+.ham-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text);
+  transition: transform .22s ease, opacity .22s ease;
+  transform-origin: center;
+}
+.nav-hamburger.is-open .ham-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.is-open .ham-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.is-open .ham-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ===== Mobile nav panel ===== */
+.mobile-nav-panel {
+  display: none; /* shown only on mobile via media query */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  background: rgba(10, 12, 15, 0.97);
+  backdrop-filter: blur(16px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  padding: 80px 24px 40px;
+}
+.mobile-nav-panel:not([hidden]) {
+  display: flex;
+}
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+.mobile-nav-links a {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  transition: color .15s ease;
+}
+.mobile-nav-links a:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+.mobile-nav-links a:hover { color: var(--accent); }
+.mobile-nav-phone {
+  display: inline-block;
+  margin-top: 32px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: color .15s ease;
+}
+.mobile-nav-phone:hover { color: var(--text); }
+
+/* ===== Mobile breakpoint ===== */
 @media (max-width: 720px) {
-  /* Ensure the header doesn't overflow the screen */
   .site-header {
-    padding-left: 12px;
-    padding-right: 12px;
-    min-width: 0;
-    overflow-x: hidden;
+    padding: 16px 5%;
+  }
+  .site-header.scrolled {
+    padding: 10px 5%;
   }
 
-  /* Adjust logo size for mobile */
-  .site-header .logo img {
-    max-height: 30px;
-    width: auto;
-  }
-
-  /* Adjust font size and spacing in the nav bar */
-  .site-header nav {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-  }
-
-  .site-header nav a {
-    font-size: 0.85rem;
-    padding: 10px;
-  }
-
-  /* Hide contact phone number on mobile */
+  /* Hide desktop nav + phone on mobile */
+  .site-nav,
   .contact-phone {
     display: none;
   }
 
-  /* Optional: Add horizontal scrolling to the navigation if necessary */
-  .site-header nav::-webkit-scrollbar {
-    display: none;
+  /* Show hamburger */
+  .nav-hamburger {
+    display: flex;
   }
 
-  /* Allow horizontal scrolling for nav items */
-  .site-header nav {
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  /* Prevent body scroll when nav is open */
+  body.nav-open {
+    overflow: hidden;
   }
 
   .floating-contact {
     right: 14px;
     bottom: 14px;
   }
-
   .floating-contact-toggle {
     padding: 13px 16px;
     font-size: 0.92rem;
   }
-  }
+}
