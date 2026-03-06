@@ -97,18 +97,43 @@
       />
     </a>
 
-    <nav class="site-nav" aria-label="Primary navigation">
+    <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
       <a href="#services" data-section="services">Services</a>
       <a href="#service-area" data-section="service-area">Service Area</a>
       <a href="#projects" data-section="projects">Projects</a>
       <a href="#estimate" data-section="estimate">Estimate</a>
       <a href="#contact" data-section="contact">Contact</a>
     </nav>
-    
+
     <div class="contact-phone">
-  <a href="tel:+13235334872">(323) 533-4872</a>
-</div>
+      <a href="tel:+13235334872">(323) 533-4872</a>
+    </div>
+
+    <button
+      class="nav-hamburger"
+      id="navHamburger"
+      type="button"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="mobileNavPanel"
+    >
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+    </button>
   </header>
+
+  <!-- Mobile nav overlay -->
+  <div id="mobileNavPanel" class="mobile-nav-panel" hidden aria-label="Mobile navigation">
+    <nav class="mobile-nav-links">
+      <a href="#services">Services</a>
+      <a href="#service-area">Service Area</a>
+      <a href="#projects">Projects</a>
+      <a href="#estimate">Estimate</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="mobile-nav-phone" href="tel:+13235334872">(323) 533-4872</a>
+  </div>
 
   <main id="top">
     <section class="hero">
@@ -545,7 +570,7 @@
       <p class="section-text">Tell us what you’re building — we’ll recommend a clean plan and help you deploy it.</p>
       <div class="hero-actions" style="margin-top: 18px;">
         <a href="#contact" class="btn">Get a Quote</a>
-        <a href="mailto:info@accelerateddigital.net?subject=Consultation%20Request%20-%20Accelerated%20Digital%20Solutions" class="btn btn-ghost">Email Us</a>
+        <a href="/cdn-cgi/l/email-protection#6b02050d042b0a08080e070e190a1f0e0f0f020c021f0a0745050e1f54181e09010e081f56280405181e071f0a1f0204054e595b390e1a1e0e181f4e595b464e595b2a08080e070e190a1f0e0f4e595b2f020c021f0a074e595b3804071e1f02040518" class="btn btn-ghost">Email Us</a>
       </div>
     </section>
 
@@ -588,7 +613,7 @@
             Or call/text:
             <a class="link" href="tel:+13235334872">(323) 533-4872</a>
             • email:
-            <a class="link" href="mailto:info@accelerateddigital.net">info@accelerateddigital.net</a>
+            <a class="link" href="/cdn-cgi/l/email-protection#e881868e87a8898b8b8d848d9a899c8d8c8c818f819c8984c6868d9c"><span class="__cf_email__" data-cfemail="31585f575e71505252545d5443504554555558565845505d1f5f5445">[email&#160;protected]</span></a>
           </p>
         </form>
       </div>
@@ -601,12 +626,12 @@
       <div class="site-footer-links">
         <a class="link" href="tel:+13235334872">(323) 533-4872</a>
         <span aria-hidden="true">•</span>
-        <a class="link" href="mailto:info@accelerateddigital.net">info@accelerateddigital.net</a>
+        <a class="link" href="/cdn-cgi/l/email-protection#325b5c545d72535151575e574053465756565b555b46535e1c5c5746"><span class="__cf_email__" data-cfemail="bcd5d2dad3fcdddfdfd9d0d9ceddc8d9d8d8d5dbd5c8ddd092d2d9c8">[email&#160;protected]</span></a>
       </div>
     </div>
   </footer>
 
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="quote.js?v=5" defer></script>
 
   <script>
@@ -728,6 +753,35 @@
       });
     })();
   </script>
+  <script>
+    (function () {
+      const hamburger = document.getElementById('navHamburger');
+      const panel = document.getElementById('mobileNavPanel');
+      if (!hamburger || !panel) return;
+
+      const setOpen = (open) => {
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        hamburger.classList.toggle('is-open', open);
+        panel.hidden = !open;
+        document.body.classList.toggle('nav-open', open);
+      };
+
+      hamburger.addEventListener('click', () => {
+        setOpen(hamburger.getAttribute('aria-expanded') !== 'true');
+      });
+
+      // Close when a link is clicked
+      panel.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setOpen(false));
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
+      });
+    })();
+  </script>
+
   <div class="floating-contact" id="floatingContact">
     <button
       class="floating-contact-toggle"
@@ -817,25 +871,4 @@
 
       wrapper.querySelectorAll('.floating-contact-action').forEach((link) => {
         link.addEventListener('click', async function (event) {
-          const mobileHref = link.getAttribute('data-mobile-href');
-          const desktopCopy = link.getAttribute('data-desktop-copy') || '(323) 533-4872';
-
-          if (isMobileLike()) {
-            link.setAttribute('href', mobileHref);
-            return;
-          }
-
-          event.preventDefault();
-
-          try {
-            await navigator.clipboard.writeText(desktopCopy);
-            showFeedback('Copied (323) 533-4872');
-          } catch (err) {
-            showFeedback('Number: (323) 533-4872');
-          }
-        });
-      });
-    })();
-  </script>
-</body>
-</html>
+          const mobileHref = link.getAttribute('data-mobil
