@@ -41,8 +41,8 @@ Tone & behavior guidelines:
   style.textContent = `
     #${WIDGET_ID}-btn {
       position: fixed;
-      bottom: 88px;
-      left: 20px;
+      bottom: 82px;
+      right: 18px;
       z-index: 1200;
       display: flex;
       align-items: center;
@@ -82,8 +82,8 @@ Tone & behavior guidelines:
 
     #${WIDGET_ID}-window {
       position: fixed;
-      bottom: 160px;
-      left: 20px;
+      bottom: 154px;
+      right: 18px;
       z-index: 1200;
       width: min(380px, calc(100vw - 32px));
       max-height: min(560px, calc(100vh - 180px));
@@ -301,13 +301,14 @@ Tone & behavior guidelines:
     @media (max-width: 480px) {
       #${WIDGET_ID}-window {
         bottom: 148px;
+        right: 10px;
         left: 10px;
         width: calc(100vw - 20px);
         max-height: calc(100vh - 168px);
       }
       #${WIDGET_ID}-btn {
         bottom: 80px;
-        left: 12px;
+        right: 12px;
       }
     }
   `;
