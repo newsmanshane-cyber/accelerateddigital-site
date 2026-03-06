@@ -277,7 +277,7 @@ function buildClientHtml({ name, notes, estimate }) {
                 <table cellpadding="0" cellspacing="0">
                   <tr>
                     <td style="padding-right:10px;">
-                      <a href="tel:+13235334872" style="display:inline-block;background:#2e7dff;color:white;text-decoration:none;font-size:13px;font-weight:700;padding:10px 20px;border-radius:8px;">Call / Text Us</a>
+                      <a href="https://www.accelerateddigital.net/#contact" style="display:inline-block;background:#2e7dff;color:white;text-decoration:none;font-size:13px;font-weight:700;padding:10px 20px;border-radius:8px;">(323) 533-4872</a>
                     </td>
                     <td>
                       <a href="https://www.accelerateddigital.net/#contact" style="display:inline-block;background:transparent;color:#2e7dff;text-decoration:none;font-size:13px;font-weight:700;padding:10px 20px;border-radius:8px;border:1px solid #2e7dff;">Contact Form</a>
@@ -297,7 +297,7 @@ function buildClientHtml({ name, notes, estimate }) {
         <!-- Footer -->
         <tr><td style="padding:12px 0 8px;text-align:center;">
           <div style="font-size:13px;font-weight:700;color:#4a5060;margin-bottom:4px;">Accelerated Digital Solutions LLC</div>
-          <div style="font-size:12px;color:#3a4050;">Los Angeles, California &nbsp;·&nbsp; <a href="tel:+13235334872" style="color:#3a4050;text-decoration:none;">(323) 533-4872</a> &nbsp;·&nbsp; <a href="https://www.accelerateddigital.net" style="color:#3a4050;text-decoration:none;">accelerateddigital.net</a></div>
+          <div style="font-size:12px;color:#3a4050;">Los Angeles, California &nbsp;·&nbsp; <span style="color:#3a4050;">(323) 533-4872</span> &nbsp;·&nbsp; <a href="https://www.accelerateddigital.net" style="color:#3a4050;text-decoration:none;">accelerateddigital.net</a></div>
         </td></tr>
 
       </table>
