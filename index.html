@@ -85,6 +85,8 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
   <div class="bg-grid" aria-hidden="true"></div>
 
   <header class="site-header" id="siteHeader">
@@ -135,7 +137,7 @@
     <a class="mobile-nav-phone" href="tel:+13235334872">(323) 533-4872</a>
   </div>
 
-  <main id="top">
+  <main id="main-content">
     <section class="hero">
       <svg class="hero-net" viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true">
         <g class="net-lines">
@@ -192,7 +194,7 @@
       </div>
     </section>
 
-    <section id="services" class="section" data-observe>
+    <section id="services" class="section" data-observe aria-label="Services">
       <h2>Services</h2>
       <p class="section-text">
         Practical, business-grade systems with clean installs, strong documentation, and support you can count on.
@@ -231,7 +233,7 @@
       </div>
     </section>
 
-    <section id="service-area" class="section" data-observe>
+    <section id="service-area" class="section" data-observe aria-label="Service Area">
       <h2>Serving the Greater Los Angeles Area</h2>
       <p class="section-text">
         Accelerated Digital Solutions LLC provides on-site and remote support across Los Angeles and surrounding communities.
@@ -255,7 +257,7 @@
       </div>
     </section>
 
-    <section id="projects" class="section" data-observe>
+    <section id="projects" class="section" data-observe aria-label="Recent Projects">
       <h2>Recent Projects</h2>
       <p class="section-text">
         A few examples of the kind of work we can do. Want to see more? Ask and we’ll share relevant examples.
@@ -280,7 +282,7 @@
     </section>
 
     <!-- ===== Estimate Section (moved here, collapsible) ===== -->
-    <section id="estimate" class="section" data-observe>
+    <section id="estimate" class="section" data-observe aria-label="Instant Estimate">
       <button
         class="estimate-toggle"
         id="estimateToggle"
@@ -314,7 +316,7 @@
 
               <div class="row" style="margin-top:12px;">
                 <div class="field">
-                  <label>Typical Setup</label>
+                  <label for="presetSelect">Typical Setup</label>
                   <select id="presetSelect">
                     <option value="none">Choose a preset…</option>
                     <option value="homeSmall">Small Home</option>
@@ -327,8 +329,8 @@
                 </div>
 
                 <div class="field">
-                  <label>&nbsp;</label>
-                  <button class="btn" id="applyPresetBtn" type="button">Apply Preset</button>
+                  <label for="applyPresetBtn" class="sr-only">Apply selected preset</label>
+                  <button class="btn" id="applyPresetBtn" type="button" aria-describedby="presetHint">Apply Preset</button>
                   <div class="hint">One click fill — doesn’t lock anything.</div>
                 </div>
               </div>
@@ -367,8 +369,8 @@
                 </div>
 
                 <div class="field">
-                  <label>&nbsp;</label>
-                  <button class="btn btn-ghost" id="applyCoverageBtn" type="button">Apply Recommendation</button>
+                  <label for="applyCoverageBtn" class="sr-only">Apply coverage recommendation</label>
+                  <button class="btn btn-ghost" id="applyCoverageBtn" type="button" aria-describedby="coverageResult">Apply Recommendation</button>
                   <div class="hint" id="coverageResult">Recommendation will appear here.</div>
                 </div>
               </div>
@@ -510,11 +512,11 @@
                 <div class="row" style="margin-top:12px;">
                   <div class="field">
                     <label for="estName">Name</label>
-                    <input id="estName" type="text" placeholder="Your name" required />
+                    <input id="estName" type="text" placeholder="Your name" required autocomplete="name" />
                   </div>
                   <div class="field">
                     <label for="estEmail">Email</label>
-                    <input id="estEmail" type="email" placeholder="you@emailprovider.com" required />
+                    <input id="estEmail" type="email" placeholder="you@emailprovider.com" required autocomplete="email" />
                   </div>
                 </div>
 
@@ -574,7 +576,7 @@
       </div>
     </section>
 
-    <section id="contact" class="section" data-observe>
+    <section id="contact" class="section" data-observe aria-label="Contact">
       <h2>Contact</h2>
 
       <div class="contact-wrap">
@@ -583,12 +585,12 @@
 
           <div class="field">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="Your name" required />
+            <input type="text" name="name" id="name" placeholder="Your name" required autocomplete="name" />
           </div>
 
           <div class="field">
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="you@emailprovider.com" required />
+            <input type="email" name="email" id="email" placeholder="you@emailprovider.com" required autocomplete="email" />
           </div>
 
           <div class="field field-full">
