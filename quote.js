@@ -383,3 +383,67 @@
   updateCoverageResult();
   loadLivePrices();
 })();
+// Chatbot integration for quote.js
+const launcher = document.getElementById("ads-chat-launcher");
+const panel = document.getElementById("ads-chat-panel");
+const closeBtn = document.getElementById("ads-chat-close");
+const messages = document.getElementById("ads-chat-messages");
+const input = document.getElementById("ads-chat-input");
+const sendBtn = document.getElementById("ads-chat-send");
+
+// Set Cloudflare Worker endpoint (replace with actual URL)
+const ADS_CHAT_ENDPOINT = "https://ads-chat.newsmanshane.workers.dev/chat";
+
+// Open the chat panel when the user clicks the chat launcher
+launcher.addEventListener("click", () => {
+  panel.classList.add("open");
+  setTimeout(() => input.focus(), 80);  // Focus input after opening
+});
+
+// Close the chat panel
+closeBtn.addEventListener("click", () => {
+  panel.classList.remove("open");
+});
+
+// Function to add a message to the chat panel
+function addMsg(role, text) {
+  const div = document.createElement("div");
+  div.className = "ads-chat-msg " + (role === "user" ? "user" : "bot");
+  div.textContent = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Handle sending the message
+async function sendMessage() {
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMsg("user", text);  // Add user's message to chat
+  input.value = "";  // Clear input field
+  sendBtn.disabled = true;  // Disable the send button to prevent multiple clicks
+
+  try {
+    const res = await fetch(ADS_CHAT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
+
+    const data = await res.json();
+    addMsg("bot", data.reply || "Sorry — I didn’t catch that.");
+  } catch (e) {
+    addMsg("bot", "Error connecting to the chatbot service. Please try again.");
+  } finally {
+    sendBtn.disabled = false;  // Re-enable the send button
+  }
+}
+
+// Send the message when the send button is clicked
+sendBtn.addEventListener("click", sendMessage);
+
+// Send the message when the Enter key is pressed
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendMessage();
+  if (e.key === "Escape") panel.classList.remove("open");  // Close chat on Escape
+});
