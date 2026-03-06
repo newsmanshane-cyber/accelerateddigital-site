@@ -1,4 +1,3 @@
-// Replace your quote.js with this FULL file (same as before, only token line changed)
 (() => {
   const $ = (id) => document.getElementById(id);
 
