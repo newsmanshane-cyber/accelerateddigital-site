@@ -17,7 +17,6 @@ About ADS:
 
 Tone & behavior guidelines:
 - Be helpful, honest, and conversational — not sales-y or pushy
--acknowledge the time of day or night say good morning, evening, or afternnon based on what time it is where the user is
 - Never promise specific outcomes, timelines, or prices (the estimate tool gives rough ballpark figures only)
 - If someone asks something you genuinely don't know (like current availability or a specific technical detail about their site), say so and suggest they call or email
 - Keep responses concise — 2–4 sentences is usually right; longer only when truly needed
@@ -42,8 +41,8 @@ Tone & behavior guidelines:
   style.textContent = `
     #${WIDGET_ID}-btn {
       position: fixed;
-      bottom: 82px;
-      right: 18px;
+      bottom: 18px;
+      left: 18px;
       z-index: 1200;
       display: flex;
       align-items: center;
@@ -83,8 +82,8 @@ Tone & behavior guidelines:
 
     #${WIDGET_ID}-window {
       position: fixed;
-      bottom: 154px;
-      right: 18px;
+      bottom: 88px;
+      left: 18px;
       z-index: 1200;
       width: min(380px, calc(100vw - 32px));
       max-height: min(560px, calc(100vh - 180px));
@@ -301,15 +300,15 @@ Tone & behavior guidelines:
 
     @media (max-width: 480px) {
       #${WIDGET_ID}-window {
-        bottom: 148px;
-        right: 10px;
+        bottom: 82px;
         left: 10px;
+        right: 10px;
         width: calc(100vw - 20px);
         max-height: calc(100vh - 168px);
       }
       #${WIDGET_ID}-btn {
-        bottom: 80px;
-        right: 12px;
+        bottom: 18px;
+        left: 12px;
       }
     }
   `;
@@ -393,7 +392,8 @@ Tone & behavior guidelines:
       const chip = document.createElement("button");
       chip.className = "aa-starter";
       chip.textContent = s;
-      chip.addEventListener("click", () => {
+      chip.addEventListener("click", (e) => {
+        e.stopPropagation();
         startersEl.innerHTML = "";
         sendMessage(s);
       });
