@@ -724,8 +724,6 @@ body {
   background:rgba(13,15,19,0.7);
   border-top:1px solid rgba(255,255,255,0.06);
 }
-
-
 /* ===== Floating Contact ===== */ .floating-contact{ position: fixed; right: 18px; bottom: 18px; z-index: 1100; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; } .floating-contact-toggle{ display: inline-flex; align-items: center; gap: 10px; padding: 14px 18px; border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; background: linear-gradient(180deg, rgba(17,20,24,0.94), rgba(12,14,18,0.94)); color: var(--text); box-shadow: 0 18px 40px rgba(0,0,0,0.38); backdrop-filter: blur(12px); cursor: pointer; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.01em; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; } .floating-contact-toggle:hover{ transform: translateY(-2px); border-color: rgba(46,125,255,0.35); box-shadow: 0 20px 48px rgba(0,0,0,0.42); } .floating-contact-dot{ width: 10px; height: 10px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 14px rgba(46,125,255,0.75); flex: 0 0 auto; } .floating-contact-panel{ width: min(340px, calc(100vw - 28px)); } .floating-contact-card{ padding: 18px; border-radius: 18px; background: rgba(17,20,24,0.92); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(14px); box-shadow: 0 18px 48px rgba(0,0,0,0.40); text-align: left; transform: translateY(8px) scale(0.98); opacity: 0; pointer-events: none; transition: transform .2s ease, opacity .2s ease; } .floating-contact.open .floating-contact-card{ transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; } .floating-contact-eyebrow{ color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; } .floating-contact-number{ display: inline-block; color: var(--text); text-decoration: none; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; } .floating-contact-number:hover{ color: white; } .floating-contact-subtext{ color: var(--muted); font-size: 0.93rem; margin-bottom: 14px; } .floating-contact-actions{ display: flex; gap: 10px; flex-wrap: wrap; } .floating-contact-action{ flex: 1 1 120px; display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 12px 14px; border-radius: 12px; text-decoration: none; font-weight: 700; border: 1px solid rgba(255,255,255,0.08); transition: transform .2s ease, border-color .2s ease, background .2s ease; } .floating-contact-action:hover{ transform: translateY(-1px); } .floating-contact-action.primary{ background: var(--accent); color: white; } .floating-contact-action.ghost{ background: rgba(255,255,255,0.05); color: var(--text); } .floating-contact-action.primary:hover, .floating-contact-action.ghost:hover{ border-color: rgba(46,125,255,0.35); } .floating-contact-feedback{ min-height: 1.2em; margin-top: 10px; color: var(--muted); font-size: 0.88rem; } /* ===== Mobile ===== */
 @media(max-width:900px){
   .estimate-grid{
@@ -762,5 +760,61 @@ body {
 
   .bd-row{
     grid-template-columns: 1.4fr 0.4fr 0.6fr 0.6fr;
+  }
+}
+/* ===== Mobile Header Fix ===== */
+@media (max-width: 720px) {
+  /* Ensure the header doesn't overflow the screen */
+  .site-header {
+    padding-left: 12px;
+    padding-right: 12px;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  /* Adjust logo size for mobile */
+  .site-header .logo img {
+    max-height: 30px;
+    width: auto;
+  }
+
+  /* Adjust font size and spacing in the nav bar */
+  .site-header nav {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .site-header nav a {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  /* Hide contact phone number on mobile */
+  .contact-phone {
+    display: none;
+  }
+
+  /* Optional: Add horizontal scrolling to the navigation if necessary */
+  .site-header nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Allow horizontal scrolling for nav items */
+  .site-header nav {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .floating-contact {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .floating-contact-toggle {
+    padding: 13px 16px;
+    font-size: 0.92rem;
   }
 }
