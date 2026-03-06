@@ -837,5 +837,35 @@
       });
     })();
   </script>
+  <!-- Chatbot Widget -->
+<div id="ads-chat-launcher" aria-label="Open chat" role="button">
+  <div class="dot"></div>
+  <div style="display:flex;flex-direction:column;gap:1px">
+    <div style="font-weight:700;font-size:13px;line-height:1;color:rgba(255,255,255,0.92)">Instant Help</div>
+    <div style="font-size:12px;line-height:1;color:rgba(255,255,255,0.65)">Ask about Wi-Fi, cameras, quotes</div>
+  </div>
+</div>
+
+<div id="ads-chat-panel" aria-live="polite">
+  <div class="ads-chat-header">
+    <div class="ads-chat-title">
+      <strong>ADS Assistant</strong>
+      <span>Quick answers • Lead capture • No pressure</span>
+    </div>
+    <button class="ads-chat-close" id="ads-chat-close">Close</button>
+  </div>
+
+  <div id="ads-chat-messages"></div>
+
+  <div class="ads-chat-footer">
+    <div class="ads-chat-form">
+      <input id="ads-chat-input" type="text" placeholder="What can we help with?" autocomplete="off" />
+      <button id="ads-chat-send" type="button">Send</button>
+    </div>
+    <div class="ads-chat-disclaimer">
+      Estimates are rough until a site walk / scope review. Please don’t share passwords or sensitive info.
+    </div>
+  </div>
+</div>
 </body>
 </html>
