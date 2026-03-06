@@ -289,8 +289,13 @@ function buildClientHtml({ name, notes, estimate }) {
           </table>
         </td></tr>
 
+        <!-- Spam notice -->
+        <tr><td style="padding:16px 0 0;text-align:center;">
+          <div style="font-size:12px;color:#3a4050;line-height:1.6;">If this email landed in spam, please mark it as <strong style="color:#4a5060;">Not Spam</strong> so future<br/>messages from us reach your inbox.</div>
+        </td></tr>
+
         <!-- Footer -->
-        <tr><td style="padding:24px 0 8px;text-align:center;">
+        <tr><td style="padding:12px 0 8px;text-align:center;">
           <div style="font-size:13px;font-weight:700;color:#4a5060;margin-bottom:4px;">Accelerated Digital Solutions LLC</div>
           <div style="font-size:12px;color:#3a4050;">Los Angeles, California &nbsp;·&nbsp; <a href="tel:+13235334872" style="color:#3a4050;text-decoration:none;">(323) 533-4872</a> &nbsp;·&nbsp; <a href="https://www.accelerateddigital.net" style="color:#3a4050;text-decoration:none;">accelerateddigital.net</a></div>
         </td></tr>
