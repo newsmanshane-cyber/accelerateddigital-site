@@ -41,22 +41,26 @@ export async function onRequestPost(context) {
 
     // Resend config (must exist in Pages env vars)
     const RESEND_API_KEY = env.RESEND_API_KEY;
-    const TO_EMAIL = env.CONTACT_TO_EMAIL;        // your inbox
+    const TO_EMAIL = env.CONTACT_TO_EMAIL;        // your primary inbox
+    const TO_EMAIL_2 = env.CONTACT_TO_EMAIL_2;    // optional second inbox (e.g. Gmail)
     const FROM_EMAIL = env.CONTACT_FROM_EMAIL;    // verified sender, like: "ADS Website <info@accelerateddigital.net>"
     if (!RESEND_API_KEY || !TO_EMAIL || !FROM_EMAIL) {
       return j({ ok: false, error: "Email service not configured on Pages." }, 500);
     }
+
+    // Build recipient list — include second email if configured
+    const toList = [TO_EMAIL, ...(TO_EMAIL_2 ? [TO_EMAIL_2] : [])];
 
     const subjectToYou = `ADS Estimate — ${money(estimate.totals.grand)} — ${name}`;
     const subjectToClient = `Your ADS Estimate — ${money(estimate.totals.grand)}`;
 
     const summary = buildTextSummary({ name, email, notes, estimate, ip });
 
-    // Send to YOU
+    // Send to YOU (and any additional inboxes)
     await resendSend({
       apiKey: RESEND_API_KEY,
       from: FROM_EMAIL,
-      to: TO_EMAIL,
+      to: toList,
       subject: subjectToYou,
       text: summary,
       replyTo: email,
