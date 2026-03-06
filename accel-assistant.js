@@ -1,42 +1,77 @@
 (() => {
-  // ─── Config ───────────────────────────────────────────────────────────────
-  const BOT_NAME   = "AccelAssistant";
-  const API_PATH   = "/api/chat";          // Cloudflare Pages Function
-  const ACCENT     = "#2e7dff";
-  const WIDGET_ID  = "accel-assistant";
+  // ─── Config ────────────────────────────────────────────────────────────────
+  const BOT_NAME  = "AccelAssistant";
+  const API_PATH  = "/api/chat";
+  const ACCENT    = "#2e7dff";
+  const WIDGET_ID = "accel-assistant";
 
   const SYSTEM_PROMPT = `You are AccelAssistant, a friendly and knowledgeable helper for Accelerated Digital Solutions LLC (ADS) — a Los Angeles-based IT and network infrastructure company.
 
-Your role is to help website visitors understand what ADS does, answer general questions about networking, Wi-Fi, structured cabling, security cameras, and IT setup, and guide people toward reaching out when they have a specific project in mind.
+Your role is to help website visitors understand what ADS does, answer general questions, and guide people toward reaching out when ready. You also help people use the Instant Estimate tool on the page.
 
 About ADS:
 - Services: Network infrastructure (routing, switching, VLANs, firewalls), Wi-Fi deployment (UniFi enterprise systems), structured cabling (Cat6, patch panels, racks), IP cameras & NVR (UniFi Protect), IT setup & support, production/streaming networks
 - Service area: Greater Los Angeles — LA, Pasadena, Glendale, Burbank, Santa Monica, Culver City, San Fernando Valley, and nearby areas by request
 - Contact: (323) 533-4872 | info@accelerateddigital.net
-- The website has an Instant Estimate tool for rough ballpark pricing on UniFi systems
+
+About the Instant Estimate Tool (on this page — scroll to the "Instant Estimate" section):
+The tool gives a rough ballpark price for UniFi Wi-Fi and camera systems. Walk people through it conversationally, one step at a time.
+
+STEP 1 — Quick Start Presets (fastest way to begin):
+  - Small Home (~1,000–2,000 sq ft): 2 indoor APs, 4 cable drops
+  - Large Home (~2,500–4,000 sq ft): 4 indoor + 1 outdoor AP, 6 drops
+  - Retail / Small Business: 3 indoor APs, 6 drops — great for storefronts
+  - Office / Multi-room: 5 indoor APs, 10 drops, premium install
+  - Cameras Only: 4 G5 Bullet cameras + recorder, for those who already have Wi-Fi
+  Tell them to pick one and click "Apply Preset" — it fills everything in automatically. Tweak after.
+
+STEP 2 — Coverage Helper (optional, if they don't know how many APs they need):
+  Enter square footage, number of floors, outdoor coverage needed. Click "Apply Recommendation."
+
+STEP 3 — Build Your System (manual customization):
+  - Indoor APs: UniFi U7 Pro (~$189 each) — one per ~1,200 sq ft is a good starting point
+  - Outdoor APs: UniFi U6 Mesh (~$179 each) — patios, parking, exterior areas
+  - Cameras: G5 Bullet (~$129), G5 Flex (~$99), G5 Turret Ultra (~$129)
+  - Cat6 drops: One per device. ~$85 per drop in labor.
+
+STEP 4 — Core Hardware:
+  - UniFi Console: UDM Pro ($379) recommended if they don't have one — it's the brain of the system
+  - Recorder (UNVR, $299): Only needed if adding cameras
+  - PoE Switch: 16-port ($299) for smaller setups, 24-port ($399) for larger — powers APs and cameras
+
+STEP 5 — Install Package:
+  - Standard: Clean install, tested and documented
+  - Premium: Neater rack, full labeling, more detailed docs
+  - Trip fee: Usually waived for local LA jobs
+
+The estimate is ballpark only — final pricing depends on site conditions, cable distances, and availability. They can email it to themselves using the name/email form at the bottom of the tool.
 
 Tone & behavior guidelines:
-- Be helpful, honest, and conversational — not sales-y or pushy
-- Never promise specific outcomes, timelines, or prices (the estimate tool gives rough ballpark figures only)
-- If someone asks something you genuinely don't know (like current availability or a specific technical detail about their site), say so and suggest they call or email
-- Keep responses concise — 2–4 sentences is usually right; longer only when truly needed
+- Be helpful, honest, and conversational — never pushy or salesy
+- When helping with the estimate, go ONE step at a time — ask a question, get their answer, then guide the next step
+- Always ask a clarifying question first (home or business? cameras too? how big?) before jumping to a recommendation
+- When someone asks about pricing, enthusiastically point to the Instant Estimate tool and offer to walk them through it
+- Never promise specific outcomes, timelines, or prices
 - If someone seems ready to move forward, naturally mention they can use the contact form, call, or text (323) 533-4872
-- You're not a replacement for a real consultation — always be honest that a site visit or call is the best way to get accurate answers
-- Never make up specs, prices, or claims about products you're not sure about`;
+- Keep responses concise — 2–4 sentences unless walking through steps
+- Never make up specs, prices, or claims you're not sure about`;
 
   const STARTERS = [
+    "Help me use the estimate tool",
     "What areas do you serve?",
-    "How does Wi-Fi deployment work?",
     "Do you handle security cameras?",
     "What's a rough cost for a small office?",
   ];
 
   // ─── State ─────────────────────────────────────────────────────────────────
-  let isOpen    = false;
-  let isLoading = false;
-  let history   = []; // { role, content }
+  let isOpen     = false;
+  let isLoading  = false;
+  let history    = [];
+  let nudgeShown = false;
+  let nudgeTimer = null;
+  let nudgeEl    = null;
 
-  // ─── Inject styles ─────────────────────────────────────────────────────────
+  // ─── Styles ────────────────────────────────────────────────────────────────
   const style = document.createElement("style");
   style.textContent = `
     #${WIDGET_ID}-btn {
@@ -80,6 +115,43 @@ Tone & behavior guidelines:
       50%      { box-shadow: 0 0 18px rgba(46,125,255,1); }
     }
 
+    #${WIDGET_ID}-nudge {
+      position: fixed;
+      bottom: 74px;
+      left: 18px;
+      z-index: 1200;
+      max-width: 240px;
+      background: rgba(14,17,22,0.97);
+      border: 1px solid rgba(46,125,255,0.35);
+      border-radius: 14px 14px 14px 4px;
+      padding: 11px 14px;
+      font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      font-size: 0.82rem;
+      color: #e8eaf0;
+      line-height: 1.5;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.5), 0 0 0 1px rgba(46,125,255,0.08);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .28s ease, transform .28s ease;
+      pointer-events: none;
+    }
+    #${WIDGET_ID}-nudge.aa-nudge-visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+    #${WIDGET_ID}-nudge-dismiss {
+      display: inline-block;
+      margin-left: 8px;
+      opacity: 0.45;
+      font-size: 0.72rem;
+      line-height: 1;
+      vertical-align: middle;
+    }
+    #${WIDGET_ID}-nudge-dismiss:hover { opacity: 1; }
+
     #${WIDGET_ID}-window {
       position: fixed;
       bottom: 88px;
@@ -108,56 +180,37 @@ Tone & behavior guidelines:
       pointer-events: all;
     }
 
-    /* Header */
     .aa-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 14px 16px 12px;
       border-bottom: 1px solid rgba(255,255,255,0.07);
       background: rgba(255,255,255,0.025);
       flex-shrink: 0;
     }
-    .aa-header-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .aa-header-left { display: flex; align-items: center; gap: 10px; }
     .aa-avatar {
-      width: 34px; height: 34px;
-      border-radius: 10px;
+      width: 34px; height: 34px; border-radius: 10px;
       background: linear-gradient(135deg, ${ACCENT}, #1a56cc);
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-      font-size: 15px;
+      display: grid; place-items: center; flex-shrink: 0; font-size: 15px;
     }
     .aa-header-info { display: flex; flex-direction: column; gap: 1px; }
     .aa-header-name { font-size: 0.9rem; font-weight: 700; letter-spacing: -0.01em; }
     .aa-header-sub  { font-size: 0.72rem; color: #8a909e; }
     .aa-close {
-      width: 30px; height: 30px;
-      border-radius: 8px;
+      width: 30px; height: 30px; border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.04);
-      color: #8a909e;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
+      color: #8a909e; cursor: pointer;
+      display: grid; place-items: center;
       transition: background .15s, color .15s;
-      font-size: 16px;
-      flex-shrink: 0;
+      font-size: 16px; flex-shrink: 0;
     }
     .aa-close:hover { background: rgba(255,255,255,0.09); color: #f1f1f1; }
 
-    /* Messages */
     .aa-messages {
-      flex: 1;
-      overflow-y: auto;
+      flex: 1; overflow-y: auto;
       padding: 14px 14px 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      display: flex; flex-direction: column; gap: 10px;
       scrollbar-width: thin;
       scrollbar-color: rgba(255,255,255,0.1) transparent;
     }
@@ -165,10 +218,8 @@ Tone & behavior guidelines:
     .aa-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 4px; }
 
     .aa-msg {
-      display: flex;
-      flex-direction: column;
-      max-width: 88%;
-      gap: 3px;
+      display: flex; flex-direction: column;
+      max-width: 88%; gap: 3px;
       animation: aa-msgIn .2s ease;
     }
     @keyframes aa-msgIn {
@@ -179,34 +230,22 @@ Tone & behavior guidelines:
     .aa-msg.aa-user { align-self: flex-end; }
 
     .aa-bubble {
-      padding: 9px 13px;
-      border-radius: 14px;
-      font-size: 0.875rem;
-      line-height: 1.55;
-      word-break: break-word;
+      padding: 9px 13px; border-radius: 14px;
+      font-size: 0.875rem; line-height: 1.55; word-break: break-word;
     }
-    .aa-bot  .aa-bubble {
+    .aa-bot .aa-bubble {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.08);
-      border-bottom-left-radius: 4px;
-      color: #e8eaf0;
+      border-bottom-left-radius: 4px; color: #e8eaf0;
     }
     .aa-user .aa-bubble {
-      background: ${ACCENT};
-      color: white;
+      background: ${ACCENT}; color: white;
       border-bottom-right-radius: 4px;
     }
 
-    /* Typing indicator */
-    .aa-typing .aa-bubble {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 12px 14px;
-    }
+    .aa-typing .aa-bubble { display: flex; align-items: center; gap: 5px; padding: 12px 14px; }
     .aa-typing-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
       background: rgba(255,255,255,0.4);
       animation: aa-bounce .9s ease-in-out infinite;
     }
@@ -217,71 +256,41 @@ Tone & behavior guidelines:
       40%          { transform: translateY(-5px); }
     }
 
-    /* Starters */
-    .aa-starters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 0 14px 10px;
-      flex-shrink: 0;
-    }
+    .aa-starters { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 10px; flex-shrink: 0; }
     .aa-starter {
-      padding: 6px 11px;
-      border-radius: 999px;
+      padding: 6px 11px; border-radius: 999px;
       border: 1px solid rgba(46,125,255,0.28);
       background: rgba(46,125,255,0.07);
-      color: ${ACCENT};
-      font-size: 0.78rem;
-      font-weight: 600;
+      color: ${ACCENT}; font-size: 0.78rem; font-weight: 600;
       cursor: pointer;
       transition: background .15s, border-color .15s, transform .1s;
       white-space: nowrap;
     }
     .aa-starter:hover {
-      background: rgba(46,125,255,0.15);
-      border-color: rgba(46,125,255,0.5);
+      background: rgba(46,125,255,0.15); border-color: rgba(46,125,255,0.5);
       transform: translateY(-1px);
     }
 
-    /* Input row */
     .aa-input-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      display: flex; align-items: center; gap: 8px;
       padding: 10px 12px 12px;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      flex-shrink: 0;
+      border-top: 1px solid rgba(255,255,255,0.07); flex-shrink: 0;
     }
     .aa-input {
       flex: 1;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 12px;
-      padding: 9px 13px;
-      color: #f1f1f1;
-      font-family: inherit;
-      font-size: 0.875rem;
-      outline: none;
-      transition: border-color .15s, background .15s;
-      resize: none;
-      height: 40px;
-      max-height: 100px;
-      overflow-y: auto;
+      border-radius: 12px; padding: 9px 13px;
+      color: #f1f1f1; font-family: inherit; font-size: 0.875rem;
+      outline: none; transition: border-color .15s, background .15s;
+      resize: none; height: 40px; max-height: 100px; overflow-y: auto;
     }
     .aa-input::placeholder { color: #5a6070; }
-    .aa-input:focus {
-      border-color: rgba(46,125,255,0.40);
-      background: rgba(255,255,255,0.07);
-    }
+    .aa-input:focus { border-color: rgba(46,125,255,0.40); background: rgba(255,255,255,0.07); }
     .aa-send {
-      width: 38px; height: 38px;
-      border-radius: 11px;
-      background: ${ACCENT};
-      border: none;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
+      width: 38px; height: 38px; border-radius: 11px;
+      background: ${ACCENT}; border: none; cursor: pointer;
+      display: grid; place-items: center; flex-shrink: 0;
       transition: background .15s, transform .1s, opacity .15s;
       opacity: 0.5;
     }
@@ -289,40 +298,28 @@ Tone & behavior guidelines:
     .aa-send:hover.aa-ready { background: #1a68e8; transform: scale(1.05); }
     .aa-send svg { width: 16px; height: 16px; }
 
-    /* Disclaimer */
-    .aa-disclaimer {
-      text-align: center;
-      font-size: 0.68rem;
-      color: #4a5060;
-      padding: 0 14px 8px;
-      flex-shrink: 0;
-    }
+    .aa-disclaimer { text-align: center; font-size: 0.68rem; color: #4a5060; padding: 0 14px 8px; flex-shrink: 0; }
 
     @media (max-width: 480px) {
-      #${WIDGET_ID}-window {
-        bottom: 82px;
-        left: 10px;
-        right: 10px;
-        width: calc(100vw - 20px);
-        max-height: calc(100vh - 168px);
-      }
-      #${WIDGET_ID}-btn {
-        bottom: 18px;
-        left: 12px;
-      }
+      #${WIDGET_ID}-window { bottom: 82px; left: 10px; right: 10px; width: calc(100vw - 20px); max-height: calc(100vh - 168px); }
+      #${WIDGET_ID}-btn { bottom: 18px; left: 12px; }
+      #${WIDGET_ID}-nudge { left: 12px; max-width: calc(100vw - 80px); }
     }
   `;
   document.head.appendChild(style);
 
   // ─── Build DOM ─────────────────────────────────────────────────────────────
-  // Toggle button
   const btn = document.createElement("button");
   btn.id = `${WIDGET_ID}-btn`;
   btn.setAttribute("aria-label", "Open AccelAssistant chat");
   btn.innerHTML = `<span class="aa-dot" aria-hidden="true"></span> AccelAssistant`;
   document.body.appendChild(btn);
 
-  // Chat window
+  nudgeEl = document.createElement("div");
+  nudgeEl.id = `${WIDGET_ID}-nudge`;
+  nudgeEl.innerHTML = `👋 Need help with the estimate? I can walk you through it! <span id="${WIDGET_ID}-nudge-dismiss">✕</span>`;
+  document.body.appendChild(nudgeEl);
+
   const win = document.createElement("div");
   win.id = `${WIDGET_ID}-window`;
   win.setAttribute("role", "dialog");
@@ -338,19 +335,10 @@ Tone & behavior guidelines:
       </div>
       <button class="aa-close" id="${WIDGET_ID}-close" aria-label="Close chat">✕</button>
     </div>
-
     <div class="aa-messages" id="${WIDGET_ID}-messages" aria-live="polite"></div>
-
     <div class="aa-starters" id="${WIDGET_ID}-starters"></div>
-
     <div class="aa-input-row">
-      <textarea
-        class="aa-input"
-        id="${WIDGET_ID}-input"
-        placeholder="Ask me anything…"
-        rows="1"
-        aria-label="Chat message"
-      ></textarea>
+      <textarea class="aa-input" id="${WIDGET_ID}-input" placeholder="Ask me anything…" rows="1" aria-label="Chat message"></textarea>
       <button class="aa-send" id="${WIDGET_ID}-send" aria-label="Send message">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
@@ -362,32 +350,89 @@ Tone & behavior guidelines:
   document.body.appendChild(win);
 
   // ─── Refs ──────────────────────────────────────────────────────────────────
-  const messagesEl  = document.getElementById(`${WIDGET_ID}-messages`);
-  const inputEl     = document.getElementById(`${WIDGET_ID}-input`);
-  const sendBtn     = document.getElementById(`${WIDGET_ID}-send`);
-  const closeBtn    = document.getElementById(`${WIDGET_ID}-close`);
-  const startersEl  = document.getElementById(`${WIDGET_ID}-starters`);
+  const messagesEl   = document.getElementById(`${WIDGET_ID}-messages`);
+  const inputEl      = document.getElementById(`${WIDGET_ID}-input`);
+  const sendBtn      = document.getElementById(`${WIDGET_ID}-send`);
+  const closeBtn     = document.getElementById(`${WIDGET_ID}-close`);
+  const startersEl   = document.getElementById(`${WIDGET_ID}-starters`);
+  const nudgeDismiss = document.getElementById(`${WIDGET_ID}-nudge-dismiss`);
 
-  // ─── Helpers ───────────────────────────────────────────────────────────────
-  function setOpen(open) {
+  // ─── Nudge ─────────────────────────────────────────────────────────────────
+  function showNudge() {
+    if (nudgeShown || isOpen) return;
+    nudgeShown = true;
+    nudgeEl.classList.add("aa-nudge-visible");
+    nudgeTimer = setTimeout(hideNudge, 8000);
+  }
+
+  function hideNudge() {
+    clearTimeout(nudgeTimer);
+    nudgeEl.classList.remove("aa-nudge-visible");
+  }
+
+  nudgeEl.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (e.target.id === `${WIDGET_ID}-nudge-dismiss`) {
+      hideNudge();
+      return;
+    }
+    hideNudge();
+    setOpen(true, true);
+  });
+
+  nudgeDismiss.addEventListener("click", (e) => {
+    e.stopPropagation();
+    hideNudge();
+  });
+
+  // ─── Watch estimate toggle ─────────────────────────────────────────────────
+  function watchEstimateToggle() {
+    const estimateBtn = document.getElementById("estimateToggle");
+    if (!estimateBtn) return;
+    estimateBtn.addEventListener("click", () => {
+      setTimeout(() => {
+        const expanded = estimateBtn.getAttribute("aria-expanded") === "true";
+        if (expanded && !isOpen) {
+          setTimeout(showNudge, 1200);
+        } else {
+          hideNudge();
+        }
+      }, 50);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", watchEstimateToggle);
+  } else {
+    watchEstimateToggle();
+  }
+
+  // ─── Open / close ──────────────────────────────────────────────────────────
+  function setOpen(open, estimateContext = false) {
     isOpen = open;
     btn.setAttribute("aria-expanded", open ? "true" : "false");
     win.classList.toggle("aa-open", open);
     if (open) {
-      // Show welcome message on first open
-      if (history.length === 0) showWelcome();
+      hideNudge();
+      if (history.length === 0) {
+        estimateContext ? showEstimateWelcome() : showWelcome();
+      }
       setTimeout(() => inputEl.focus(), 250);
     }
   }
 
   function showWelcome() {
-    appendMessage("bot", "Hey! I'm AccelAssistant 👋 I can answer questions about our services, coverage area, or just help you figure out what you need. What's on your mind?");
+    appendMessage("bot", "Hey! I'm AccelAssistant 👋 I can answer questions about our services, help you figure out what you need, or walk you through the Instant Estimate tool step by step. What's on your mind?");
     renderStarters();
+  }
+
+  function showEstimateWelcome() {
+    appendMessage("bot", "Hey! 👋 I saw you opened the Instant Estimate tool — great, I can walk you through it! First question: is this for a home, a business, or something else like a production space?");
   }
 
   function renderStarters() {
     startersEl.innerHTML = "";
-    if (history.length > 2) return; // hide after conversation starts
+    if (history.length > 2) return;
     STARTERS.forEach(s => {
       const chip = document.createElement("button");
       chip.className = "aa-starter";
@@ -417,11 +462,7 @@ Tone & behavior guidelines:
     const div = document.createElement("div");
     div.className = "aa-msg aa-bot aa-typing";
     div.id = `${WIDGET_ID}-typing`;
-    div.innerHTML = `<div class="aa-bubble">
-      <span class="aa-typing-dot"></span>
-      <span class="aa-typing-dot"></span>
-      <span class="aa-typing-dot"></span>
-    </div>`;
+    div.innerHTML = `<div class="aa-bubble"><span class="aa-typing-dot"></span><span class="aa-typing-dot"></span><span class="aa-typing-dot"></span></div>`;
     messagesEl.appendChild(div);
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
@@ -431,11 +472,9 @@ Tone & behavior guidelines:
   }
 
   function updateSendBtn() {
-    const hasText = inputEl.value.trim().length > 0;
-    sendBtn.classList.toggle("aa-ready", hasText && !isLoading);
+    sendBtn.classList.toggle("aa-ready", inputEl.value.trim().length > 0 && !isLoading);
   }
 
-  // Auto-grow textarea
   inputEl.addEventListener("input", () => {
     inputEl.style.height = "40px";
     inputEl.style.height = Math.min(inputEl.scrollHeight, 100) + "px";
@@ -447,9 +486,7 @@ Tone & behavior guidelines:
     const trimmed = (text || inputEl.value).trim();
     if (!trimmed || isLoading) return;
 
-    // Clear starters after first real message
     startersEl.innerHTML = "";
-
     inputEl.value = "";
     inputEl.style.height = "40px";
     updateSendBtn();
@@ -467,13 +504,10 @@ Tone & behavior guidelines:
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ messages: history, system: SYSTEM_PROMPT }),
       });
-
       const data = await res.json().catch(() => ({}));
       removeTyping();
-
       if (!res.ok || !data.reply) {
-        const errMsg = "Sorry, I had trouble connecting. You can reach us at (323) 533-4872 or info@accelerateddigital.net!";
-        appendMessage("bot", errMsg);
+        appendMessage("bot", "Sorry, I had trouble connecting. You can reach us at (323) 533-4872 or info@accelerateddigital.net!");
       } else {
         appendMessage("bot", data.reply);
         history.push({ role: "assistant", content: data.reply });
@@ -491,23 +525,18 @@ Tone & behavior guidelines:
   // ─── Events ────────────────────────────────────────────────────────────────
   btn.addEventListener("click", () => setOpen(!isOpen));
   closeBtn.addEventListener("click", () => setOpen(false));
-
   sendBtn.addEventListener("click", () => sendMessage());
 
   inputEl.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && isOpen) setOpen(false);
   });
 
-  // Close if clicking outside
   document.addEventListener("click", (e) => {
-    if (isOpen && !win.contains(e.target) && !btn.contains(e.target)) {
+    if (isOpen && !win.contains(e.target) && !btn.contains(e.target) && !nudgeEl.contains(e.target)) {
       setOpen(false);
     }
   });
