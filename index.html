@@ -719,5 +719,38 @@
       });
     })();
   </script>
+  <div class="floating-contact">
+  <button class="floating-contact-toggle" id="floatingContactToggle" aria-label="Open contact options">
+    Contact Us
+  </button>
+
+  <div class="floating-contact-menu" id="floatingContactMenu">
+    <a href="tel:+13235334872" class="floating-contact-action call">
+      Call Us
+    </a>
+    <a href="sms:+13235334872" class="floating-contact-action text">
+      Text Us
+    </a>
+  </div>
+</div>
+<script>
+  (function () {
+    const toggle = document.getElementById('floatingContactToggle');
+    const menu = document.getElementById('floatingContactMenu');
+
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener('click', function () {
+      menu.classList.toggle('open');
+    });
+
+    document.addEventListener('click', function (event) {
+      const wrapper = document.querySelector('.floating-contact');
+      if (!wrapper.contains(event.target)) {
+        menu.classList.remove('open');
+      }
+    });
+  })();
+</script>
 </body>
 </html>
