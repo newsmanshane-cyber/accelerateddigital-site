@@ -81,7 +81,16 @@ body {
   line-height: 0;
   text-decoration:none;
 }
+.contact-phone a {
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+}
 
+.contact-phone a:hover {
+  text-decoration: underline;
+}
 .brand-logo{
   width:52px;
   height:52px;
