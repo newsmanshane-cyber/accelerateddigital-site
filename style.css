@@ -7,6 +7,79 @@ section[id] {
   scroll-margin-top: 80px;
 }
 
+/* ===== Accessibility ===== */
+
+/* Skip to main content link — visible only on keyboard focus */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 18px;
+  z-index: 9999;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  border-radius: 0 0 10px 10px;
+  text-decoration: none;
+  transition: top .15s ease;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid white;
+  outline-offset: 2px;
+}
+
+/* Screen-reader only utility class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Global focus-visible styles — clear ring for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Remove outline for mouse users only */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Stronger focus for interactive cards and buttons */
+.btn:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px rgba(46,125,255,0.20);
+}
+
+/* Form inputs — restore focus visibility that was removed */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(46,125,255,0.18);
+}
+
+/* Improve muted text contrast slightly for WCAG AA */
+:root {
+  --muted: #c4c8d2;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -590,8 +663,8 @@ body {
 
 .contact-form input:focus,
 .contact-form textarea:focus{
-  border-color:rgba(46,125,255,0.45);
-  outline:none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(46,125,255,0.18);
 }
 
 .turnstile-row{
