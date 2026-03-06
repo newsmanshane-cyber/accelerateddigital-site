@@ -303,7 +303,7 @@
         return;
       }
 
-      emailUI.status.textContent = "Estimate sent! Check your inbox.";
+      emailUI.status.textContent = "Estimate sent! Check your inbox — if you don't see it in a minute, check your spam folder.";
       emailUI.form.reset();
       if (window.turnstile) window.turnstile.reset(); // resets all widgets
     } catch {
