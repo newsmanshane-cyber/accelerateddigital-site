@@ -629,6 +629,8 @@
         <a class="link" href="tel:+13235334872">(323) 533-4872</a>
         <span aria-hidden="true">•</span>
         <a class="link" href="/cdn-cgi/l/email-protection#325b5c545d72535151575e574053465756565b555b46535e1c5c5746"><span class="__cf_email__" data-cfemail="bcd5d2dad3fcdddfdfd9d0d9ceddc8d9d8d8d5dbd5c8ddd092d2d9c8">[email&#160;protected]</span></a>
+        <span aria-hidden="true">•</span>
+        <button class="link" id="portalFooterBtn" type="button">Client Portal</button>
       </div>
     </div>
   </footer>
@@ -894,5 +896,98 @@
       });
     })();
   </script>
+  <!-- Client Portal Modal -->
+  <div id="portalModal" class="portal-modal-backdrop" hidden aria-modal="true" role="dialog" aria-labelledby="portalModalTitle">
+    <div class="portal-modal">
+      <button class="portal-modal-close" id="portalModalClose" aria-label="Close client portal dialog">✕</button>
+
+      <div class="portal-modal-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+
+      <h2 id="portalModalTitle" class="portal-modal-title">Client Portal</h2>
+      <p class="portal-modal-sub">View and download your invoices from Accelerated Digital Solutions.</p>
+
+      <a href="https://accounting.accelerateddigital.net" target="_blank" rel="noopener noreferrer" class="btn portal-modal-btn">
+        Log In to Your Portal
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+
+      <div class="portal-modal-steps">
+        <p class="portal-modal-steps-label">First time? Here's how it works:</p>
+        <ol class="portal-modal-list">
+          <li>
+            <span class="portal-step-num" aria-hidden="true">1</span>
+            <span>We send you an invoice by email — it includes a direct link to view it.</span>
+          </li>
+          <li>
+            <span class="portal-step-num" aria-hidden="true">2</span>
+            <span>Click <strong>Log In to Your Portal</strong> above and sign in with the email address we have on file for you.</span>
+          </li>
+          <li>
+            <span class="portal-step-num" aria-hidden="true">3</span>
+            <span>View all your invoices, check balances, and download PDFs anytime.</span>
+          </li>
+        </ol>
+      </div>
+
+      <p class="portal-modal-help">
+        Don't have access yet or having trouble?
+        <a href="#contact" class="link" id="portalContactLink">Contact us</a> and we'll get you set up.
+      </p>
+    </div>
+  </div>
+  <script>
+    (() => {
+      const modal    = document.getElementById('portalModal');
+      const openBtn  = document.getElementById('portalFooterBtn');
+      const closeBtn = document.getElementById('portalModalClose');
+      const contactLink = document.getElementById('portalContactLink');
+      let lastFocused;
+
+      function openModal() {
+        lastFocused = document.activeElement;
+        modal.hidden = false;
+        document.body.classList.add('modal-open');
+        // Focus first focusable element
+        closeBtn.focus();
+      }
+
+      function closeModal() {
+        modal.hidden = true;
+        document.body.classList.remove('modal-open');
+        if (lastFocused) lastFocused.focus();
+      }
+
+      openBtn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+
+      // Close on backdrop click
+      modal.addEventListener('click', e => {
+        if (e.target === modal) closeModal();
+      });
+
+      // Close on Escape key + trap Tab inside modal
+      modal.addEventListener('keydown', e => {
+        if (e.key === 'Escape') { closeModal(); return; }
+        if (e.key === 'Tab') {
+          const focusable = [...modal.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])')];
+          const first = focusable[0];
+          const last  = focusable[focusable.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault(); last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault(); first.focus();
+          }
+        }
+      });
+
+      // "Contact us" link closes modal then scrolls to contact section
+      contactLink.addEventListener('click', () => {
+        closeModal();
+      });
+    })();
+  </script>
+
 </body>
 </html>
