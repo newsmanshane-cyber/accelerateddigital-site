@@ -807,6 +807,183 @@ body {
   background:rgba(13,15,19,0.7);
   border-top:1px solid rgba(255,255,255,0.06);
 }
+
+/* Footer link button — looks like an <a> */
+button.link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: color .2s, text-decoration-color .2s;
+}
+button.link:hover {
+  color: white;
+  text-decoration-color: rgba(255,255,255,0.3);
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open { overflow: hidden; }
+
+/* ===== Client Portal Modal ===== */
+.portal-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(5, 7, 10, 0.82);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn .15s ease;
+}
+.portal-modal-backdrop[hidden] { display: none; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.portal-modal {
+  position: relative;
+  background: linear-gradient(160deg, #111827, #0d1117);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 20px;
+  padding: 40px 36px 36px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.55);
+  animation: slideUp .18s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.portal-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--muted);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background .15s, color .15s;
+}
+.portal-modal-close:hover { background: rgba(255,255,255,0.1); color: white; }
+
+.portal-modal-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1a3a6e, #0d1e3d);
+  border: 1px solid rgba(46,125,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.portal-modal-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+
+.portal-modal-sub {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.portal-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+  padding: 14px 24px;
+  font-size: 0.97rem;
+  margin-bottom: 28px;
+  text-decoration: none;
+}
+
+.portal-modal-steps {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+
+.portal-modal-steps-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 0 0 14px;
+}
+
+.portal-modal-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.portal-modal-list li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.portal-step-num {
+  flex: 0 0 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(46,125,255,0.15);
+  border: 1px solid rgba(46,125,255,0.3);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.portal-modal-help {
+  font-size: 0.85rem;
+  color: #6b7280;
+  text-align: center;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .portal-modal { padding: 32px 22px 28px; }
+}
 /* ===== Floating Contact ===== */ .floating-contact{ position: fixed; right: 18px; bottom: 18px; z-index: 1100; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; } .floating-contact-toggle{ display: inline-flex; align-items: center; gap: 10px; padding: 14px 18px; border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; background: linear-gradient(180deg, rgba(17,20,24,0.94), rgba(12,14,18,0.94)); color: var(--text); box-shadow: 0 18px 40px rgba(0,0,0,0.38); backdrop-filter: blur(12px); cursor: pointer; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.01em; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; } .floating-contact-toggle:hover{ transform: translateY(-2px); border-color: rgba(46,125,255,0.35); box-shadow: 0 20px 48px rgba(0,0,0,0.42); } .floating-contact-dot{ width: 10px; height: 10px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 14px rgba(46,125,255,0.75); flex: 0 0 auto; } .floating-contact-panel{ width: min(340px, calc(100vw - 28px)); } .floating-contact-card{ padding: 18px; border-radius: 18px; background: rgba(17,20,24,0.92); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(14px); box-shadow: 0 18px 48px rgba(0,0,0,0.40); text-align: left; transform: translateY(8px) scale(0.98); opacity: 0; pointer-events: none; transition: transform .2s ease, opacity .2s ease; } .floating-contact.open .floating-contact-card{ transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; } .floating-contact-eyebrow{ color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; } .floating-contact-number{ display: inline-block; color: var(--text); text-decoration: none; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; } .floating-contact-number:hover{ color: white; } .floating-contact-subtext{ color: var(--muted); font-size: 0.93rem; margin-bottom: 14px; } .floating-contact-actions{ display: flex; gap: 10px; flex-wrap: wrap; } .floating-contact-action{ flex: 1 1 120px; display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 12px 14px; border-radius: 12px; text-decoration: none; font-weight: 700; border: 1px solid rgba(255,255,255,0.08); transition: transform .2s ease, border-color .2s ease, background .2s ease; } .floating-contact-action:hover{ transform: translateY(-1px); } .floating-contact-action.primary{ background: var(--accent); color: white; } .floating-contact-action.ghost{ background: rgba(255,255,255,0.05); color: var(--text); } .floating-contact-action.primary:hover, .floating-contact-action.ghost:hover{ border-color: rgba(46,125,255,0.35); } .floating-contact-feedback{ min-height: 1.2em; margin-top: 10px; color: var(--muted); font-size: 0.88rem; } /* ===== Mobile ===== */
 @media(max-width:900px){
   .estimate-grid{
