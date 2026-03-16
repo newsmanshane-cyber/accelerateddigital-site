@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | Accelerated Digital Solutions LLC</title>
+  <meta name="description" content="Privacy Policy for Accelerated Digital Solutions LLC. Learn how we collect, use, and protect your information." />
+  <meta name="robots" content="index,follow" />
+  <meta name="author" content="Accelerated Digital Solutions LLC" />
+  <link rel="canonical" href="https://www.accelerateddigital.net/privacy-policy" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.accelerateddigital.net/privacy-policy" />
+  <meta property="og:title" content="Privacy Policy | Accelerated Digital Solutions LLC" />
+  <meta property="og:description" content="Privacy Policy for Accelerated Digital Solutions LLC." />
+  <meta property="og:image" content="https://www.accelerateddigital.net/assets/og-image.png" />
+  <meta property="og:site_name" content="Accelerated Digital Solutions LLC" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X59WX00S4E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X59WX00S4E', { anonymize_ip: true });
+  </script>
+
+  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+  <style>
+    /* ===== Privacy page specific styles ===== */
+    .privacy-hero {
+      padding: 100px 10% 60px;
+      text-align: center;
+      position: relative;
+    }
+    .privacy-hero h1 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+    .privacy-hero .effective {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .privacy-hero .effective span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .breadcrumb a:hover { color: var(--text); }
+    .breadcrumb svg { opacity: 0.5; flex-shrink: 0; }
+
+    /* Table of contents */
+    .toc-card {
+      max-width: 860px;
+      margin: 0 auto 48px;
+      padding: 26px 30px;
+      background: rgba(21,24,31,0.65);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      backdrop-filter: blur(8px);
+    }
+    .toc-card h2 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .toc-grid a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.91rem;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: color .18s;
+    }
+    .toc-grid a:hover { color: var(--text); }
+    .toc-num {
+      flex: 0 0 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: rgba(46,125,255,0.12);
+      border: 1px solid rgba(46,125,255,0.2);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Main content area */
+    .privacy-content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 10% 80px;
+    }
+    .privacy-section {
+      margin-bottom: 48px;
+      scroll-margin-top: 100px;
+    }
+    .privacy-section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: rgba(46,125,255,0.12);
+      border: 1px solid rgba(46,125,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .privacy-section p {
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .privacy-section p:last-child { margin-bottom: 0; }
+    .privacy-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .privacy-section ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+    .bullet-dot {
+      flex: 0 0 6px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 9px;
+      opacity: 0.7;
+    }
+
+    /* Info callout boxes */
+    .info-box {
+      background: rgba(46,125,255,0.07);
+      border: 1px solid rgba(46,125,255,0.18);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      color: rgba(241,241,241,0.88);
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+    .info-box strong { color: var(--text); }
+
+    /* Contact block */
+    .contact-block {
+      background: rgba(21,24,31,0.65);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-top: 18px;
+    }
+    .contact-block p {
+      margin-bottom: 10px;
+    }
+    .contact-block a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(46,125,255,0.3);
+      transition: border-color .2s;
+    }
+    .contact-block a:hover { border-bottom-color: rgba(46,125,255,0.8); }
+
+    /* Back to top */
+    .back-to-top {
+      display: flex;
+      justify-content: center;
+      margin-top: 60px;
+      padding-bottom: 40px;
+    }
+    .back-to-top a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      transition: color .2s, border-color .2s;
+    }
+    .back-to-top a:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
+
+    /* Site footer inner layout (matches index) */
+    .site-footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 16px;
+    }
+    .site-footer-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    @media (max-width: 720px) {
+      .privacy-hero { padding: 90px 6% 50px; }
+      .privacy-content { padding: 0 6% 60px; }
+      .toc-card { margin: 0 6% 40px; }
+      .toc-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="/" aria-label="Accelerated Digital Solutions — Home">
+      <img src="assets/ADS%20LOGO%20WHITE%20MONOGRAM.svg?v=1" alt="Accelerated Digital Solutions" class="brand-logo" draggable="false" />
+    </a>
+    <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
+      <a href="/#services">Services</a>
+      <a href="/#service-area">Service Area</a>
+      <a href="/#projects">Projects</a>
+      <a href="/#estimate">Estimate</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <div class="contact-phone">
+      <a href="tel:+13235334872">(323) 533-4872</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" type="button"
+      aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNavPanel">
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+    </button>
+  </header>
+
+  <!-- Mobile nav overlay -->
+  <div id="mobileNavPanel" class="mobile-nav-panel" hidden aria-label="Mobile navigation">
+    <nav class="mobile-nav-links">
+      <a href="/#services">Services</a>
+      <a href="/#service-area">Service Area</a>
+      <a href="/#projects">Projects</a>
+      <a href="/#estimate">Estimate</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <a class="mobile-nav-phone" href="tel:+13235334872">(323) 533-4872</a>
+  </div>
+
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="privacy-hero">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        <span>Privacy Policy</span>
+      </nav>
+      <h1>Privacy Policy</h1>
+      <p class="effective">Effective Date: <span>March 16, 2026</span> &nbsp;•&nbsp; Accelerated Digital Solutions LLC</p>
+    </section>
+
+    <!-- Table of Contents -->
+    <div class="toc-card" role="navigation" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <div class="toc-grid">
+        <a href="#information-we-collect"><span class="toc-num">1</span>Information We Collect</a>
+        <a href="#how-we-use"><span class="toc-num">2</span>How We Use Your Information</a>
+        <a href="#information-sharing"><span class="toc-num">3</span>Information Sharing</a>
+        <a href="#cookies-analytics"><span class="toc-num">4</span>Cookies &amp; Analytics</a>
+        <a href="#data-retention"><span class="toc-num">5</span>Data Retention</a>
+        <a href="#security"><span class="toc-num">6</span>Security</a>
+        <a href="#third-party"><span class="toc-num">7</span>Third-Party Services</a>
+        <a href="#your-rights"><span class="toc-num">8</span>Your Rights (CCPA)</a>
+        <a href="#childrens-privacy"><span class="toc-num">9</span>Children's Privacy</a>
+        <a href="#changes"><span class="toc-num">10</span>Changes to This Policy</a>
+        <a href="#contact-us"><span class="toc-num">11</span>Contact Us</a>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="privacy-content">
+
+      <div class="info-box">
+        <strong>Plain English Summary:</strong> We collect only what we need to respond to your inquiries and deliver our services. We don't sell your data, we don't buy ad space with it, and we never will. This page explains the specifics in full.
+      </div>
+
+      <!-- 1. Information We Collect -->
+      <section class="privacy-section" id="information-we-collect">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          1. Information We Collect
+        </h2>
+        <p>We collect information you voluntarily provide and certain technical data generated when you use our website.</p>
+
+        <p><strong style="color:var(--text);">Information you provide directly:</strong></p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Name, email address, and message content when you submit our contact form.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Name, email address, and project notes when you request or email an estimate.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Phone number if you call or text us directly at (323) 533-4872.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Business name and project details you share during consultations or service engagements.</li>
+        </ul>
+
+        <p><strong style="color:var(--text);">Information collected automatically:</strong></p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Pages visited, time spent on site, and general navigation patterns via Google Analytics.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Browser type, device type, and operating system (anonymized).</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Approximate geographic region (city-level, via anonymized IP address).</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Referral source (how you arrived at our site).</li>
+        </ul>
+        <p>We do <strong style="color:var(--text);">not</strong> collect payment card numbers, Social Security numbers, government-issued ID numbers, or any financial account information through this website.</p>
+      </section>
+
+      <!-- 2. How We Use -->
+      <section class="privacy-section" id="how-we-use">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </span>
+          2. How We Use Your Information
+        </h2>
+        <p>We use the information we collect to:</p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Respond to your contact form submissions, estimate requests, and questions.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Provide, schedule, and deliver IT and network infrastructure services.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Send you project-related communications, invoices, and service updates.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Improve our website based on aggregated, anonymized usage data.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Comply with applicable legal obligations.</li>
+        </ul>
+        <p>We do <strong style="color:var(--text);">not</strong> use your information for automated decision-making, profiling, or unsolicited marketing campaigns.</p>
+      </section>
+
+      <!-- 3. Information Sharing -->
+      <section class="privacy-section" id="information-sharing">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </span>
+          3. Information Sharing
+        </h2>
+        <p>We do <strong style="color:var(--text);">not sell, rent, or trade your personal information</strong> to third parties — ever. We share information only in these limited circumstances:</p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Service providers:</strong> Trusted tools we use to operate our business, such as email delivery (Resend) and our accounting platform (Akaunting). These providers are contractually limited to using your data only to provide the service.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Legal requirements:</strong> If required by applicable law, court order, or governmental authority.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Business transfers:</strong> In the unlikely event of a merger, acquisition, or sale of assets, customer data may be transferred. We will notify you via email and/or a prominent notice on this page prior to any such transfer.</li>
+        </ul>
+      </section>
+
+      <!-- 4. Cookies & Analytics -->
+      <section class="privacy-section" id="cookies-analytics">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </span>
+          4. Cookies &amp; Analytics
+        </h2>
+        <p>Our website uses the following technologies to understand site usage:</p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Google Analytics (GA4):</strong> We use Google Analytics with IP anonymization enabled (<code style="background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88em;">anonymize_ip: true</code>). This means your full IP address is never stored by Google. Analytics cookies track aggregate, non-identifiable usage data.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Cloudflare Turnstile:</strong> Our contact and estimate forms use Cloudflare Turnstile for bot protection. This is a privacy-preserving CAPTCHA alternative that does not use tracking cookies or behavioral fingerprinting.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Session cookies:</strong> Standard browser session data used for website functionality. These expire when you close your browser.</li>
+        </ul>
+        <p>You can opt out of Google Analytics tracking by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" class="link">Google Analytics Opt-Out Browser Add-On</a>. Most modern browsers also allow you to block or clear cookies through browser settings.</p>
+      </section>
+
+      <!-- 5. Data Retention -->
+      <section class="privacy-section" id="data-retention">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </span>
+          5. Data Retention
+        </h2>
+        <p>We retain your information only as long as necessary for the purpose it was collected:</p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Contact form inquiries:</strong> Retained in our email system for up to 2 years, or until you request deletion.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Client records and invoices:</strong> Retained for a minimum of 7 years to comply with applicable tax and business record-keeping requirements.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Analytics data:</strong> Aggregated and anonymized data is retained per Google Analytics default settings (up to 14 months for user-level data).</li>
+        </ul>
+        <p>When retention periods expire, we delete or anonymize data in a secure manner.</p>
+      </section>
+
+      <!-- 6. Security -->
+      <section class="privacy-section" id="security">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          6. Security
+        </h2>
+        <p>We implement industry-standard technical and organizational measures to protect your information, including:</p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span>HTTPS/TLS encryption for all data in transit.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Cloudflare WAF and DDoS protection on all public-facing services.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Secure, access-controlled hosting infrastructure.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Bot protection on all web forms via Cloudflare Turnstile.</li>
+        </ul>
+        <p>While we take reasonable precautions, no method of transmission over the internet or electronic storage is 100% secure. If you have security concerns, please contact us directly.</p>
+      </section>
+
+      <!-- 7. Third-Party Services -->
+      <section class="privacy-section" id="third-party">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </span>
+          7. Third-Party Services
+        </h2>
+        <p>Our website integrates with the following third-party services. Each operates under its own privacy policy:</p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Google Analytics</strong> — Website analytics. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" class="link">Privacy Policy</a></li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Cloudflare</strong> — CDN, security, DNS, and form protection (Turnstile). <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" class="link">Privacy Policy</a></li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Resend</strong> — Transactional email delivery for contact form and estimate confirmations. <a href="https://resend.com/privacy" target="_blank" rel="noopener noreferrer" class="link">Privacy Policy</a></li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Akaunting (self-hosted)</strong> — Client invoicing and accounting. Hosted on our own infrastructure at <code style="background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88em;">accounting.accelerateddigital.net</code>.</li>
+        </ul>
+        <p>Our website may contain links to external websites. We are not responsible for the privacy practices of those sites and encourage you to review their policies.</p>
+      </section>
+
+      <!-- 8. Your Rights (CCPA) -->
+      <section class="privacy-section" id="your-rights">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+          </span>
+          8. Your Rights (California / CCPA)
+        </h2>
+        <p>As a California-based business, we comply with the California Consumer Privacy Act (CCPA). If you are a California resident, you have the following rights:</p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Right to Know:</strong> Request disclosure of the categories and specific pieces of personal information we have collected about you.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Right to Delete:</strong> Request deletion of your personal information, subject to certain exceptions (e.g., legal retention requirements).</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Right to Opt-Out of Sale:</strong> We do not sell personal information, so this right does not apply. However, you may contact us to confirm this at any time.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Right to Non-Discrimination:</strong> We will not discriminate against you for exercising any of these rights.</li>
+        </ul>
+        <p>To exercise any of these rights, please contact us using the information in Section 11. We will respond to verified requests within 45 days.</p>
+        <div class="info-box">
+          <strong>Note:</strong> We are a small business. We are not currently subject to the CCPA's full compliance requirements (which apply to businesses with annual gross revenues exceeding $25 million, or that annually buy/sell/share the personal information of 100,000+ consumers). Nonetheless, we believe privacy is a right, not a technicality, and we are committed to honoring these principles regardless.
+        </div>
+      </section>
+
+      <!-- 9. Children's Privacy -->
+      <section class="privacy-section" id="childrens-privacy">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </span>
+          9. Children's Privacy
+        </h2>
+        <p>Our website and services are intended for businesses and adults aged 18 and over. We do not knowingly collect personal information from children under the age of 13. If you believe we have inadvertently collected information from a minor, please contact us immediately and we will promptly delete it.</p>
+      </section>
+
+      <!-- 10. Changes -->
+      <section class="privacy-section" id="changes">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+          </span>
+          10. Changes to This Policy
+        </h2>
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices or applicable law. When we make material changes, we will update the "Effective Date" at the top of this page.</p>
+        <p>We encourage you to review this page periodically. Your continued use of our website following any changes constitutes your acceptance of the updated policy.</p>
+      </section>
+
+      <!-- 11. Contact Us -->
+      <section class="privacy-section" id="contact-us">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
+          11. Contact Us
+        </h2>
+        <p>If you have questions, concerns, or requests related to this Privacy Policy or your personal information, please contact us:</p>
+        <div class="contact-block">
+          <p><strong style="color:var(--text);">Accelerated Digital Solutions LLC</strong></p>
+          <p>Los Angeles, California</p>
+          <p>Email: <a href="mailto:info@accelerateddigital.net">info@accelerateddigital.net</a></p>
+          <p>Phone / Text: <a href="tel:+13235334872">(323) 533-4872</a></p>
+          <p>Website: <a href="https://www.accelerateddigital.net">accelerateddigital.net</a></p>
+        </div>
+      </section>
+
+      <div class="back-to-top">
+        <a href="#main-content">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+          Back to top
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div>© 2026 Accelerated Digital Solutions LLC — Los Angeles, California</div>
+      <div class="site-footer-links">
+        <a class="link" href="tel:+13235334872">(323) 533-4872</a>
+        <span aria-hidden="true">•</span>
+        <a class="link" href="mailto:info@accelerateddigital.net">info@accelerateddigital.net</a>
+        <span aria-hidden="true">•</span>
+        <a class="link" href="/privacy-policy">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky header scroll effect
+    (function () {
+      const header = document.getElementById("siteHeader");
+      const onScroll = () => header.classList.toggle("scrolled", (window.scrollY || 0) > 10);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // Hamburger nav
+    (function () {
+      const hamburger = document.getElementById('navHamburger');
+      const panel = document.getElementById('mobileNavPanel');
+      if (!hamburger || !panel) return;
+      const setOpen = (open) => {
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        hamburger.classList.toggle('is-open', open);
+        panel.hidden = !open;
+        document.body.classList.toggle('nav-open', open);
+      };
+      hamburger.addEventListener('click', () => {
+        setOpen(hamburger.getAttribute('aria-expanded') !== 'true');
+      });
+      panel.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setOpen(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+    })();
+  </script>
+</body>
+</html>
