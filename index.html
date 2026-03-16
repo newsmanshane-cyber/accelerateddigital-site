@@ -78,11 +78,26 @@
   }
   </script>
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X59WX00S4E"></script>
+  <!-- Google Analytics with Consent Mode v2 -->
   <script>
+    // Set default consent to denied before GA loads — cookie-consent.js updates this on accept
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      wait_for_update: 500
+    });
+    // If user previously accepted, grant consent immediately so GA fires correctly
+    if (localStorage.getItem('ads_cookie_consent') === 'accepted') {
+      gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'denied' });
+    }
+    if (localStorage.getItem('ads_cookie_consent') === 'declined') {
+      window['ga-disable-G-X59WX00S4E'] = true;
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X59WX00S4E"></script>
+  <script>
     gtag('js', new Date());
     gtag('config', 'G-X59WX00S4E', {
       page_title: document.title,
@@ -1072,5 +1087,6 @@
     })();
   </script>
 
+  <script src="cookie-consent.js" defer></script>
 </body>
 </html>
