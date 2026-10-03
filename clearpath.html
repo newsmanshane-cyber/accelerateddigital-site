@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ClearPath Monitoring | Patient Monitoring for Addiction Treatment Programs — by Accelerated Digital Solutions</title>
+  <meta name="description" content="ClearPath Monitoring gives substance use disorder treatment programs and sober living homes location awareness, app and web safeguards, tamper alerts and secure messaging on patients' own devices — designed with HIPAA and 42 CFR Part 2 in mind." />
+  <meta name="robots" content="index,follow" />
+  <meta name="author" content="Accelerated Digital Solutions LLC" />
+
+  <link rel="canonical" href="https://www.accelerateddigital.net/clearpath" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.accelerateddigital.net/clearpath" />
+  <meta property="og:title" content="ClearPath Monitoring — accountability tools for addiction recovery programs" />
+  <meta property="og:description" content="Patient monitoring for SUD treatment facilities and sober living homes, built by Accelerated Digital Solutions." />
+  <meta property="og:image" content="https://clearpathmonitoring.com/brand/clearpath-wordmark.png" />
+  <meta property="og:site_name" content="Accelerated Digital Solutions LLC" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ClearPath Monitoring" />
+  <meta name="twitter:description" content="Patient monitoring for SUD treatment facilities and sober living homes, built by Accelerated Digital Solutions." />
+  <meta name="twitter:image" content="https://clearpathmonitoring.com/brand/cp-icon-192.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ClearPath Monitoring",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "iOS, iPadOS, Web",
+    "description": "Patient-monitoring platform for substance use disorder treatment facilities and sober living homes.",
+    "url": "https://www.accelerateddigital.net/clearpath",
+    "image": "https://clearpathmonitoring.com/brand/cp-icon-192.png",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Accelerated Digital Solutions LLC",
+      "url": "https://www.accelerateddigital.net"
+    }
+  }
+  </script>
+
+  <!-- Google Analytics with Consent Mode v2 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', wait_for_update: 500 });
+    if (localStorage.getItem('ads_cookie_consent') === 'accepted') {
+      gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'denied' });
+    }
+    if (localStorage.getItem('ads_cookie_consent') === 'declined') {
+      window['ga-disable-G-X59WX00S4E'] = true;
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X59WX00S4E"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-X59WX00S4E', { page_title: document.title, page_location: window.location.href, anonymize_ip: true });
+  </script>
+
+  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+  <style>
+    /* ===== ClearPath page — purple theme layered over the ADS base ===== */
+    .cp-page .bg-grid{
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px),
+        radial-gradient(circle at 15% 20%, rgba(138,22,209,0.28), transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(185,76,255,0.12), transparent 50%);
+    }
+    .cp-page .site-nav a.active::after{ background: linear-gradient(90deg, var(--cp-light), rgba(185,76,255,0.3)); }
+    .cp-page .card:hover{ border-color: rgba(185,76,255,0.4); }
+    .cp-page .card::before{
+      background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(185,76,255,0.20), transparent 45%);
+    }
+
+    .cp-hero{
+      padding: 96px 10% 64px;
+      text-align: center;
+      position: relative;
+    }
+    .cp-hero-icon{
+      width: 92px; height: 92px;
+      border-radius: 22px;
+      display: block;
+      margin: 0 auto 18px;
+      box-shadow: 0 18px 50px rgba(138,22,209,0.45);
+    }
+    .cp-hero .cp-wordmark{ margin: 0 auto 26px; width: 420px; }
+    .cp-hero h1{
+      font-size: clamp(2rem, 3.4vw, 2.9rem);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .cp-hero p{ color: var(--muted); max-width: 780px; margin: 0 auto 28px; }
+    .cp-badge{
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #e9d5ff;
+      background: rgba(138,22,209,0.25);
+      border: 1px solid rgba(185,76,255,0.45);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+
+    .cp-page .section h2{ font-size: 1.75rem; }
+    .cp-page .eyebrow{ color: var(--cp-light); }
+
+    .promise{
+      max-width: 860px;
+      margin: 30px auto 0;
+      text-align: left;
+      padding: 26px 28px;
+      border-radius: 18px;
+      background: rgba(138,22,209,0.10);
+      border: 1px solid rgba(185,76,255,0.30);
+      border-left: 4px solid var(--cp-light);
+    }
+    .promise h3{ margin-bottom: 8px; }
+    .promise p{ color: var(--muted); }
+    .promise p + p{ margin-top: 10px; }
+
+    .grid{
+      display: grid;
+      gap: 18px;
+      max-width: 1100px;
+      margin: 34px auto 0;
+      text-align: left;
+    }
+    .grid-4{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .grid-3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .grid .card{ width: auto; padding: 24px; }
+    .grid .card h3{ font-size: 1.05rem; }
+    .grid .card p{ font-size: 0.95rem; }
+
+    .feat-icon{
+      width: 40px; height: 40px;
+      border-radius: 11px;
+      display: grid; place-items: center;
+      color: var(--cp-light);
+      background: rgba(138,22,209,0.16);
+      border: 1px solid rgba(185,76,255,0.30);
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .feat-icon svg{ width: 21px; height: 21px; }
+
+    /* Platform support */
+    .platforms{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1000px;
+      margin: 34px auto 0;
+      text-align: left;
+    }
+    .platform-group{
+      padding: 24px;
+      border-radius: 18px;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .platform-group h3{ margin-bottom: 4px; }
+    .platform-group > p{ color: var(--muted); font-size: 0.93rem; margin-bottom: 14px; }
+    .platform-list{ list-style: none; display: grid; gap: 8px; }
+    .platform-list li{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .platform-name{ font-weight: 600; }
+    .platform-name small{ display: block; font-weight: 400; color: var(--muted); font-size: 0.84rem; }
+    .status{
+      flex: 0 0 auto;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+    .status-live{ color: #6ee7b7; border-color: rgba(16,185,129,0.5); background: rgba(16,185,129,0.12); }
+    .status-beta{ color: #e9d5ff; border-color: rgba(185,76,255,0.55); background: rgba(138,22,209,0.20); }
+    .status-dev{ color: #93c5fd; border-color: rgba(39,194,255,0.45); background: rgba(39,194,255,0.10); }
+    .status-soon{ color: #fcd34d; border-color: rgba(255,176,32,0.45); background: rgba(255,176,32,0.10); }
+    .status-key{
+      display: flex; flex-wrap: wrap; gap: 10px 18px;
+      justify-content: center;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    .status-key span{ display: inline-flex; align-items: center; gap: 8px; }
+
+    .roadmap{
+      max-width: 860px;
+      margin: 30px auto 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      text-align: left;
+    }
+    .roadmap li{
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .roadmap li strong{ display: block; }
+    .roadmap li span.desc{ color: var(--muted); font-size: 0.94rem; }
+    .roadmap-note{ color: #8a909e; font-size: 0.86rem; margin-top: 14px; }
+
+    .privacy-list{
+      max-width: 860px;
+      margin: 28px auto 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      text-align: left;
+    }
+    .privacy-list li{
+      padding-left: 30px;
+      position: relative;
+      color: var(--text);
+    }
+    .privacy-list li::before{
+      content: "";
+      position: absolute;
+      left: 4px; top: 0.35em;
+      width: 14px; height: 8px;
+      border-left: 2px solid var(--cp-light);
+      border-bottom: 2px solid var(--cp-light);
+      transform: rotate(-45deg);
+    }
+    .privacy-list li span{ color: var(--muted); }
+
+    .cp-page .contact-form input:focus,
+    .cp-page .contact-form textarea:focus,
+    .cp-page .contact-form select:focus{
+      border-color: var(--cp-light);
+      box-shadow: 0 0 0 3px rgba(185,76,255,0.2);
+    }
+    .made-by{
+      margin-top: 22px;
+      color: #8a909e;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 1000px){
+      .grid-4{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .grid-3{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 720px){
+      .cp-hero{ padding: 72px 6% 48px; }
+      .cp-hero .cp-wordmark{ width: 280px; }
+      .grid-4, .grid-3, .platforms{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body class="cp-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="/" aria-label="Accelerated Digital Solutions — Home">
+      <img src="assets/ADS%20LOGO%20WHITE%20MONOGRAM.svg?v=1" alt="Accelerated Digital Solutions" class="brand-logo" draggable="false" />
+    </a>
+
+    <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
+      <a href="#overview" data-section="overview">Overview</a>
+      <a href="#features" data-section="features">Features</a>
+      <a href="#platforms" data-section="platforms">Platforms</a>
+      <a href="#privacy" data-section="privacy">Privacy</a>
+      <a href="#cp-contact" data-section="cp-contact">Contact</a>
+    </nav>
+
+    <a class="btn btn-cp header-cta" href="#cp-contact">Request Info</a>
+
+    <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNavPanel">
+      <span class="ham-bar"></span><span class="ham-bar"></span><span class="ham-bar"></span>
+    </button>
+  </header>
+
+  <div id="mobileNavPanel" class="mobile-nav-panel" hidden aria-label="Mobile navigation">
+    <nav class="mobile-nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#features">Features</a>
+      <a href="#platforms">Platforms</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#cp-contact">Contact</a>
+      <a href="/">Accelerated Digital Solutions</a>
+    </nav>
+    <a class="mobile-nav-phone" href="mailto:support@clearpathmonitoring.com">support@clearpathmonitoring.com</a>
+  </div>
+
+  <main id="main-content">
+    <!-- ===== Hero ===== -->
+    <section class="cp-hero">
+      <img src="assets/clearpath/cp-icon-192.webp" alt="" aria-hidden="true" class="cp-hero-icon" width="92" height="92" draggable="false" />
+      <img src="assets/clearpath/clearpath-wordmark.webp" alt="ClearPath Monitoring" class="cp-wordmark" width="420" height="132" draggable="false" />
+      <span class="cp-badge">Now in beta</span>
+      <h1>Accountability that supports recovery.</h1>
+      <p>
+        ClearPath Monitoring is a patient-monitoring platform for substance use disorder treatment programs and sober living homes.
+        Care teams get one secure place to see how each patient is doing between sessions, and patients get a direct line to their care team on their own phone.
+      </p>
+      <div class="hero-actions">
+        <a href="#cp-contact" class="btn btn-cp">Request Information</a>
+        <a href="#features" class="btn btn-ghost">See What It Does</a>
+      </div>
+    </section>
+
+    <!-- ===== Overview ===== -->
+    <section id="overview" class="section" data-observe aria-label="What ClearPath is">
+      <p class="eyebrow">What ClearPath is</p>
+      <h2>Built for the work between appointments</h2>
+      <p class="section-text">
+        Recovery doesn't stop when a patient leaves the building. ClearPath pairs a staff dashboard (on the web and as an iPhone and iPad app) with a ClearPath app on the patient's
+        own devices. The facility decides what is monitored, the patient consents and can see that monitoring is on, and the care team is told when something changes.
+        Records stay with the treatment facility. ClearPath is the software they use.
+      </p>
+
+      <div class="promise">
+        <h3>An honest promise</h3>
+        <p>
+          No software can stop a determined person from getting around controls on their own device. ClearPath doesn't claim to.
+          Its promise is narrower: a patient can't get around it <em>quietly</em>. If monitoring is switched off, a protection stops working, or a device goes silent, the care team knows.
+        </p>
+        <p>
+          That's accountability rather than prevention, and it's a promise we can keep.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== Who it's for ===== -->
+    <section id="who" class="section" aria-label="Who ClearPath is for">
+      <p class="eyebrow">Who it's for</p>
+      <h2>Made for treatment teams across the continuum of care</h2>
+      <p class="section-text">
+        From residential treatment through step-down care to sober living, ClearPath follows the patient as their level of care changes.
+      </p>
+
+      <div class="grid grid-4">
+        <div class="card reveal">
+          <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M10 10h4"/></svg></div>
+          <h3>Residential treatment &amp; detox</h3>
+          <p>Visibility for programs that let patients keep their phones during inpatient care.</p>
+        </div>
+        <div class="card reveal">
+          <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>PHP &amp; outpatient programs</h3>
+          <p>Support for patients living in the community while they keep attending treatment.</p>
+        </div>
+        <div class="card reveal">
+          <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></div>
+          <h3>Sober living homes</h3>
+          <p>House chat, chores, outing sign-outs and curfew requests, run by house managers.</p>
+        </div>
+        <div class="card reveal">
+          <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18.5 20a6.5 6.5 0 0 0-2.5-5.1"/></svg></div>
+          <h3>Clinicians &amp; case managers</h3>
+          <p>Alerts, notes and patient messages, with each person seeing only what their role allows.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Features ===== -->
+    <section id="features" class="section" data-observe aria-label="What ClearPath does">
+      <p class="eyebrow">What it does</p>
+      <h2>Everything a care team needs in one place</h2>
+
+      <div class="grid grid-3">
+        <div class="card reveal">
+          <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
+          <h3>Location &amp; geofencing</h3>
+          <p>Allowed areas and restricted zones with schedules and grace periods. Staff are alerted when a patient leaves where they should be or enters a place they shouldn't.</p>
+        </div>
+        <div class="card reveal">
+          <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>Web &amp; app safeguards</h3>
+          <p>Web filtering from the facility's blocklist and app restrictions (through Apple's Screen Time on iPhone). Blocked attempts are logged for the care team.</p>
+        </div>
+        <div class="card reveal">
+          <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+          <h3>Alerts &amp; tamper evidence</h3>
+          <p>The care team is told when a protection stops working, monitoring is switched off or a device goes quiet. Only staff, using their own codes, can pause monitoring, and every pause is recorded under their name.</p>
+        </div>
+        <div class="card reveal">
+          <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Messaging, calls &amp; journal</h3>
+          <p>Secure messages, plus voice and video calls between patients and their care team that are never recorded. There's also a private journal for the clinical team to review. Notifications never reveal what a message says.</p>
+        </div>
+        <div class="card reveal">
+          <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></div>
+          <h3>Schedules &amp; house life</h3>
+          <p>Appointments on the patient's phone, plus house chat, chore rotations, outing sign-outs and curfew-extension requests for sober living residents.</p>
+        </div>
+        <div class="card reveal">
+          <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8M12 17v4M7 12l3-3 2 2 5-5"/></svg></div>
+          <h3>Staff dashboard</h3>
+          <p>Patients, alerts with clinical notes, a live map, activity history and team messaging. Remote actions include lockout, pause and discharge, which releases the patient's device.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Platforms ===== -->
+    <section id="platforms" class="section" data-observe aria-label="Supported platforms">
+      <p class="eyebrow">Supported devices</p>
+      <h2>Where ClearPath runs today, and what's next</h2>
+      <p class="section-text">
+        ClearPath runs on the devices patients already own. No facility-issued phones and no factory resets.
+      </p>
+
+      <div class="platforms">
+        <div class="platform-group">
+          <h3>Patient app</h3>
+          <p>The ClearPath app on the patient's own device.</p>
+          <ul class="platform-list">
+            <li><span class="platform-name">iPhone<small>iOS · Screen Time–based safeguards</small></span><span class="status status-beta">Beta</span></li>
+            <li><span class="platform-name">iPad<small>iPadOS · same app as iPhone</small></span><span class="status status-beta">Beta</span></li>
+            <li><span class="platform-name">Windows PCs &amp; laptops<small>Windows 10 and 11</small></span><span class="status status-dev">In development</span></li>
+            <li><span class="platform-name">Mac<small>macOS</small></span><span class="status status-dev">In development</span></li>
+            <li><span class="platform-name">Android phones &amp; tablets</span><span class="status status-soon">Coming soon</span></li>
+          </ul>
+        </div>
+
+        <div class="platform-group">
+          <h3>Staff tools</h3>
+          <p>For clinicians, case managers, house managers and administrators.</p>
+          <ul class="platform-list">
+            <li><span class="platform-name">Web dashboard<small>Any modern browser, desktop or tablet</small></span><span class="status status-live">Available</span></li>
+            <li><span class="platform-name">ClearPath Dashboard for iPhone &amp; iPad<small>Alerts, patients, messages, schedule and calls</small></span><span class="status status-beta">Beta</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="status-key" aria-label="Status key">
+        <span><span class="status status-live">Available</span> ready to use</span>
+        <span><span class="status status-beta">Beta</span> in testing with early users</span>
+        <span><span class="status status-dev">In development</span> being built and tested internally</span>
+        <span><span class="status status-soon">Coming soon</span> next on the roadmap</span>
+      </div>
+
+      <h3 style="margin-top:46px; font-size:1.25rem;">Coming soon</h3>
+      <ul class="roadmap">
+        <li>
+          <span class="status status-soon">Next</span>
+          <span><strong>Android app</strong><span class="desc">The patient app for Android phones and tablets, with the same features as on iPhone.</span></span>
+        </li>
+        <li>
+          <span class="status status-dev">Building</span>
+          <span><strong>Windows &amp; Mac apps in beta</strong><span class="desc">The desktop apps are moving from internal testing into the beta, bringing patient messaging, calls and the latest safeguards to computers.</span></span>
+        </li>
+        <li>
+          <span class="status status-soon">Planned</span>
+          <span><strong>Recovery rewards</strong><span class="desc">Optional, facility-controlled contingency-management points that patients earn for positive steps and redeem for rewards the facility sets.</span></span>
+        </li>
+      </ul>
+      <p class="roadmap-note">Roadmap items and timing may change. Ask us about anything you need that isn't listed.</p>
+    </section>
+
+    <!-- ===== Privacy ===== -->
+    <section id="privacy" class="section" data-observe aria-label="Privacy and security">
+      <p class="eyebrow">Privacy &amp; security</p>
+      <h2>Designed around patient privacy from day one</h2>
+      <p class="section-text">
+        Substance use disorder records carry some of the strongest protections in healthcare. ClearPath is designed with HIPAA and 42 CFR Part 2 in mind.
+      </p>
+      <ul class="privacy-list">
+        <li>The treatment facility holds the records. <span>ClearPath processes information only on the facility's instructions, and it's never sold or used for advertising.</span></li>
+        <li>Every view is logged. <span>Each time a staff member opens a patient's record, location, messages or journal, the system records who looked and when.</span></li>
+        <li>Role-based access. <span>Staff see only what their role allows, and records are kept separate by facility.</span></li>
+        <li>Discreet by default. <span>Notifications never show message content, and browsing details are hidden until a staff member deliberately opens them.</span></li>
+        <li>Clear limits. <span>The app doesn't read outside messages, email or photos, doesn't record calls, and stops reporting at discharge.</span></li>
+        <li>Secure sessions. <span>Traffic is encrypted in transit, sign-ins are individual, two-factor authentication is supported, and idle sessions end automatically.</span></li>
+      </ul>
+      <p class="section-text" style="margin-top:22px;">
+        Read the full <a class="link link-cp" href="https://clearpathmonitoring.com/privacy/" target="_blank" rel="noopener">ClearPath privacy policy</a>.
+      </p>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="cp-contact" class="section" data-observe aria-label="Contact ClearPath">
+      <p class="eyebrow">Get in touch</p>
+      <h2>Interested in ClearPath for your program?</h2>
+      <p class="section-text">
+        Tell us a little about your facility and we'll follow up by email with more information or a walkthrough.
+        You can also email <a class="link link-cp" href="mailto:support@clearpathmonitoring.com">support@clearpathmonitoring.com</a>.
+      </p>
+
+      <div class="contact-wrap">
+        <form id="cpContactForm" class="contact-form" novalidate>
+          <input type="text" name="fax" id="fax" autocomplete="off" tabindex="-1" aria-hidden="true" />
+
+          <div class="field">
+            <label for="cpName">Name</label>
+            <input type="text" id="cpName" placeholder="Your name" required autocomplete="name" />
+          </div>
+
+          <div class="field">
+            <label for="cpEmail">Work email</label>
+            <input type="email" id="cpEmail" placeholder="you@yourfacility.org" required autocomplete="email" />
+          </div>
+
+          <div class="field">
+            <label for="cpOrg">Organization</label>
+            <input type="text" id="cpOrg" placeholder="Facility or program name" autocomplete="organization" />
+          </div>
+
+          <div class="field">
+            <label for="cpRole">Your role</label>
+            <select id="cpRole">
+              <option value="Facility leadership / owner">Facility leadership / owner</option>
+              <option value="Clinical director">Clinical director</option>
+              <option value="Clinician / case manager">Clinician / case manager</option>
+              <option value="Sober living operator / house manager">Sober living operator / house manager</option>
+              <option value="IT / operations">IT / operations</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="field field-full">
+            <label for="cpMessage">How can we help?</label>
+            <textarea id="cpMessage" rows="5" placeholder="Program type, number of patients, what you're hoping ClearPath can do…" required></textarea>
+          </div>
+
+          <div class="field field-full turnstile-row">
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAClxR7FVt3S2YrrD" data-response-field-name="cp-turnstile-response"></div>
+          </div>
+
+          <div class="field field-full actions-row">
+            <button class="btn btn-cp" type="submit">Request Information</button>
+            <p id="cpFormStatus" class="form-status" aria-live="polite"></p>
+          </div>
+
+          <p class="contact-alt">
+            Please don't include patient names or health information in this form.
+            If you're a patient, contact your treatment facility first. They hold your records and can answer questions about your own program.
+          </p>
+        </form>
+      </div>
+
+      <p class="made-by">ClearPath Monitoring is developed and operated by <a class="link" href="/">Accelerated Digital Solutions LLC</a>, Los Angeles, California.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div>© 2026 Accelerated Digital Solutions LLC — Los Angeles, California<br>
+        ClearPath Monitoring is a product of Accelerated Digital Solutions LLC.</div>
+      <div class="site-footer-links">
+        <a class="link link-cp" href="mailto:support@clearpathmonitoring.com">support@clearpathmonitoring.com</a>
+        <span aria-hidden="true">•</span>
+        <a class="link" href="/">Accelerated Digital Solutions</a>
+        <span aria-hidden="true">•</span>
+        <a class="link" href="https://clearpathmonitoring.com/privacy/" target="_blank" rel="noopener">ClearPath Privacy</a>
+        <span aria-hidden="true">•</span>
+        <a class="link" href="/sms-terms">SMS Terms</a>
+        <span aria-hidden="true">•</span>
+        <a class="link" href="/privacy-policy">ADS Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script src="accel-assistant.js?v=2" defer></script>
+
+  <script>
+    (function () {
+      const header = document.getElementById("siteHeader");
+      const onScroll = () => header.classList.toggle("scrolled", (window.scrollY || 0) > 10);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    })();
+
+    (function () {
+      const navLinks = Array.from(document.querySelectorAll(".site-nav a[data-section]"));
+      const sections = Array.from(document.querySelectorAll("section[data-observe]"));
+      const setActive = (id) => navLinks.forEach(a => a.classList.toggle("active", a.dataset.section === id));
+      const io = new IntersectionObserver((entries) => {
+        const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target?.id) setActive(visible.target.id);
+      }, { threshold: [0.2, 0.35, 0.5, 0.65], rootMargin: "-20% 0px -60% 0px" });
+      sections.forEach(s => io.observe(s));
+    })();
+
+    (function () {
+      const items = Array.from(document.querySelectorAll(".card.reveal"));
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+      }, { threshold: 0.12 });
+      items.forEach(c => io.observe(c));
+      document.querySelectorAll(".card").forEach(card => {
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+          card.style.setProperty("--my", (e.clientY - r.top) + "px");
+        });
+      });
+    })();
+
+    // Hamburger
+    (function () {
+      const hamburger = document.getElementById('navHamburger');
+      const panel = document.getElementById('mobileNavPanel');
+      if (!hamburger || !panel) return;
+      const setOpen = (open) => {
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        hamburger.classList.toggle('is-open', open);
+        panel.hidden = !open;
+        document.body.classList.toggle('nav-open', open);
+      };
+      hamburger.addEventListener('click', () => setOpen(hamburger.getAttribute('aria-expanded') !== 'true'));
+      panel.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setOpen(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+    })();
+
+    // ClearPath inquiry form → same /api/contact endpoint, tagged as a ClearPath inquiry
+    (function () {
+      const form = document.getElementById("cpContactForm");
+      const statusEl = document.getElementById("cpFormStatus");
+      if (!form) return;
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        statusEl.textContent = "Sending…";
+
+        const v = (id) => document.getElementById(id).value.trim();
+        const name = v("cpName"), email = v("cpEmail"), org = v("cpOrg"), role = v("cpRole"), msg = v("cpMessage");
+
+        if (!name || !email || !msg) { statusEl.textContent = "Please add your name, email and a message."; return; }
+
+        const token = form["cp-turnstile-response"]?.value || "";
+        if (!token) { statusEl.textContent = "Please complete the verification."; return; }
+
+        const payload = {
+          name,
+          email,
+          product: "clearpath",
+          topic: "ClearPath Monitoring",
+          organization: org,
+          role,
+          message: [
+            "Topic: ClearPath Monitoring inquiry",
+            `Organization: ${org || "(not given)"}`,
+            `Role: ${role}`,
+            "",
+            msg
+          ].join("\n"),
+          fax: document.getElementById("fax").value.trim(),
+          turnstileToken: token
+        };
+
+        try {
+          const res = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) { statusEl.textContent = data?.error || "Could not send. Please try again, or email support@clearpathmonitoring.com."; return; }
+          statusEl.textContent = "Thanks! We've received your request and will reply by email. If you don't see a confirmation, check your spam folder.";
+          form.reset();
+          if (window.turnstile) window.turnstile.reset();
+        } catch {
+          statusEl.textContent = "Network error. Please try again, or email support@clearpathmonitoring.com.";
+        }
+      });
+    })();
+  </script>
+
+  <script src="cookie-consent.js" defer></script>
+</body>
+</html>

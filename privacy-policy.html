@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy | Accelerated Digital Solutions LLC</title>
-  <meta name="description" content="Privacy Policy for Accelerated Digital Solutions LLC. Learn how we collect, use, and protect your information." />
+  <meta name="description" content="Privacy Policy for Accelerated Digital Solutions LLC and its website, including how ClearPath Monitoring and our SMS programs fit in." />
   <meta name="robots" content="index,follow" />
   <meta name="author" content="Accelerated Digital Solutions LLC" />
   <link rel="canonical" href="https://www.accelerateddigital.net/privacy-policy" />
@@ -26,7 +26,7 @@
     gtag('config', 'G-X59WX00S4E', { anonymize_ip: true });
   </script>
 
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css?v=3" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 
   <style>
@@ -165,20 +165,21 @@
       gap: 8px;
     }
     .privacy-section ul li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
+      display: block;
+      position: relative;
+      padding-left: 16px;
       color: var(--muted);
       font-size: 0.95rem;
       line-height: 1.65;
     }
     .bullet-dot {
-      flex: 0 0 6px;
+      position: absolute;
+      left: 0;
+      top: 9px;
       width: 6px;
       height: 6px;
       border-radius: 50%;
       background: var(--accent);
-      margin-top: 9px;
       opacity: 0.7;
     }
 
@@ -269,14 +270,11 @@
     </a>
     <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
       <a href="/#services">Services</a>
-      <a href="/#service-area">Service Area</a>
-      <a href="/#projects">Projects</a>
-      <a href="/#estimate">Estimate</a>
+      <a href="/clearpath">ClearPath</a>
+      <a href="/#approach">How We Work</a>
       <a href="/#contact">Contact</a>
     </nav>
-    <div class="contact-phone">
-      <a href="tel:+13235334872">(323) 533-4872</a>
-    </div>
+    <a class="btn header-cta" href="/#contact">Get in Touch</a>
     <button class="nav-hamburger" id="navHamburger" type="button"
       aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNavPanel">
       <span class="ham-bar"></span>
@@ -289,12 +287,11 @@
   <div id="mobileNavPanel" class="mobile-nav-panel" hidden aria-label="Mobile navigation">
     <nav class="mobile-nav-links">
       <a href="/#services">Services</a>
-      <a href="/#service-area">Service Area</a>
-      <a href="/#projects">Projects</a>
-      <a href="/#estimate">Estimate</a>
+      <a href="/clearpath">ClearPath</a>
+      <a href="/#approach">How We Work</a>
       <a href="/#contact">Contact</a>
     </nav>
-    <a class="mobile-nav-phone" href="tel:+13235334872">(323) 533-4872</a>
+    <a class="mobile-nav-phone" href="mailto:info@accelerateddigital.net">info@accelerateddigital.net</a>
   </div>
 
   <main id="main-content">
@@ -307,7 +304,7 @@
         <span>Privacy Policy</span>
       </nav>
       <h1>Privacy Policy</h1>
-      <p class="effective">Effective Date: <span>March 16, 2026</span> &nbsp;•&nbsp; Accelerated Digital Solutions LLC</p>
+      <p class="effective">Effective Date: <span>October 3, 2026</span> &nbsp;•&nbsp; Accelerated Digital Solutions LLC</p>
     </section>
 
     <!-- Table of Contents -->
@@ -317,15 +314,16 @@
         <a href="#information-we-collect"><span class="toc-num">1</span>Information We Collect</a>
         <a href="#how-we-use"><span class="toc-num">2</span>How We Use Your Information</a>
         <a href="#information-sharing"><span class="toc-num">3</span>Information Sharing</a>
-        <a href="#sms-policy"><span class="toc-num">4</span>SMS &amp; Text Messaging</a>
-        <a href="#cookies-analytics"><span class="toc-num">5</span>Cookies &amp; Analytics</a>
-        <a href="#data-retention"><span class="toc-num">6</span>Data Retention</a>
-        <a href="#security"><span class="toc-num">7</span>Security</a>
-        <a href="#third-party"><span class="toc-num">8</span>Third-Party Services</a>
-        <a href="#your-rights"><span class="toc-num">9</span>Your Rights (CCPA)</a>
-        <a href="#childrens-privacy"><span class="toc-num">10</span>Children's Privacy</a>
-        <a href="#changes"><span class="toc-num">11</span>Changes to This Policy</a>
-        <a href="#contact-us"><span class="toc-num">12</span>Contact Us</a>
+        <a href="#clearpath"><span class="toc-num">4</span>ClearPath Monitoring</a>
+        <a href="#sms-policy"><span class="toc-num">5</span>SMS &amp; Text Messaging</a>
+        <a href="#cookies-analytics"><span class="toc-num">6</span>Cookies &amp; Analytics</a>
+        <a href="#data-retention"><span class="toc-num">7</span>Data Retention</a>
+        <a href="#security"><span class="toc-num">8</span>Security</a>
+        <a href="#third-party"><span class="toc-num">9</span>Third-Party Services</a>
+        <a href="#your-rights"><span class="toc-num">10</span>Your Rights (CCPA)</a>
+        <a href="#childrens-privacy"><span class="toc-num">11</span>Children's Privacy</a>
+        <a href="#changes"><span class="toc-num">12</span>Changes to This Policy</a>
+        <a href="#contact-us"><span class="toc-num">13</span>Contact Us</a>
       </div>
     </div>
 
@@ -333,7 +331,7 @@
     <div class="privacy-content">
 
       <div class="info-box">
-        <strong>Plain English Summary:</strong> We collect only what we need to respond to your inquiries and deliver our services. We don't sell your data, we don't buy ad space with it, and we never will. This page explains the specifics in full.
+        <strong>Plain English Summary:</strong> We collect only what we need to respond to your inquiries and deliver our IT and software services. We don't sell your data, we don't buy ad space with it, and we never will. This page covers Accelerated Digital Solutions and this website. If you are a patient, staff member or beta tester using <strong>ClearPath Monitoring</strong>, the separate <a href="https://clearpathmonitoring.com/privacy/" class="link" target="_blank" rel="noopener">ClearPath Privacy Policy</a> also applies (see Section 4).
       </div>
 
       <!-- 1. Information We Collect -->
@@ -348,9 +346,10 @@
 
         <p><strong style="color:var(--text);">Information you provide directly:</strong></p>
         <ul>
-          <li><span class="bullet-dot" aria-hidden="true"></span>Name, email address, and message content when you submit our contact form.</li>
-          <li><span class="bullet-dot" aria-hidden="true"></span>Name, email address, and project notes when you request or email an estimate.</li>
-          <li><span class="bullet-dot" aria-hidden="true"></span>Phone number if you call or text us directly at (323) 533-4872.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Name, email address, the topic you choose, and message content when you submit a contact form on this website.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Organization name and job role if you choose to include them when asking about ClearPath Monitoring.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Your phone number, if you give it to us and agree to receive text messages (see Section 5).</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Messages you type into the website chat assistant (see Section 9).</li>
           <li><span class="bullet-dot" aria-hidden="true"></span>Business name and project details you share during consultations or service engagements.</li>
         </ul>
 
@@ -374,8 +373,8 @@
         </h2>
         <p>We use the information we collect to:</p>
         <ul>
-          <li><span class="bullet-dot" aria-hidden="true"></span>Respond to your contact form submissions, estimate requests, and questions.</li>
-          <li><span class="bullet-dot" aria-hidden="true"></span>Provide, schedule, and deliver IT and network infrastructure services.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Respond to your contact form submissions and questions.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span>Provide, schedule, and deliver IT infrastructure and software development services.</li>
           <li><span class="bullet-dot" aria-hidden="true"></span>Send you project-related communications, invoices, and service updates.</li>
           <li><span class="bullet-dot" aria-hidden="true"></span>Improve our website based on aggregated, anonymized usage data.</li>
           <li><span class="bullet-dot" aria-hidden="true"></span>Comply with applicable legal obligations.</li>
@@ -402,21 +401,46 @@
         </div>
       </section>
 
-      <!-- 3a. SMS / Text Messaging -->
+      <!-- 4. ClearPath Monitoring -->
+      <section class="privacy-section" id="clearpath">
+        <h2>
+          <span class="section-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          </span>
+          4. ClearPath Monitoring
+        </h2>
+        <p>ClearPath Monitoring is a patient-monitoring platform for addiction treatment programs that is developed and operated by Accelerated Digital Solutions LLC. Because it handles health information, ClearPath has its own, more detailed privacy policy:</p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Patients and treatment facility staff:</strong> Information collected by the ClearPath app, the ClearPath Dashboard app and the ClearPath web dashboard is governed by the <a href="https://clearpathmonitoring.com/privacy/" class="link" target="_blank" rel="noopener">ClearPath Privacy Policy</a>, not this one. In short: the treatment facility holds patient records, and ClearPath processes them only on the facility's instructions. Every view of a patient's information is audited, and substance use disorder records are handled with HIPAA and 42 CFR Part 2 in mind.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Beta testers:</strong> Sign-ups at <a href="https://clearpathmonitoring.com/beta/" class="link" target="_blank" rel="noopener">clearpathmonitoring.com/beta</a> are covered by the ClearPath Privacy Policy and are kept separate from patient records.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Inquiries through this website:</strong> If you ask about ClearPath through a form on accelerateddigital.net, that inquiry is handled under this policy, like any other contact form message. Please don't include patient names or health information in website forms.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">No mixing of data:</strong> We never use ClearPath patient or clinical information for Accelerated Digital Solutions marketing, website analytics, or any purpose other than providing ClearPath to the facility.</li>
+        </ul>
+        <p>If you are a patient, contact your treatment facility first with questions about your own monitoring. They hold your records. For anything else about ClearPath, email <a href="mailto:support@clearpathmonitoring.com" class="link">support@clearpathmonitoring.com</a>.</p>
+      </section>
+
+      <!-- 5. SMS / Text Messaging -->
       <section class="privacy-section" id="sms-policy">
         <h2>
           <span class="section-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </span>
-          5. SMS &amp; Text Messaging Policy
+          5. SMS &amp; Text Messaging
         </h2>
-        <p>Accelerated Digital Solutions LLC may communicate with clients and prospective clients via SMS (text message) for appointment confirmations, service updates, and direct business communication.</p>
+        <p>Accelerated Digital Solutions LLC sends text messages only to people who have agreed to receive them, under two programs:</p>
+        <ul>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">ADS client messages:</strong> Appointment confirmations, service updates and replies to your questions, sent to clients and prospective clients who give us their number and ask us to text them.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">ClearPath beta program texts:</strong> Updates for ClearPath beta testers who tick the optional opt-in box on the beta sign-up form. These include new builds, testing instructions and requests for feedback. Up to 4 messages a month, sent only between 8am and 9pm Pacific time. Texts never mention health, treatment or anything personal.</li>
+        </ul>
+        <p>For both programs:</p>
         <ul>
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">No sharing for marketing:</strong> No mobile information will be shared with third parties or affiliates for marketing or promotional purposes.</li>
-          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Opt-in data protected:</strong> Text messaging originator opt-in data and consent information will not be shared with any third parties under any circumstances.</li>
-          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Opt-out:</strong> You may opt out of SMS communications at any time by replying <strong style="color:var(--text);">STOP</strong> to any text message from us. Standard message and data rates may apply.</li>
-          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Help:</strong> Reply <strong style="color:var(--text);">HELP</strong> to any text message for assistance, or contact us directly at <a href="mailto:info@accelerateddigital.net" style="color:var(--accent);">info@accelerateddigital.net</a>.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Opt-in data protected:</strong> Text messaging originator opt-in data and consent information will not be shared with any third parties.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Opt-out:</strong> Reply <strong style="color:var(--text);">STOP</strong> to any message to opt out, and <strong style="color:var(--text);">START</strong> to opt back in. Message and data rates may apply. Message frequency varies.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Help:</strong> Reply <strong style="color:var(--text);">HELP</strong> to any message, or email <a href="mailto:info@accelerateddigital.net" class="link">info@accelerateddigital.net</a> (ADS) or <a href="mailto:support@clearpathmonitoring.com" class="link">support@clearpathmonitoring.com</a> (ClearPath beta).</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Records:</strong> We keep a record of your consent and of the messages we send and receive, so we can show what you agreed to and honor an opt-out. Texts are delivered by Twilio on our behalf.</li>
         </ul>
+        <p>The full terms are in our <a href="/sms-terms" class="link">SMS Terms</a>.</p>
       </section>
 
       <!-- 5. Cookies & Analytics -->
@@ -425,12 +449,12 @@
           <span class="section-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
           </span>
-          5. Cookies &amp; Analytics
+          6. Cookies &amp; Analytics
         </h2>
         <p>Our website uses the following technologies to understand site usage:</p>
         <ul>
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Google Analytics (GA4):</strong> We use Google Analytics with IP anonymization enabled (<code style="background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88em;">anonymize_ip: true</code>). This means your full IP address is never stored by Google. Analytics cookies track aggregate, non-identifiable usage data.</li>
-          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Cloudflare Turnstile:</strong> Our contact and estimate forms use Cloudflare Turnstile for bot protection. This is a privacy-preserving CAPTCHA alternative that does not use tracking cookies or behavioral fingerprinting.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Cloudflare Turnstile:</strong> Our contact forms use Cloudflare Turnstile for bot protection. This is a privacy-preserving CAPTCHA alternative that does not use tracking cookies or behavioral fingerprinting.</li>
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Session cookies:</strong> Standard browser session data used for website functionality. These expire when you close your browser.</li>
         </ul>
         <p>You can opt out of Google Analytics tracking by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" class="link">Google Analytics Opt-Out Browser Add-On</a>. Most modern browsers also allow you to block or clear cookies through browser settings.</p>
@@ -442,11 +466,12 @@
           <span class="section-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           </span>
-          6. Data Retention
+          7. Data Retention
         </h2>
         <p>We retain your information only as long as necessary for the purpose it was collected:</p>
         <ul>
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Contact form inquiries:</strong> Retained in our email system for up to 2 years, or until you request deletion.</li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">SMS consent records:</strong> Kept for as long as you are subscribed and for a reasonable period afterwards, so we can show consent and honor opt-outs.</li>
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Client records and invoices:</strong> Retained for a minimum of 7 years to comply with applicable tax and business record-keeping requirements.</li>
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Analytics data:</strong> Aggregated and anonymized data is retained per Google Analytics default settings (up to 14 months for user-level data).</li>
         </ul>
@@ -459,7 +484,7 @@
           <span class="section-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </span>
-          7. Security
+          8. Security
         </h2>
         <p>We implement industry-standard technical and organizational measures to protect your information, including:</p>
         <ul>
@@ -477,13 +502,15 @@
           <span class="section-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           </span>
-          8. Third-Party Services
+          9. Third-Party Services
         </h2>
         <p>Our website integrates with the following third-party services. Each operates under its own privacy policy:</p>
         <ul>
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Google Analytics</strong> — Website analytics. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" class="link">Privacy Policy</a></li>
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Cloudflare</strong> — CDN, security, DNS, and form protection (Turnstile). <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" class="link">Privacy Policy</a></li>
-          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Resend</strong> — Transactional email delivery for contact form and estimate confirmations. <a href="https://resend.com/privacy" target="_blank" rel="noopener noreferrer" class="link">Privacy Policy</a></li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Resend</strong> — Transactional email delivery for contact form confirmations. <a href="https://resend.com/privacy" target="_blank" rel="noopener noreferrer" class="link">Privacy Policy</a></li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Twilio</strong> — Delivery of text messages to people who opt in (Section 5). <a href="https://www.twilio.com/en-us/legal/privacy" target="_blank" rel="noopener noreferrer" class="link">Privacy Policy</a></li>
+          <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Anthropic</strong> — Powers the website chat assistant. Messages you type into the assistant are sent to Anthropic to generate a reply. Please don't enter sensitive or health information there. <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener noreferrer" class="link">Privacy Policy</a></li>
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Akaunting (self-hosted)</strong> — Client invoicing and accounting. Hosted on our own infrastructure at <code style="background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88em;">accounting.accelerateddigital.net</code>.</li>
         </ul>
         <p>Our website may contain links to external websites. We are not responsible for the privacy practices of those sites and encourage you to review their policies.</p>
@@ -495,7 +522,7 @@
           <span class="section-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
           </span>
-          9. Your Rights (California / CCPA)
+          10. Your Rights (California / CCPA)
         </h2>
         <p>As a California-based business, we comply with the California Consumer Privacy Act (CCPA). If you are a California resident, you have the following rights:</p>
         <ul>
@@ -504,7 +531,7 @@
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Right to Opt-Out of Sale:</strong> We do not sell personal information, so this right does not apply. However, you may contact us to confirm this at any time.</li>
           <li><span class="bullet-dot" aria-hidden="true"></span><strong style="color:var(--text);">Right to Non-Discrimination:</strong> We will not discriminate against you for exercising any of these rights.</li>
         </ul>
-        <p>To exercise any of these rights, please contact us using the information in Section 12. We will respond to verified requests within 45 days.</p>
+        <p>To exercise any of these rights, please contact us using the information in Section 13. We will respond to verified requests within 45 days.</p>
         <div class="info-box">
           <strong>Note:</strong> We are a small business. We are not currently subject to the CCPA's full compliance requirements (which apply to businesses with annual gross revenues exceeding $25 million, or that annually buy/sell/share the personal information of 100,000+ consumers). Nonetheless, we believe privacy is a right, not a technicality, and we are committed to honoring these principles regardless.
         </div>
@@ -516,7 +543,7 @@
           <span class="section-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </span>
-          10. Children's Privacy
+          11. Children's Privacy
         </h2>
         <p>Our website and services are intended for businesses and adults aged 18 and over. We do not knowingly collect personal information from children under the age of 13. If you believe we have inadvertently collected information from a minor, please contact us immediately and we will promptly delete it.</p>
       </section>
@@ -527,7 +554,7 @@
           <span class="section-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
           </span>
-          11. Changes to This Policy
+          12. Changes to This Policy
         </h2>
         <p>We may update this Privacy Policy from time to time to reflect changes in our practices or applicable law. When we make material changes, we will update the "Effective Date" at the top of this page.</p>
         <p>We encourage you to review this page periodically. Your continued use of our website following any changes constitutes your acceptance of the updated policy.</p>
@@ -539,14 +566,14 @@
           <span class="section-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </span>
-          12. Contact Us
+          13. Contact Us
         </h2>
         <p>If you have questions, concerns, or requests related to this Privacy Policy or your personal information, please contact us:</p>
         <div class="contact-block">
           <p><strong style="color:var(--text);">Accelerated Digital Solutions LLC</strong></p>
           <p>Los Angeles, California</p>
           <p>Email: <a href="mailto:info@accelerateddigital.net">info@accelerateddigital.net</a></p>
-          <p>Phone / Text: <a href="tel:+13235334872">(323) 533-4872</a></p>
+          <p>ClearPath Monitoring: <a href="mailto:support@clearpathmonitoring.com">support@clearpathmonitoring.com</a></p>
           <p>Website: <a href="https://www.accelerateddigital.net">accelerateddigital.net</a></p>
         </div>
       </section>
@@ -565,9 +592,11 @@
     <div class="site-footer-inner">
       <div>© 2026 Accelerated Digital Solutions LLC — Los Angeles, California</div>
       <div class="site-footer-links">
-        <a class="link" href="tel:+13235334872">(323) 533-4872</a>
-        <span aria-hidden="true">•</span>
         <a class="link" href="mailto:info@accelerateddigital.net">info@accelerateddigital.net</a>
+        <span aria-hidden="true">•</span>
+        <a class="link" href="/clearpath">ClearPath Monitoring</a>
+        <span aria-hidden="true">•</span>
+        <a class="link" href="/sms-terms">SMS Terms</a>
         <span aria-hidden="true">•</span>
         <a class="link" href="/privacy-policy">Privacy Policy</a>
       </div>
