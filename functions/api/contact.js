@@ -8,7 +8,13 @@
  *   CONTACT_TO_EMAIL_2   — optional second inbox, e.g. accelerateddigitalllc@gmail.com
  *   CONTACT_FROM_EMAIL   — verified Resend sender, e.g. ADS Website <info@accelerateddigital.net>
  *   TURNSTILE_SECRET     — secret key from Cloudflare Turnstile dashboard
+ *   CLEARPATH_TO_EMAIL   — optional; inbox for ClearPath inquiries (defaults to support@clearpathmonitoring.com)
+ *
+ * ClearPath inquiries (body.product === "clearpath") go to the ClearPath inbox as well as the
+ * primary inbox, and the confirmation is signed by ClearPath with replies going to support@.
  */
+
+const CLEARPATH_DEFAULT_TO = "support@clearpathmonitoring.com";
 
 const CORS_HEADERS = {
   "access-control-allow-origin": "*",
@@ -36,6 +42,9 @@ export async function onRequestPost(context) {
   const message = String(body.message || "").trim();
   const fax     = String(body.fax     || "").trim(); // honeypot
   const token   = String(body.turnstileToken || "").trim();
+  const isClearPath = String(body.product || "").trim().toLowerCase() === "clearpath";
+  const organization = String(body.organization || "").trim().slice(0, 200);
+  const role         = String(body.role || "").trim().slice(0, 100);
 
   // ── 2. Honeypot check ──────────────────────────────────────────────────────
   if (fax) {
@@ -92,14 +101,21 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: "Email service not configured." }, 500);
   }
 
-  const toList = [TO_EMAIL, ...(TO_EMAIL_2 ? [TO_EMAIL_2] : [])];
+  const CLEARPATH_TO = env.CLEARPATH_TO_EMAIL || CLEARPATH_DEFAULT_TO;
+  const toList = [
+    ...(isClearPath ? [CLEARPATH_TO] : []),
+    TO_EMAIL,
+    ...(TO_EMAIL_2 ? [TO_EMAIL_2] : []),
+  ].filter((v, i, a) => a.indexOf(v) === i);
 
   // ── 6. Build email bodies ──────────────────────────────────────────────────
   const notifyBody = [
-    `New contact form submission`,
+    isClearPath ? `New ClearPath Monitoring inquiry` : `New contact form submission`,
     ``,
     `Name:    ${name}`,
     `Email:   ${email}`,
+    ...(organization ? [`Org:     ${organization}`] : []),
+    ...(role ? [`Role:    ${role}`] : []),
     `IP:      ${ip || "unknown"}`,
     ``,
     `Message:`,
@@ -109,7 +125,21 @@ export async function onRequestPost(context) {
     `Reply directly to this email to respond to ${name}.`,
   ].join("\n");
 
-  const confirmBody = [
+  const confirmBody = isClearPath ? [
+    `Hi ${name},`,
+    ``,
+    `Thanks for your interest in ClearPath Monitoring! We received your request and will get back to you shortly.`,
+    ``,
+    `Here's a copy of what you sent:`,
+    ``,
+    message,
+    ``,
+    `If you have anything to add, just reply to this email or write to ${CLEARPATH_DEFAULT_TO}.`,
+    ``,
+    `— The ClearPath Team`,
+    `ClearPath Monitoring, a product of Accelerated Digital Solutions LLC`,
+    `accelerateddigital.net/clearpath`,
+  ].join("\n") : [
     `Hi ${name},`,
     ``,
     `Thanks for reaching out to Accelerated Digital Solutions! We received your message and will get back to you shortly.`,
@@ -118,7 +148,7 @@ export async function onRequestPost(context) {
     ``,
     message,
     ``,
-    `In the meantime, feel free to call or text us at (323) 533-4872.`,
+    `If you have anything to add, just reply to this email.`,
     ``,
     `— The ADS Team`,
     `Accelerated Digital Solutions LLC`,
@@ -132,7 +162,9 @@ export async function onRequestPost(context) {
       apiKey:   RESEND_API_KEY,
       from:     FROM_EMAIL,
       to:       toList,
-      subject:  `New message from ${name} — ADS Contact Form`,
+      subject:  isClearPath
+        ? `ClearPath inquiry from ${name}${organization ? ` (${organization})` : ""}`
+        : `New message from ${name} — ADS Contact Form`,
       text:     notifyBody,
       replyTo:  email,
     });
@@ -142,16 +174,18 @@ export async function onRequestPost(context) {
       apiKey:   RESEND_API_KEY,
       from:     FROM_EMAIL,
       to:       email,
-      subject:  `We got your message — Accelerated Digital Solutions`,
+      subject:  isClearPath
+        ? `We got your request — ClearPath Monitoring`
+        : `We got your message — Accelerated Digital Solutions`,
       text:     confirmBody,
-      replyTo:  TO_EMAIL,
+      replyTo:  isClearPath ? CLEARPATH_TO : TO_EMAIL,
     });
 
     return json({ ok: true }, 200);
 
   } catch (err) {
     console.error("[contact] Resend error:", err);
-    return json({ ok: false, error: "Could not send message. Please try again or call us at (323) 533-4872." }, 502);
+    return json({ ok: false, error: "Could not send message. Please try again or email info@accelerateddigital.net." }, 502);
   }
 }
 
